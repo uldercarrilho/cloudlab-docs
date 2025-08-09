@@ -15,34 +15,61 @@
 
 ### 🚀 Features & Enhancements
 <!-- Add new feature ideas here -->
-- [ ] Example: Add user authentication system
-- [ ] Example: Implement search functionality
-- [ ] Example: Create dashboard for metrics
 
 ### 🐛 Bugs & Issues
 <!-- Add bug reports and issues here -->
-- [ ] Example: Login form validation not working
-- [ ] Example: Performance issue on large datasets
 
 ### 🔧 Technical Debt
 <!-- Add technical improvements here -->
-- [ ] Example: Refactor legacy authentication code
-- [ ] Example: Update deprecated dependencies
 
 ### 📚 Documentation
 <!-- Add documentation tasks here -->
-- [ ] Example: Update API documentation
-- [ ] Example: Create user onboarding guide
+- [ ] Improve RFC template
+  - Context: The current RFC template could be enhanced to better guide contributors and ensure more consistent, high-quality proposals.
+  - Impact: Improved clarity, completeness, and usability of RFCs; easier for reviewers to assess proposals.
+  - Notes:
+      - Review best practices from other open source projects.
+      - Consider adding sections for security, backwards compatibility, and migration strategy.
+      - Add guidance/examples for each section.
+      - AI-Assistant friendly.
+      - Include reference for technical books or well-known developers.
+- [ ] Improve ADR template
+  - Context: The current ADR template could be updated to provide clearer guidance and ensure more consistent, actionable architectural decisions.
+  - Impact: Higher quality ADRs, easier decision tracking, and better knowledge sharing across the team.
+  - Notes:
+      - Review ADR templates from leading open source projects.
+      - Consider adding sections for consequences, alternatives, and links to related RFCs or decisions.
+      - Add examples and guidance for each section to help contributors.
+      - Ensure alignment with the improved RFC template.
+      - AI-Assistant friendly.
+      - Include reference for technical books or well-known developers.
 
 ### 🧪 Research & Investigation
 <!-- Add research tasks and spikes here -->
-- [ ] Example: Investigate new caching solutions
-- [ ] Example: Research accessibility requirements
+- [ ] [TECHNICAL] Design a Golang project scaffold
+  - Context: Establish a robust foundation for new Go projects to ensure maintainability and scalability.
+  - Impact: Enables consistent project structure, easier onboarding, and alignment with best practices.
+  - Notes: Evaluate approaches such as Package Oriented Design, Clean Architecture, and Domain Driven Design for suitability.
+- [ ] Review the file `ai-sessions/chat-history/2025-08-08-distributed-systems-key-concepts.md`
+  - Context: Ensure all distributed systems concepts are accurately captured and mapped to requirements.
+  - Impact: Guarantees technical documentation is comprehensive and up-to-date for future reference and implementation.
+  - Notes: 
+      - Cross-check with current system architecture and backlog items.
+      - Consider dedicated clusters for critical and non-critical paths.
+      - Consider dedicated clusters for producers, consumers, and sinks.
+      - Ensure healthchecks for readiness and liveness are addressed.
+      - Evaluate GraphQL integration.
+      - Define rate limits for both instance and cluster levels.
+      - Integrate Vault for secrets management.
+      - Explore cache strategies.
+      - Explore the most important design patterns.
+      - Use different types of system design (e.g., DDD, Layered, etc.; check references in relevant books).
+      - Apply Goroutines patterns where appropriate.
+      - Explore all deployment strategies.
+      - Support both local and CI pipeline deployments.
 
 ### 🎨 UX/UI Improvements
 <!-- Add user experience improvements here -->
-- [ ] Example: Improve mobile responsiveness
-- [ ] Example: Redesign settings page
 
 ## 📝 Notes and Context
 
