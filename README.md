@@ -27,6 +27,7 @@ This repository serves as the central knowledge base for distributed system desi
 - **`development/tools/`** – CI/CD pipelines and development tooling
 
 ### 💼 Business
+- **`business/backlog/`** – AI-assisted backlog management system with TODO capture, prioritized tasks, and workflow tracking
 - **`business/requirements/`** – Functional and non-functional requirements
 - **`business/workflows/`** – Business processes and user journeys
 - **`business/user-stories/`** – User stories and epics
@@ -58,6 +59,7 @@ This repository serves as the central knowledge base for distributed system desi
 - **Operational issues**: Look in `runbooks/troubleshooting/`
 - **Development setup**: Begin with `development/environments/`
 - **Business context**: Explore `business/requirements/`
+- **Task management**: Use `business/backlog/` for project planning and AI-assisted execution
 
 ## 📋 Contributing
 
