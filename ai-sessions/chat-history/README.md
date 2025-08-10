@@ -9,7 +9,10 @@ Maintains a searchable archive of AI interactions for:
 - Maintaining context for ongoing projects
 
 ## Organization
-- Use descriptive filenames: `YYYY-MM-DD-topic-summary.md`
+- Use descriptive filenames in the format:  
+  `<YYYY-MM-DD-HHMM>-<topic-summary>.md`  
+  Example: `2025-08-08-1910-distributed-systems-key-concepts.md`  
+  (The original date and time are also recorded inside each file.)
 - Include session metadata (date, key outcomes)
 
 ## Best Practices
