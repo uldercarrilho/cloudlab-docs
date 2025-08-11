@@ -31,23 +31,6 @@
   - Context: Establish a robust foundation for new Go projects to ensure maintainability and scalability.
   - Impact: Enables consistent project structure, easier onboarding, and alignment with best practices.
   - Notes: Evaluate approaches such as Package Oriented Design, Clean Architecture, and Domain Driven Design for suitability.
-- [ ] Review the file `ai-sessions/chat-history/2025-08-08-distributed-systems-key-concepts.md`
-  - Context: Ensure all distributed systems concepts are accurately captured and mapped to requirements.
-  - Impact: Guarantees technical documentation is comprehensive and up-to-date for future reference and implementation.
-  - Notes: 
-      - Cross-check with current system architecture and backlog items.
-      - Consider dedicated clusters for critical and non-critical paths.
-      - Consider dedicated clusters for producers, consumers, and sinks.
-      - Ensure healthchecks for readiness and liveness are addressed.
-      - Evaluate GraphQL integration.
-      - Define rate limits for both instance and cluster levels.
-      - Integrate Vault for secrets management.
-      - Explore cache strategies.
-      - Explore the most important design patterns.
-      - Use different types of system design (e.g., DDD, Layered, etc.; check references in relevant books).
-      - Apply Goroutines patterns where appropriate.
-      - Explore all deployment strategies.
-      - Support both local and CI pipeline deployments.
 
 ### 🎨 UX/UI Improvements
 <!-- Add user experience improvements here -->
