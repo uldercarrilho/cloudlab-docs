@@ -1,0 +1,111 @@
+---
+description: |
+  This file defines the general rules and standards for the distributed systems project led by Ulder Carrilho Júnior. It outlines the project's purpose, core principles, and mandatory processes, including the ADR-first approach, AI agent collaboration, and comprehensive coverage of distributed systems concepts. The rules specify requirements for technology decisions, documentation, database schema design, code quality, and educational value. They also detail the distributed systems concepts to be demonstrated, such as consistency models, partitioning, replication, fault tolerance, load balancing, service discovery, message queuing, distributed transactions, monitoring, and security. The guidelines ensure incremental, well-documented, and maintainable development, with a strong focus on AI-friendly documentation and future extensibility.
+globs:
+alwaysApply: false
+---
+# Cursor Rules for Distributed Systems Project
+
+## Project Context
+- **Project Name**: Cloud Lab
+- **Project Owner**: Ulder Carrilho Júnior
+- **Project Purpose**: Design and implement a comprehensive distributed system that demonstrates all key distributed systems concepts
+- **Complexity Level**: Complex enough to showcase all principles, simple enough to understand
+- **Implementation Method**: AI agent-driven development using Cursor
+- **Documentation Focus**: AI-friendly documentation for future AI agents
+
+## Core Principles
+1. **ADR-First Approach**: Every technology, tool, or service decision must have an Architecture Decision Record (ADR)
+2. **AI Agent Collaboration**: All implementation work should be done by AI agents with human oversight
+3. **Comprehensive Coverage**: The system must demonstrate all distributed systems key concepts
+4. **Educational Value**: Code and documentation should be clear enough for learning purposes
+
+## Technology Decision Process
+- **MANDATORY**: Create an ADR document before implementing any new technology/tool/service
+- **REQUIRED**: Get explicit approval from Ulder before proceeding with implementation
+- **DOCUMENTATION**: All decisions must be documented in the `architecture/adrs/` directory
+- **REASONING**: ADRs must include clear rationale, alternatives considered, and consequences
+
+## AI Agent Guidelines
+- **Context Awareness**: Always read and understand existing project documentation before making changes
+- **Incremental Development**: Build the system step by step, ensuring each component is well-documented
+- **Code Quality**: Write clean, readable code with comprehensive comments explaining distributed systems concepts
+- **Documentation**: Create AI-friendly documentation that future AI agents can easily understand
+- **Database First**: Always design and document database schemas before implementing business logic
+- **Schema Validation**: Ensure Go structs use strongly-typed enums that match database ENUM constraints
+
+## Distributed Systems Concepts to Cover
+The system must demonstrate:
+- **Consistency Models**: Strong, eventual, causal consistency
+- **Partitioning & Sharding**: Data distribution strategies
+- **Replication**: Master-slave, multi-master, leaderless
+- **Fault Tolerance**: Circuit breakers, retry mechanisms, graceful degradation
+- **Load Balancing**: Multiple strategies and algorithms
+- **Service Discovery**: Service registration and discovery mechanisms
+- **Message Queuing**: Asynchronous communication patterns
+- **Distributed Transactions**: Saga pattern, two-phase commit alternatives
+- **Monitoring & Observability**: Distributed tracing, metrics, logging
+- **Security**: Authentication, authorization, encryption in distributed context
+
+## File Organization Standards
+- **Code**: Place in appropriate service directories with clear separation of concerns
+- **Documentation**: Use markdown format with clear headings and structure
+- **Diagrams**: Include C4 model diagrams for architecture visualization
+- **Examples**: Provide practical examples for each concept implemented
+
+## Database Schema Standards
+- **ENUM Types**: Use PostgreSQL ENUM types for columns with fixed value sets (e.g., status, event_type, order_state)
+- **Column Descriptions**: Every database column must have a comprehensive COMMENT explaining its purpose and usage
+- **Table Comments**: Every table must have a COMMENT explaining its overall purpose and role in the system
+- **Constraints**: Use appropriate constraints (NOT NULL, UNIQUE, CHECK) to ensure data integrity
+- **Indexing**: Create proper indexes for performance, especially for status-based queries and foreign key lookups
+- **Naming Conventions**: Use snake_case for table and column names, descriptive and self-documenting
+
+## Communication Protocol
+- **Status Updates**: Provide clear progress updates on each component
+- **Decision Points**: Highlight when ADR creation is needed
+- **Questions**: Ask for clarification when requirements are unclear
+- **Approval Requests**: Explicitly request approval before major changes
+
+## Quality Standards
+- **Testing**: Include unit tests and integration tests for distributed components
+- **Error Handling**: Implement comprehensive error handling for distributed scenarios
+- **Logging**: Structured logging for debugging distributed issues
+- **Performance**: Consider performance implications of distributed patterns
+
+## Documentation Requirements
+- **README Files**: Every directory should have a clear README explaining its purpose
+- **Code Comments**: Explain distributed systems concepts in code comments
+- **Architecture Diagrams**: Keep C4 diagrams updated with system evolution
+- **API Documentation**: OpenAPI specs for all service interfaces
+
+## Implementation Phases
+1. **Foundation**: Basic service structure and communication
+2. **Core Patterns**: Implement fundamental distributed patterns
+3. **Advanced Features**: Add complex distributed scenarios
+4. **Testing & Validation**: Comprehensive testing of distributed behavior
+5. **Documentation**: Complete AI-friendly documentation
+
+## Database Implementation Guidelines
+- **Schema Design**: Start with ENUM types, then table definitions with comprehensive comments
+- **Go Integration**: Create Go structs with proper tags (`db:`, `json:`) and validation methods
+- **Migration Strategy**: Use versioned database migrations for schema evolution
+- **Performance**: Consider query patterns when designing indexes and constraints
+- **Data Integrity**: Implement validation at both database and application levels
+
+## Success Criteria
+- All distributed systems concepts are demonstrated through working code
+- System is complex enough to show real-world challenges
+- Documentation is comprehensive and AI-friendly
+- All technology decisions are documented in ADRs
+- Code is production-ready quality with proper error handling
+- System can be easily understood and extended by future AI agents
+
+## Important Notes
+- **Never skip ADR creation** for technology decisions
+- **Always get approval** from Ulder before major changes
+- **Focus on educational value** - explain concepts clearly
+- **Build incrementally** - don't try to implement everything at once
+- **Consider maintainability** - future AI agents should be able to work with the codebase
+- **Database Standards**: Always follow ENUM usage and column description standards for AI agent collaboration
+- **Schema Documentation**: Well-documented schemas are crucial for distributed systems maintainability
