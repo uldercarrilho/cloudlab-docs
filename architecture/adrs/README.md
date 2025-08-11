@@ -12,4 +12,4 @@ ADRs capture the context, options considered, and consequences of important arch
 - Superseded decisions are marked but not deleted
 
 ## Template
-Use the ADR template in `/templates/adr-template.md` for consistency.
+Use the PRD + ADR hybrid template in `/templates/prd-adr-template.md` for consistency. This template combines product requirements with architectural decisions, making it ideal for solo development and AI collaboration.

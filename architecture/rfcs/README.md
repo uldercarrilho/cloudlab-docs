@@ -13,4 +13,4 @@ RFCs facilitate collaborative decision-making by allowing the team to discuss an
 - **Implemented**: Successfully delivered
 
 ## Template
-Use the RFC template in `/templates/rfc-template.md` for consistency.
+Use the PRD + ADR hybrid template in `/templates/prd-adr-template.md` for consistency. This template combines product requirements with architectural decisions, making it ideal for solo development and AI collaboration.

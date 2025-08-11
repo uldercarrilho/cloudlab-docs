@@ -24,25 +24,6 @@
 
 ### 📚 Documentation
 <!-- Add documentation tasks here -->
-- [ ] Improve RFC template
-  - Context: The current RFC template could be enhanced to better guide contributors and ensure more consistent, high-quality proposals.
-  - Impact: Improved clarity, completeness, and usability of RFCs; easier for reviewers to assess proposals.
-  - Notes:
-      - Review best practices from other open source projects.
-      - Consider adding sections for security, backwards compatibility, and migration strategy.
-      - Add guidance/examples for each section.
-      - AI-Assistant friendly.
-      - Include reference for technical books or well-known developers.
-- [ ] Improve ADR template
-  - Context: The current ADR template could be updated to provide clearer guidance and ensure more consistent, actionable architectural decisions.
-  - Impact: Higher quality ADRs, easier decision tracking, and better knowledge sharing across the team.
-  - Notes:
-      - Review ADR templates from leading open source projects.
-      - Consider adding sections for consequences, alternatives, and links to related RFCs or decisions.
-      - Add examples and guidance for each section to help contributors.
-      - Ensure alignment with the improved RFC template.
-      - AI-Assistant friendly.
-      - Include reference for technical books or well-known developers.
 
 ### 🧪 Research & Investigation
 <!-- Add research tasks and spikes here -->
