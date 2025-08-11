@@ -11,6 +11,8 @@ This repository serves as the central knowledge base for distributed system desi
 - **`architecture/rfcs/`** – Request for Comments (RFCs) for proposed changes and new features
 - **`architecture/diagrams/`** – Visual system architecture, service interactions, and data flows
 
+> **Note:** ADRs and RFCs now use the unified PRD + ADR hybrid template for better consistency and AI collaboration.
+
 ### 🔌 API Documentation
 - **`api-docs/openapi/`** – OpenAPI/Swagger specifications for all services
 - **`api-docs/postman/`** – Postman collections and environments
@@ -40,8 +42,7 @@ This repository serves as the central knowledge base for distributed system desi
 
 ### 📝 Templates
 - **`templates/`** – Document templates for consistency, including:
-  - `adr-template.md` – Architecture Decision Record template
-  - `rfc-template.md` – RFC template
+  - `prd-adr-template.md` – PRD + ADR hybrid template for features and decisions
   - `runbook-template.md` – Runbook template
   - `post-mortem-template.md` – Post-mortem template
 
@@ -54,7 +55,7 @@ This repository serves as the central knowledge base for distributed system desi
 
 ## 🔍 Finding Information
 
-- **Architecture decisions**: See `architecture/adrs/`
+- **Architecture decisions & features**: See `architecture/adrs/` and `architecture/rfcs/` (using unified PRD + ADR template)
 - **API integration**: Start with `api-docs/openapi/`
 - **Operational issues**: Look in `runbooks/troubleshooting/`
 - **Development setup**: Begin with `development/environments/`
