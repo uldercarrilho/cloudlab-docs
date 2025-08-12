@@ -43,16 +43,13 @@ We will implement a **hybrid API communication strategy** that uses the right to
 ### Internal APIs (Service-to-Service)
 - **Primary**: gRPC for high-performance internal communication
 - **Secondary**: HTTP/2 for simple service interactions
-- **Event-driven**: Message queues for asynchronous processing
+- **Event-driven**: Apache Kafka for asynchronous processing, event streaming, and saga pattern coordination
 
 ### API Design Principles
 - **Consistency**: Standardized error handling and response formats
 - **Versioning**: Semantic versioning with backward compatibility
 - **Documentation**: OpenAPI/Swagger for REST, GraphQL schema introspection
 - **Security**: JWT-based authentication, rate limiting, and input validation
-- **Business Rule Compliance**: Enforce business constraints and data validation rules
-- **Saga Pattern Support**: Enable real-time workflow coordination and compensation actions
-- **Multi-tenant Isolation**: Ensure complete data segregation between vendors
 
 ## Alternatives Considered
 
@@ -97,6 +94,10 @@ We will implement a **hybrid API communication strategy** that uses the right to
 - **Compensation Actions**: Immediate notification of failed steps for rollback handling
 - **Data Consistency**: Meets business rules for data propagation timing requirements
 - **Multi-tenant Operations**: Supports vendor isolation and commission structure workflows
+- **User Registration Workflows**: Email verification and business verification flows via REST APIs
+- **Vendor Onboarding**: Multi-step vendor registration with real-time status updates via WebSocket
+- **Order Lifecycle Management**: Complete order processing from creation to delivery with real-time status
+- **Payment Processing**: Secure payment flows with fraud detection and real-time transaction updates
 
 #### Developer Experience
 - **GraphQL Schema**: Self-documenting APIs with introspection capabilities
@@ -180,6 +181,25 @@ We will implement a **hybrid API communication strategy** that uses the right to
    - Performance benchmarking and optimization
    - Security testing and vulnerability assessment
    - Saga pattern workflow validation
+
+### Phase 4: Business Rule Validation & Compliance (Weeks 7-8)
+1. **Business Rule Engine Integration**
+   - Implement automated business rule validation in API middleware
+   - Create business rule compliance checks for all critical endpoints
+   - Set up real-time validation for order processing and payment flows
+   - Implement business rule violation alerting and logging
+
+2. **Compliance Monitoring**
+   - PCI DSS compliance validation for payment endpoints
+   - GDPR compliance checks for data access and modification
+   - Business rule violation tracking and reporting
+   - Automated compliance audit trail generation
+
+3. **Business Workflow Validation**
+   - Validate saga pattern implementation against business rules
+   - Test multi-tenant isolation and vendor commission workflows
+   - Verify data consistency timing requirements
+   - End-to-end business workflow testing
 
 ## Technical Specifications
 
@@ -324,6 +344,12 @@ service OrderService {
   rpc GetOrder(GetOrderRequest) returns (Order);
   rpc UpdateOrderStatus(UpdateOrderStatusRequest) returns (Order);
 }
+
+service AnalyticsService {
+  rpc GetRealTimeMetrics(GetMetricsRequest) returns (MetricsResponse);
+  rpc StreamAnalyticsData(AnalyticsFilter) returns (stream AnalyticsData);
+  rpc GetBusinessIntelligence(BIRequest) returns (BIResponse);
+}
 ```
 
 ### WebSocket Message Protocol
@@ -419,6 +445,13 @@ service OrderService {
 - **OAuth 2.0**: Third-party integration support
 - **Role-Based Access Control**: Granular permissions per endpoint
 - **API Keys**: Rate limiting and usage tracking
+
+### Payment Security & Fraud Prevention
+- **PCI DSS Compliance**: Complete implementation of Payment Card Industry Data Security Standard
+- **Fraud Detection**: Address verification, CVV validation, velocity checks, and risk scoring algorithms
+- **Tokenization**: Secure storage of payment method information for recurring payments
+- **Fraud Monitoring**: Real-time fraud detection with automated blocking for suspicious activity
+- **Security Testing**: Regular penetration testing and vulnerability scanning
 
 ### Data Protection
 - **HTTPS/TLS**: All external API communication encrypted
@@ -708,6 +741,10 @@ plugins:
 - **Development Velocity**: Faster feature delivery
 - **Operational Efficiency**: Reduced debugging and maintenance time
 - **Scalability**: Support for business growth requirements
+- **Business Rule Compliance**: Real-time tracking of business rule violations and compliance rates
+- **Saga Pattern Success Rate**: Order processing workflow completion and compensation action tracking
+- **Multi-tenant Operations**: Vendor isolation effectiveness and commission structure workflow success
+- **Data Consistency Performance**: SLA compliance for data propagation timing requirements
 
 ## Future Considerations
 
