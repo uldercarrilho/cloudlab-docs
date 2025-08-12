@@ -91,21 +91,41 @@
 5. **Ecosystem**: Rich ecosystem of connectors, tools, and community support
 6. **Performance**: Sub-millisecond latency for high-throughput scenarios
 
+### Decision Matrix with Weighted Criteria
+
+| Criteria | Weight | Apache Kafka | RabbitMQ | Apache Pulsar | AWS SQS/SNS |
+|----------|--------|--------------|----------|---------------|-------------|
+| **Performance & Scalability** | 25% | 9/10 | 6/10 | 8/10 | 7/10 |
+| **Event Streaming Capabilities** | 20% | 10/10 | 4/10 | 9/10 | 3/10 |
+| **Operational Complexity** | 15% | 6/10 | 9/10 | 5/10 | 10/10 |
+| **Reliability & Durability** | 15% | 9/10 | 8/10 | 9/10 | 8/10 |
+| **Ecosystem & Community** | 10% | 10/10 | 9/10 | 6/10 | 8/10 |
+| **Cost at Scale** | 10% | 8/10 | 9/10 | 7/10 | 5/10 |
+| **Vendor Lock-in** | 5% | 10/10 | 10/10 | 10/10 | 2/10 |
+| **Total Weighted Score** | 100% | **8.7/10** | **7.4/10** | **7.4/10** | **6.8/10** |
+
+**Scoring Legend:**
+- 10/10: Excellent - Best in class
+- 8-9/10: Very Good - Meets most requirements
+- 6-7/10: Good - Meets basic requirements
+- 4-5/10: Fair - Limited capabilities
+- 2-3/10: Poor - Significant limitations
+
 ### Alternatives Considered
 
 #### RabbitMQ
-- **Pros**: Mature, easy to set up, good for simple message queuing
-- **Cons**: Limited event streaming capabilities, weaker ordering guarantees, less scalable for high throughput
+- **Pros**: Mature, easy to set up, good for simple message queuing, excellent operational simplicity
+- **Cons**: Limited event streaming capabilities, weaker ordering guarantees, less scalable for high throughput, limited event sourcing support
 - **Decision**: Not suitable for event streaming and high-scale requirements
 
 #### Apache Pulsar
-- **Pros**: Multi-tenancy, geo-replication, unified messaging model
-- **Cons**: Newer technology with smaller community, operational complexity, higher resource requirements
+- **Pros**: Multi-tenancy, geo-replication, unified messaging model, strong event streaming capabilities
+- **Cons**: Newer technology with smaller community, operational complexity, higher resource requirements, limited production experience
 - **Decision**: Promising but too immature for production use
 
 #### AWS SQS/SNS
-- **Pros**: Fully managed, serverless, easy integration with AWS services
-- **Cons**: Limited event streaming, vendor lock-in, higher costs at scale, weaker ordering guarantees
+- **Pros**: Fully managed, serverless, easy integration with AWS services, excellent operational simplicity
+- **Cons**: Limited event streaming, vendor lock-in, higher costs at scale, weaker ordering guarantees, limited event sourcing support
 - **Decision**: Not suitable for on-premises deployment and event streaming requirements
 
 ### Consequences
@@ -151,6 +171,73 @@
 }
 ```
 
+### Event Schema Versioning Strategy
+
+#### Versioning Approach
+- **Semantic Versioning**: Follow MAJOR.MINOR.PATCH format
+- **Backward Compatibility**: MINOR and PATCH versions must be backward compatible
+- **Breaking Changes**: MAJOR version increments for breaking changes
+- **Schema Registry**: Use Apache Avro with Confluent Schema Registry for schema management
+
+#### Schema Evolution Strategies
+1. **Additive Changes**: New optional fields (MINOR version)
+2. **Non-Breaking Modifications**: Field renames, type widening (MINOR version)
+3. **Breaking Changes**: Field removal, type narrowing (MAJOR version)
+4. **Deprecation**: Mark fields as deprecated before removal
+
+#### Versioning Implementation
+```json
+{
+  "eventId": "uuid-v4",
+  "eventType": "order.created",
+  "eventVersion": "2.1.0",
+  "timestamp": "ISO-8601",
+  "source": "order-service",
+  "data": {
+    "orderId": "uuid-v4",
+    "customerId": "uuid-v4",
+    "items": [...],
+    "total": 99.99,
+    "currency": "USD",           // New field in v2.0
+    "shippingAddress": {...},    // New field in v2.1
+    "legacyField": null          // Deprecated field, will be removed in v3.0
+  },
+  "metadata": {
+    "correlationId": "uuid-v4",
+    "causationId": "uuid-v4",
+    "schemaVersion": "2.1.0"
+  }
+}
+```
+
+### CQRS Integration Strategy
+
+#### Command and Query Separation
+- **Command Side**: Handle write operations through event sourcing
+- **Query Side**: Optimized read models for different use cases
+- **Event Store**: Kafka as the primary event store
+- **Read Models**: Separate databases optimized for specific queries
+
+#### CQRS Implementation Pattern
+```
+┌─────────────────┐    ┌─────────────────┐     ┌─────────────────┐
+│   Command API   │───▶│  Command Handler│───▶│   Event Store   │
+│                 │    │                 │     │    (Kafka)      │
+└─────────────────┘    └─────────────────┘     └─────────────────┘
+                                                       │
+                                                       ▼
+┌─────────────────┐    ┌─────────────────┐     ┌─────────────────┐
+│   Query API     │◀───│   Read Models   │◀───│  Event Handlers │
+│                 │    │                 │     │                 │
+└─────────────────┘    └─────────────────┘     └─────────────────┘
+```
+
+#### Read Model Synchronization
+- **Event Handlers**: Process events and update read models
+- **Eventual Consistency**: Read models updated asynchronously
+- **Projection Patterns**: Materialized views for complex queries
+- **Cache Strategy**: Redis for frequently accessed data
+
 ### Topic Naming Convention
 - `business.{domain}.{event-type}` (e.g., `business.orders.created`)
 - `audit.{domain}.{event-type}` (e.g., `audit.orders.created`)
@@ -189,7 +276,105 @@
 
 ---
 
-## 10. References
+## 10. Comprehensive Monitoring and Observability
+
+### Monitoring Requirements
+
+#### Infrastructure Metrics
+- **Broker Health**: CPU, memory, disk I/O, network usage
+- **Topic Performance**: Throughput, latency, partition distribution
+- **Consumer Health**: Consumer lag, processing rate, error rates
+- **Cluster Status**: Replication factor, under-replicated partitions
+
+#### Application Metrics
+- **Event Processing**: Events per second, processing latency
+- **Error Rates**: Failed events, retry attempts, dead letter queue size
+- **Business Metrics**: Order events, inventory updates, user activities
+- **Performance**: 95th and 99th percentile latencies
+
+#### Alerting Thresholds
+- **Critical**: Consumer lag > 5 seconds, broker down, >1% error rate
+- **Warning**: Consumer lag > 2 seconds, high memory usage, >0.5% error rate
+- **Info**: High throughput, new consumer groups, schema changes
+
+### Observability Tools
+
+#### Monitoring Stack
+- **Metrics Collection**: Prometheus for time-series metrics
+- **Visualization**: Grafana dashboards for real-time monitoring
+- **Logging**: ELK Stack (Elasticsearch, Logstash, Kibana)
+- **Tracing**: Jaeger for distributed tracing
+- **Alerting**: AlertManager with Slack/email notifications
+
+#### Dashboard Requirements
+- **Kafka Cluster Overview**: Broker status, topic performance, consumer health
+- **Business Metrics**: Event processing rates, error rates, business KPIs
+- **Operational Metrics**: Infrastructure health, resource utilization
+- **Alert History**: Recent alerts, resolution times, escalation patterns
+
+### Operational Runbooks
+
+#### Incident Response
+1. **High Consumer Lag**: Check consumer health, scale consumers, investigate bottlenecks
+2. **Broker Failure**: Failover to healthy brokers, check replication, restore from backup
+3. **Schema Registry Issues**: Validate schemas, check compatibility, rollback if necessary
+4. **Performance Degradation**: Analyze metrics, identify bottlenecks, optimize configuration
+
+#### Maintenance Procedures
+- **Topic Management**: Create, delete, reconfigure topics
+- **Schema Updates**: Deploy new schemas, handle breaking changes
+- **Cluster Scaling**: Add/remove brokers, rebalance partitions
+- **Backup and Recovery**: Backup configurations, restore procedures
+
+---
+
+## 11. Enhanced Risk Mitigation Strategies
+
+### Risk Assessment and Mitigation
+
+#### Complexity Risk: Event-Driven Architecture Learning Curve
+**Mitigation Strategies:**
+- **Phased Implementation**: Start with simple producer/consumer patterns
+- **Training Program**: Comprehensive Kafka training for development team
+- **Proof of Concept**: Build simple event streaming examples before complex patterns
+- **Documentation**: Create detailed runbooks and troubleshooting guides
+- **Mentoring**: Pair experienced developers with team members learning Kafka
+
+#### Performance Risk: Message Queue Bottlenecks
+**Mitigation Strategies:**
+- **Capacity Planning**: Thorough performance testing and load testing
+- **Monitoring**: Real-time performance metrics and alerting
+- **Auto-scaling**: Horizontal scaling of consumers and brokers
+- **Optimization**: Tune Kafka configuration for specific workload patterns
+- **Fallback Plans**: Circuit breakers and graceful degradation strategies
+
+#### Operational Risk: Complex Debugging and Monitoring
+**Mitigation Strategies:**
+- **Comprehensive Observability**: Full-stack monitoring from infrastructure to business metrics
+- **Structured Logging**: Consistent log format across all services
+- **Distributed Tracing**: End-to-end request tracing with correlation IDs
+- **Runbooks**: Detailed procedures for common operational tasks
+- **Team Training**: Operations team training on Kafka troubleshooting
+
+#### Data Loss Risk: Message Processing Failures
+**Mitigation Strategies:**
+- **Dead Letter Queues**: Failed message handling and retry mechanisms
+- **Replication**: Multiple broker replication for high availability
+- **Backup Strategies**: Regular backup of topic data and configurations
+- **Idempotent Processing**: Ensure consumers can handle duplicate messages
+- **Monitoring**: Alert on failed message processing and DLQ growth
+
+#### Schema Evolution Risk: Breaking Changes
+**Mitigation Strategies:**
+- **Schema Registry**: Centralized schema management and validation
+- **Versioning Strategy**: Clear versioning approach with backward compatibility
+- **Testing**: Comprehensive testing of schema changes before deployment
+- **Rollback Plan**: Ability to rollback to previous schema versions
+- **Gradual Migration**: Support multiple schema versions during transition
+
+---
+
+## 12. References
 > Links to standards, APIs, diagrams, or related docs.
 
 ### Documentation
@@ -215,7 +400,7 @@
 
 ---
 
-## 11. Implementation Timeline
+## 13. Implementation Timeline
 
 ### Phase 1: Foundation (Week 1)
 - [ ] Kafka cluster deployment and configuration
@@ -243,7 +428,7 @@
 
 ---
 
-## 12. Success Metrics
+## 14. Success Metrics
 
 ### Performance Metrics
 - **Latency**: < 100ms for 95th percentile
