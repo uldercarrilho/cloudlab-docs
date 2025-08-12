@@ -349,6 +349,65 @@ EOF
 4. **Performance Testing**: Benchmark service response times and throughput
 5. **Disaster Recovery**: Test multi-cluster failover procedures
 
+**Performance Benchmarking Examples:**
+
+**Load Testing Script:**
+```bash
+#!/bin/bash
+# Load testing script for Kubernetes services
+
+SERVICE_URL="http://cloud-lab-service.cloud-lab.svc.cluster.local"
+CONCURRENT_USERS=100
+DURATION=300
+
+echo "Starting load test for $SERVICE_URL"
+echo "Concurrent users: $CONCURRENT_USERS"
+echo "Duration: $DURATION seconds"
+
+# Install hey tool if not present
+if ! command -v hey &> /dev/null; then
+    echo "Installing hey load testing tool..."
+    wget https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
+    chmod +x hey_linux_amd64
+    sudo mv hey_linux_amd64 /usr/local/bin/hey
+fi
+
+# Run load test
+hey -z ${DURATION}s -c $CONCURRENT_USERS $SERVICE_URL
+
+echo "Load test completed"
+```
+
+**Performance Validation Criteria:**
+```yaml
+# Performance test configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: performance-test-config
+  namespace: testing
+data:
+  test-config.yaml: |
+    performance_tests:
+      - name: "Service Response Time"
+        target: "< 100ms (95th percentile)"
+        method: "Load testing with hey tool"
+        duration: "5 minutes"
+        concurrent_users: 100
+        
+      - name: "Throughput Test"
+        target: "1000 requests/second"
+        method: "Sustained load testing"
+        duration: "10 minutes"
+        concurrent_users: 500
+        
+      - name: "Scalability Test"
+        target: "10x traffic spike handling"
+        method: "Sudden traffic increase simulation"
+        duration: "2 minutes"
+        concurrent_users: 1000
+```
+
 ---
 
 ## 9. AI Collaboration Notes
@@ -399,6 +458,86 @@ data:
         regex: true
 ```
 
+**Advanced Monitoring Dashboards:**
+
+**Kubernetes Cluster Dashboard:**
+```yaml
+# Grafana dashboard configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubernetes-cluster-dashboard
+  namespace: monitoring
+data:
+  dashboard.json: |
+    {
+      "dashboard": {
+        "title": "Kubernetes Cluster Overview",
+        "panels": [
+          {
+            "title": "Cluster CPU Usage",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "sum(rate(container_cpu_usage_seconds_total{container!=\"\"}[5m]))",
+                "legendFormat": "CPU Usage"
+              }
+            ]
+          },
+          {
+            "title": "Pod Status Distribution",
+            "type": "stat",
+            "targets": [
+              {
+                "expr": "count(kube_pod_status_phase)",
+                "legendFormat": "Total Pods"
+              }
+            ]
+          }
+        ]
+      }
+    }
+```
+
+**Istio Service Mesh Dashboard:**
+```yaml
+# Istio-specific monitoring
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: istio-service-mesh-dashboard
+  namespace: monitoring
+data:
+  dashboard.json: |
+    {
+      "dashboard": {
+        "title": "Istio Service Mesh Metrics",
+        "panels": [
+          {
+            "title": "Request Rate",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "sum(rate(istio_requests_total[5m]))",
+                "legendFormat": "Requests/sec"
+              }
+            ]
+          },
+          {
+            "title": "Response Time (95th percentile)",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "histogram_quantile(0.95, sum(rate(istio_request_duration_milliseconds_bucket[5m])) by (le))",
+                "legendFormat": "Response Time (ms)"
+              }
+            ]
+          }
+        ]
+      }
+    }
+```
+
 **Logging Strategy:**
 - **Centralized Logging**: Fluentd/Fluent Bit for log collection
 - **Log Storage**: Elasticsearch for log indexing and search
@@ -416,6 +555,44 @@ data:
 - **Warning Alerts**: Slack/Teams for team awareness
 - **Escalation**: Automated escalation after 15 minutes for critical issues
 - **Alert Fatigue Prevention**: Intelligent grouping and correlation
+
+**Advanced Troubleshooting Scenarios:**
+
+**Scenario 1: Service Mesh Communication Failure**
+```bash
+# Diagnostic commands for Istio issues
+# Check proxy status
+kubectl get pods -n istio-system
+kubectl logs -n istio-system -l app=istiod
+
+# Verify mTLS configuration
+kubectl get peerauthentication -A
+kubectl get destinationrule -A
+
+# Check proxy configuration
+kubectl exec -it <pod-name> -c istio-proxy -- pilot-agent request GET config_dump
+
+# Verify service endpoints
+kubectl get endpoints -n <namespace>
+kubectl get virtualservice -A
+```
+
+**Scenario 2: Resource Exhaustion**
+```bash
+# Check resource usage across cluster
+kubectl top nodes
+kubectl top pods --all-namespaces
+
+# Check for resource quotas
+kubectl get resourcequota -A
+kubectl describe resourcequota <quota-name>
+
+# Check for pending pods
+kubectl get pods --all-namespaces --field-selector=status.phase=Pending
+
+# Analyze resource requests vs limits
+kubectl get pods -o custom-columns="NAME:.metadata.name,CPU_REQUEST:.spec.containers[*].resources.requests.cpu,CPU_LIMIT:.spec.containers[*].resources.limits.cpu,MEMORY_REQUEST:.spec.containers[*].resources.requests.memory,MEMORY_LIMIT:.spec.containers[*].resources.limits.memory"
+```
 
 ---
 
