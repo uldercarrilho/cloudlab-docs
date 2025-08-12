@@ -12,7 +12,7 @@
 **Priority**: High/Medium/Low
 **Effort**: X days/hours
 **Type**: Infrastructure/Feature/Bug/Research
-**Created**: YYYY-MM-DD
+**Created**: YYYY-MM-DD HH:MM:SS [use current date and time]
 **Started**: 
 **Completed**: 
 
@@ -62,9 +62,9 @@ Clear description of what needs to be accomplished and why this is valuable for 
 - External dependencies
 
 ## Progress Log
-<!-- Update as work progresses -->
-- YYYY-MM-DD: Progress update
-- YYYY-MM-DD: Progress update
+<!-- Update as work progresses using the current date and time -->
+- YYYY-MM-DD HH:MM:SS: Progress update
+- YYYY-MM-DD HH:MM:SS: Progress update
 
 ## Risk Assessment
 - **Risk 1**: Description - *Mitigation: approach*
