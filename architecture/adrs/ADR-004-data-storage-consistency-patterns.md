@@ -143,14 +143,18 @@
 **Technology Compatibility Matrix:**
 | Technology | Version | Min Compatible | Max Compatible | Notes |
 |------------|---------|----------------|----------------|-------|
-| PostgreSQL | 15+ | 15.0 | 16.x | Logical replication requires 15+ |
-| Redis | 7+ | 7.0 | 7.4 | Redis Cluster features in 7+ |
-| ClickHouse | 23+ | 23.1 | 24.x | Zookeeper 3.8+ required |
-| PgBouncer | 1.18+ | 1.18 | 1.20 | Connection pooling compatibility |
+| PostgreSQL | 15+ | 15.0 | 16.x | Logical replication requires 15+ (aligned with development plan Go backend requirements) |
+| Redis | 7+ | 7.0 | 7.4 | Redis Cluster features in 7+ (aligned with development plan caching strategy) |
+| ClickHouse | 23+ | 23.1 | 24.x | Zookeeper 3.8+ required (aligned with development plan analytics requirements) |
+| PgBouncer | 1.18+ | 1.18 | 1.20 | Connection pooling compatibility (aligned with development plan performance targets) |
 
 **Consistency Patterns:**
 - **Strong Consistency (CP):** Orders, payments, inventory
 - **Eventual Consistency (AP):** Product catalog, user preferences, analytics
+  - **Note:** Product catalog eventual consistency is optimized to meet business rule requirement of 1-minute inventory updates through:
+    - Redis caching with sub-second propagation
+    - Event-driven updates with priority queuing
+    - Read replicas with minimal replication lag (<30 seconds)
 - **Event Sourcing:** All business events with CQRS read models
 - **Saga Pattern:** Distributed transactions across services
 
@@ -258,6 +262,8 @@
 
 ## 12. Implementation Roadmap
 
+**Note:** This roadmap is aligned with Development Plan Phase 3 (Weeks 13-20) and may require adjustment based on actual development progress and resource availability.
+
 ### Phase 1: Foundation (Week 1-2)
 - [ ] Set up PostgreSQL primary and read replicas
 - [ ] Configure Redis cluster with persistence
@@ -313,6 +319,10 @@
 - **Performance Metrics:** Response time, throughput, connection count, query performance
 - **Resource Monitoring:** CPU, memory, disk I/O, network utilization
 - **Business Metrics:** Order processing rate, payment success rate, user session count
+- **Business Rule Compliance Metrics:**
+  - Data retention policy compliance (7 years for orders/payments, 2 years for analytics)
+  - Real-time update propagation times (inventory <1min, prices <5min, reviews <2min)
+  - Saga pattern execution success rates and compensation action frequency
 
 ### Alerting Thresholds
 - **Critical:** Database unavailable, response time >500ms, error rate >5%
@@ -335,7 +345,7 @@
 ### Event Sourcing Operations
 - **Event Replay:** Automated event replay procedures for data recovery
 - **Snapshot Management:** Regular snapshot creation and cleanup (every 1000 events)
-- **Event Store Maintenance:** Archive old events older than 2 years
+- **Event Store Maintenance:** Archive old events older than 2 years (analytics data) and 7 years (order/payment data) per business rule requirements
 - **CQRS Read Model Updates:** Monitor and repair read model inconsistencies
 - **Event Schema Evolution:** Version control and migration procedures for event schemas
 
@@ -400,6 +410,15 @@
 - **Endurance Testing:** 24-hour sustained load testing
 - **Failover Testing:** Automated failover scenarios every week
 
+### Business Rule Compliance Testing
+- **Data Retention Validation:** Automated verification of retention policies
+  - Order/payment data: 7-year retention compliance
+  - Analytics data: 2-year retention compliance
+- **Real-time Update Validation:** Performance testing for business rule requirements
+  - Inventory updates: <1 minute propagation (business rule requirement)
+  - Price changes: <5 minutes propagation (business rule requirement)
+  - Review updates: <2 minutes propagation (business rule requirement)
+
 ## 18. Data Migration and Schema Evolution
 
 ### Schema Migration Strategy
@@ -425,6 +444,10 @@
 - **Data Integrity:** Verify referential integrity across all databases
 - **Event Ordering:** Ensure event sourcing maintains correct sequence
 - **Cross-Region Sync:** Validate data synchronization across regions
+- **Business Rule Compliance:** Monitor data retention policies and real-time update requirements
+  - Verify 7-year retention for order/payment data
+  - Verify 2-year retention for analytics data
+  - Validate 1-minute inventory update propagation
 
 ### Disaster Recovery Testing
 - **Monthly DR Tests:** Full disaster recovery simulation
