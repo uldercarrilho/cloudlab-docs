@@ -385,6 +385,113 @@ service OrderService {
 - **Capacity Alerts**: Resource usage and scaling triggers
 - **Business Metrics**: API usage patterns and user behavior
 
+### Monitoring Configuration Examples
+
+#### Prometheus Configuration
+```yaml
+# prometheus.yml
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'api-gateway'
+    static_configs:
+      - targets: ['kong:8001']
+    metrics_path: /metrics
+    scrape_interval: 10s
+
+  - job_name: 'graphql-service'
+    static_configs:
+      - targets: ['graphql-service:4000']
+    metrics_path: /metrics
+
+  - job_name: 'rest-api'
+    static_configs:
+      - targets: ['rest-api:3000']
+    metrics_path: /metrics
+
+  - job_name: 'grpc-services'
+    static_configs:
+      - targets: ['product-service:50051', 'order-service:50052']
+    metrics_path: /metrics
+```
+
+#### Grafana Dashboard Configuration
+```json
+{
+  "dashboard": {
+    "title": "API Performance Dashboard",
+    "panels": [
+      {
+        "title": "Response Time by Endpoint",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "{{endpoint}} - P95"
+          }
+        ]
+      },
+      {
+        "title": "Error Rate by Service",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(http_requests_total{status=~\"4..|5..\"}[5m])",
+            "legendFormat": "{{service}} - Error Rate"
+          }
+        ]
+      },
+      {
+        "title": "GraphQL Query Performance",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.99, rate(graphql_query_duration_seconds_bucket[5m]))",
+            "legendFormat": "P99 Query Time"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+#### Alert Rules
+```yaml
+# alerting-rules.yml
+groups:
+  - name: api-performance
+    rules:
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 0.5
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High API response time detected"
+          description: "P95 response time is {{ $value }}s"
+
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is {{ $value }} errors/second"
+
+      - alert: GraphQLSlowQueries
+        expr: histogram_quantile(0.99, rate(graphql_query_duration_seconds_bucket[5m])) > 1.0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Slow GraphQL queries detected"
+          description: "P99 query time is {{ $value }}s"
+```
+
 ## Deployment & Operations
 
 ### Infrastructure Requirements
@@ -404,6 +511,90 @@ service OrderService {
 - **Change Management**: Controlled deployment and rollback processes
 - **Capacity Planning**: Proactive scaling based on usage trends
 - **Disaster Recovery**: Backup and recovery procedures
+
+### Operational Runbooks
+
+#### API Gateway Incident Response
+```markdown
+# API Gateway Incident Response Runbook
+
+## Symptoms
+- High error rates (5xx responses)
+- Increased response times
+- Service unavailable errors
+
+## Immediate Actions
+1. Check Kong service status: `docker exec kong kong health`
+2. Verify database connectivity: `docker exec kong kong db_export`
+3. Check resource usage: `docker stats kong`
+
+## Escalation
+- If unresolved in 15 minutes: Escalate to DevOps team
+- If affecting production: Page on-call engineer
+
+## Recovery Steps
+1. Restart Kong service: `docker restart kong`
+2. Verify health checks: `curl http://kong:8001/status`
+3. Monitor metrics for 10 minutes
+4. Update incident status
+```
+
+#### GraphQL Performance Troubleshooting
+```markdown
+# GraphQL Performance Troubleshooting
+
+## Slow Query Investigation
+1. Check query complexity: `curl -X POST -H "Content-Type: application/json" -d '{"query":"query { __schema { types { name } } }"}' http://localhost:4000/graphql`
+2. Review query logs for N+1 patterns
+3. Check data loader implementation
+4. Verify Redis cache hit rates
+
+## Common Issues
+- Missing data loaders causing N+1 queries
+- Complex nested queries without field selection
+- Missing query result caching
+- Inefficient resolver implementations
+
+## Resolution Steps
+1. Implement missing data loaders
+2. Add query complexity analysis
+3. Optimize resolver functions
+4. Enable query result caching
+```
+
+#### Rate Limiting Configuration
+```markdown
+# Rate Limiting Configuration Guide
+
+## Kong Rate Limiting Setup
+```yaml
+plugins:
+  - name: rate-limiting
+    config:
+      minute: 1000
+      hour: 10000
+      policy: local
+      fault_tolerant: true
+      hide_client_headers: false
+```
+
+## Per-User Rate Limiting
+```yaml
+plugins:
+  - name: rate-limiting
+    config:
+      minute: 100
+      hour: 1000
+      policy: local
+      identifier: consumer
+      fault_tolerant: true
+```
+
+## Monitoring Rate Limiting
+- Track rate limit headers in responses
+- Monitor rate limit violations
+- Set up alerts for unusual rate limiting patterns
+```
 
 ## Success Metrics
 
