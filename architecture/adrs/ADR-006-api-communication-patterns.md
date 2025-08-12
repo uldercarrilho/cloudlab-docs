@@ -10,6 +10,8 @@
 
 The distributed e-commerce platform requires a comprehensive API communication strategy that supports multiple interaction patterns, scales efficiently, and provides excellent developer experience. This decision establishes the foundational patterns for how services expose APIs, communicate with each other, and handle different types of interactions across the system.
 
+This ADR specifically addresses the business requirements for real-time order processing using the Saga pattern, multi-tenant isolation, and compliance with business rules for data consistency and propagation timing.
+
 ### Problem Statement
 
 - **Service Integration**: Need to establish consistent patterns for service-to-service communication
@@ -25,6 +27,9 @@ The distributed e-commerce platform requires a comprehensive API communication s
 - **Scalability**: Support for 10,000 requests/second peak capacity
 - **Security**: Multi-tenant isolation and rate limiting requirements
 - **Operational Excellence**: Comprehensive monitoring and debugging capabilities
+- **Business Workflow Support**: Enable real-time order processing Saga pattern implementation
+- **Data Consistency**: Meet business rules for data propagation timing across services
+- **Multi-tenant Operations**: Support vendor isolation and commission structure requirements
 
 ## Decision
 
@@ -45,6 +50,9 @@ We will implement a **hybrid API communication strategy** that uses the right to
 - **Versioning**: Semantic versioning with backward compatibility
 - **Documentation**: OpenAPI/Swagger for REST, GraphQL schema introspection
 - **Security**: JWT-based authentication, rate limiting, and input validation
+- **Business Rule Compliance**: Enforce business constraints and data validation rules
+- **Saga Pattern Support**: Enable real-time workflow coordination and compensation actions
+- **Multi-tenant Isolation**: Ensure complete data segregation between vendors
 
 ## Alternatives Considered
 
@@ -84,6 +92,12 @@ We will implement a **hybrid API communication strategy** that uses the right to
 - **WebSocket**: Efficient real-time communication with minimal overhead
 - **Rate Limiting**: Prevents API abuse and ensures fair resource distribution
 
+#### Business Workflow Support
+- **Saga Pattern**: Real-time coordination of distributed order processing workflows
+- **Compensation Actions**: Immediate notification of failed steps for rollback handling
+- **Data Consistency**: Meets business rules for data propagation timing requirements
+- **Multi-tenant Operations**: Supports vendor isolation and commission structure workflows
+
 #### Developer Experience
 - **GraphQL Schema**: Self-documenting APIs with introspection capabilities
 - **OpenAPI**: Comprehensive REST API documentation and testing tools
@@ -118,50 +132,61 @@ We will implement a **hybrid API communication strategy** that uses the right to
 
 ## Implementation Strategy
 
-### Phase 1: Foundation (Week 1)
+### Phase 1: Foundation (Weeks 1-2)
 1. **API Gateway Setup**
-   - Implement Kong or similar API gateway
+   - Implement Kong API gateway with Istio service mesh integration
    - Configure routing for REST and GraphQL endpoints
    - Set up authentication and rate limiting middleware
+   - Establish service mesh policies for internal communication
 
 2. **GraphQL Foundation**
    - Design GraphQL schema for core entities
    - Implement GraphQL server with Apollo Server
    - Create data loaders to prevent N+1 queries
+   - Implement query complexity analysis
 
 3. **REST API Setup**
    - Design REST endpoints for simple operations
    - Implement OpenAPI specification
    - Set up automated testing with Postman/Newman
 
-### Phase 2: Internal Communication (Week 2)
+### Phase 2: Internal Communication (Weeks 3-4)
 1. **gRPC Implementation**
    - Define Protocol Buffer schemas for internal services
    - Implement gRPC server and client libraries
    - Set up service discovery and load balancing
+   - Integrate with Istio service mesh for traffic management
 
 2. **HTTP/2 Integration**
    - Configure HTTP/2 for simple service interactions
    - Implement health checks and readiness probes
    - Set up circuit breakers and retry logic
 
-### Phase 3: Real-time Features (Week 3)
+### Phase 3: Real-time Features & Saga Support (Weeks 5-6)
 1. **WebSocket Implementation**
    - Design WebSocket message protocol
    - Implement connection management and authentication
    - Create real-time notification system
+   - Support order processing Saga pattern updates
 
-2. **Integration & Testing**
+2. **Saga Pattern Integration**
+   - Implement real-time order status updates
+   - Support inventory change notifications
+   - Enable payment status real-time updates
+   - Implement compensation action notifications
+
+3. **Integration & Testing**
    - End-to-end testing across all protocols
    - Performance benchmarking and optimization
    - Security testing and vulnerability assessment
+   - Saga pattern workflow validation
 
 ## Technical Specifications
 
 ### API Gateway Configuration
 
 ```yaml
-# Kong API Gateway Configuration
+# Kong API Gateway Configuration with Istio Integration
 services:
   - name: graphql-service
     url: http://graphql-service:4000
@@ -174,9 +199,15 @@ services:
             config:
               minute: 1000
               hour: 10000
+              policy: local
+              identifier: consumer
           - name: jwt
             config:
               secret: ${JWT_SECRET}
+          - name: cors
+            config:
+              origins: ["*"]
+              methods: ["POST", "GET"]
   
   - name: rest-api
     url: http://rest-api:3000
@@ -189,10 +220,31 @@ services:
             config:
               minute: 500
               hour: 5000
+              policy: local
+              identifier: consumer
           - name: cors
             config:
               origins: ["*"]
               methods: ["GET", "POST", "PUT", "DELETE"]
+
+# Istio Service Mesh Policies
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: api-communication-policy
+spec:
+  host: "*.local"
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN
+    connectionPool:
+      tcp:
+        maxConnections: 100
+        connectTimeout: 30ms
+      http:
+        http2MaxRequests: 1000
+        maxRequestsPerConnection: 10
+        maxRetries: 3
 ```
 
 ### GraphQL Schema Design
@@ -292,6 +344,40 @@ service OrderService {
   }
 }
 
+// Saga Pattern Event Messages
+{
+  "type": "saga_step_completed",
+  "timestamp": "2025-01-27T10:30:00Z",
+  "data": {
+    "sagaId": "saga_12345",
+    "step": "payment_processed",
+    "orderId": "ord_12345",
+    "status": "success",
+    "nextStep": "inventory_update"
+  },
+  "metadata": {
+    "correlationId": "corr_67890",
+    "compensationRequired": false
+  }
+}
+
+// Inventory Update Messages
+{
+  "type": "inventory_updated",
+  "timestamp": "2025-01-27T10:30:00Z",
+  "data": {
+    "productId": "prod_12345",
+    "warehouseId": "wh_001",
+    "quantity": 150,
+    "reserved": 25,
+    "available": 125
+  },
+  "metadata": {
+    "source": "order_fulfillment",
+    "propagationTime": "1_minute_sla"
+  }
+}
+
 // Connection Authentication
 {
   "type": "auth",
@@ -307,6 +393,13 @@ service OrderService {
 - **REST API Calls**: < 150ms for CRUD operations
 - **gRPC Calls**: < 100ms for internal service communication
 - **WebSocket Messages**: < 50ms for real-time updates
+
+### Data Consistency SLAs (Business Rules Alignment)
+- **Product Catalog Updates**: Price changes propagate within 5 minutes
+- **Inventory Updates**: Stock changes propagate within 1 minute
+- **Review Updates**: User-generated content propagates within 2 minutes
+- **Vendor Information**: Business data updates propagate within 10 minutes
+- **Order Status Changes**: Real-time updates via WebSocket for immediate visibility
 
 ### Throughput Targets
 - **Peak Capacity**: 10,000 requests/second across all APIs
@@ -646,3 +739,7 @@ plugins:
 - [Protocol Buffers Guide](https://developers.google.com/protocol-buffers/docs/overview)
 - [JWT Security Best Practices](https://auth0.com/blog/a-look-at-the-latest-draft-for-jwt-bcp/)
 - [Rate Limiting Strategies](https://cloud.google.com/architecture/rate-limiting-strategies-techniques)
+- [Saga Pattern Implementation](https://microservices.io/patterns/data/saga.html)
+- [Istio Service Mesh Documentation](https://istio.io/docs/)
+- [Business Rules Document](../business/backlog/BUSINESS-RULES-001-ecommerce-platform.md)
+- [Development Plan Document](../business/backlog/DEVELOPMENT-PLAN-001-distributed-ecommerce-platform.md)
