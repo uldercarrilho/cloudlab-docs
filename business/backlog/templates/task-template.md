@@ -13,7 +13,7 @@
 **Effort**: X Story Points
 **Epic**: Related epic name (if applicable)
 **Assignee**: Team member or AI Agent (if known)
-**Created**: YYYY-MM-DD
+**Created**: YYYY-MM-DD HH:MM:SS [use current date and time]
 **Target Release**: Version or timeframe
 
 ### Description
