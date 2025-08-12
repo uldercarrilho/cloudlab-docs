@@ -690,3 +690,235 @@ kubectl get pods -o custom-columns="NAME:.metadata.name,CPU_REQUEST:.spec.contai
    - Upgrade Istio control plane
    - Upgrade Istio data plane
    - Verify service mesh functionality
+
+
+
+## 12. Comprehensive Troubleshooting Guide
+
+### Common Issues & Solutions
+
+**Kubernetes Cluster Issues:**
+
+**Issue 1: Pods Stuck in Pending State**
+```bash
+# Check node resources
+kubectl describe nodes | grep -A 10 "Allocated resources"
+
+# Check for resource quotas
+kubectl get resourcequota -A
+kubectl describe resourcequota <quota-name>
+
+# Check for taints and tolerations
+kubectl get nodes -o custom-columns="NAME:.metadata.name,TAINTS:.spec.taints"
+
+# Solution: Scale up cluster or adjust resource requests
+kubectl scale deployment <deployment> --replicas=3
+```
+
+**Issue 2: Services Not Accessible**
+```bash
+# Check service endpoints
+kubectl get endpoints -n <namespace>
+kubectl describe service <service-name>
+
+# Check pod labels and selectors
+kubectl get pods -n <namespace> --show-labels
+kubectl get service <service-name> -o yaml
+
+# Verify network policies
+kubectl get networkpolicy -A
+kubectl describe networkpolicy <policy-name>
+
+# Solution: Fix label selectors or network policies
+kubectl label pod <pod-name> app=<app-label>
+```
+
+**Issue 3: High Resource Usage**
+```bash
+# Check resource consumption
+kubectl top pods --all-namespaces
+kubectl top nodes
+
+# Analyze resource requests vs limits
+kubectl get pods -o custom-columns="NAME:.metadata.name,CPU_REQ:.spec.containers[*].resources.requests.cpu,CPU_LIM:.spec.containers[*].resources.limits.cpu,MEM_REQ:.spec.containers[*].resources.requests.memory,MEM_LIM:.spec.containers[*].resources.limits.memory"
+
+# Check for resource hogs
+kubectl get pods --all-namespaces --field-selector=status.phase=Running -o custom-columns="NAMESPACE:.metadata.namespace,NAME:.metadata.name,CPU:.spec.containers[*].resources.requests.cpu,MEMORY:.spec.containers[*].resources.requests.memory"
+
+# Solution: Implement resource quotas and HPA
+kubectl autoscale deployment <deployment> --cpu-percent=70 --min=2 --max=10
+```
+
+**Istio Service Mesh Issues:**
+
+**Issue 1: mTLS Configuration Problems**
+```bash
+# Check mTLS status
+kubectl get peerauthentication -A
+kubectl get destinationrule -A
+
+# Verify proxy configuration
+kubectl exec -it <pod-name> -c istio-proxy -- pilot-agent request GET config_dump
+
+# Check for mTLS conflicts
+kubectl get peerauthentication -A -o yaml | grep -A 5 -B 5 "mode:"
+
+# Solution: Apply consistent mTLS policy
+kubectl apply -f - <<EOF
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+  namespace: istio-system
+spec:
+  mtls:
+    mode: STRICT
+EOF
+```
+
+**Issue 2: Traffic Routing Failures**
+```bash
+# Check virtual service configuration
+kubectl get virtualservice -A
+kubectl describe virtualservice <vs-name>
+
+# Verify destination rules
+kubectl get destinationrule -A
+kubectl describe destinationrule <dr-name>
+
+# Check gateway configuration
+kubectl get gateway -A
+kubectl describe gateway <gateway-name>
+
+# Solution: Fix routing configuration
+kubectl apply -f - <<EOF
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: <service-name>
+spec:
+  hosts:
+  - <service-name>
+  http:
+  - route:
+    - destination:
+        host: <service-name>
+        subset: v1
+      weight: 100
+EOF
+```
+
+**Issue 3: Performance Degradation**
+```bash
+# Check Istio proxy metrics
+kubectl exec -it <pod-name> -c istio-proxy -- curl localhost:15000/stats
+
+# Analyze request latency
+kubectl exec -it <pod-name> -c istio-proxy -- curl localhost:15000/stats | grep request_duration
+
+# Check for circuit breaker trips
+kubectl exec -it <pod-name> -c istio-proxy -- curl localhost:15000/stats | grep circuit_breaker
+
+# Solution: Optimize traffic policies and resource allocation
+kubectl patch destinationrule <dr-name> -p '{"spec":{"trafficPolicy":{"connectionPool":{"tcp":{"maxConnections":100},"http":{"http1MaxPendingRequests":1000,"maxRequestsPerConnection":10}}}}}'
+```
+
+### Diagnostic Tools & Commands
+
+**Cluster Health Check:**
+```bash
+#!/bin/bash
+# Comprehensive cluster health check script
+
+echo "=== Kubernetes Cluster Health Check ==="
+echo "Date: $(date)"
+echo ""
+
+echo "1. Node Status:"
+kubectl get nodes -o wide
+echo ""
+
+echo "2. Pod Status Summary:"
+kubectl get pods --all-namespaces --field-selector=status.phase!=Running
+echo ""
+
+echo "3. Service Status:"
+kubectl get services --all-namespaces
+echo ""
+
+echo "4. Resource Usage:"
+kubectl top nodes
+echo ""
+
+echo "5. Istio Service Mesh Status:"
+kubectl get pods -n istio-system
+echo ""
+
+echo "6. Recent Events:"
+kubectl get events --all-namespaces --sort-by='.lastTimestamp' | tail -20
+echo ""
+
+echo "Health check completed at $(date)"
+```
+
+**Performance Monitoring:**
+```bash
+#!/bin/bash
+# Performance monitoring script
+
+NAMESPACE="cloud-lab"
+SERVICE="cloud-lab-service"
+
+echo "=== Performance Monitoring for $SERVICE ==="
+echo ""
+
+echo "1. Pod Resource Usage:"
+kubectl top pods -n $NAMESPACE | grep $SERVICE
+echo ""
+
+echo "2. Service Response Time (if metrics available):"
+kubectl exec -it $(kubectl get pods -n $NAMESPACE -l app=$SERVICE -o jsonpath='{.items[0].metadata.name}') -c istio-proxy -- curl -s localhost:15000/stats | grep request_duration
+echo ""
+
+echo "3. Active Connections:"
+kubectl exec -it $(kubectl get pods -n $NAMESPACE -l app=$SERVICE -o jsonpath='{.items[0].metadata.name}') -c istio-proxy -- curl -s localhost:15000/stats | grep active
+echo ""
+
+echo "4. Error Rates:"
+kubectl exec -it $(kubectl get pods -n $NAMESPACE -l app=$SERVICE -o jsonpath='{.items[0].metadata.name}') -c istio-proxy -- curl -s localhost:15000/stats | grep error
+echo ""
+```
+
+### Emergency Procedures
+
+**Critical Service Outage:**
+1. **Immediate Response (0-5 minutes):**
+   - Check cluster status: `kubectl get nodes`
+   - Verify service endpoints: `kubectl get endpoints -n <namespace>`
+   - Check Istio proxy status: `kubectl get pods -n istio-system`
+
+2. **Quick Recovery (5-15 minutes):**
+   - Restart failed pods: `kubectl delete pod <pod-name> -n <namespace>`
+   - Scale up deployment: `kubectl scale deployment <deployment> --replicas=5`
+   - Check service mesh: `kubectl get virtualservice,destinationrule -A`
+
+3. **Full Recovery (15-60 minutes):**
+   - Analyze logs: `kubectl logs -n <namespace> <pod-name>`
+   - Check events: `kubectl get events -n <namespace> --sort-by='.lastTimestamp'`
+   - Implement fixes and verify recovery
+
+**Performance Crisis:**
+1. **Immediate Actions:**
+   - Scale up resources: `kubectl scale deployment <deployment> --replicas=10`
+   - Check resource limits: `kubectl describe pod <pod-name>`
+   - Verify auto-scaling: `kubectl get hpa -A`
+
+2. **Traffic Management:**
+   - Implement circuit breakers: Update destination rules
+   - Add retry policies: Modify virtual service configuration
+   - Enable rate limiting: Apply rate limiting policies
+
+3. **Long-term Fixes:**
+   - Optimize resource allocation
+   - Implement caching strategies
+   - Review application architecture
