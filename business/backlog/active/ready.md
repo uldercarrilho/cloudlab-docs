@@ -7,7 +7,6 @@
 ## 📋 Available Tasks
 
 ### High Priority
-- **[TASK-006](../tasks/TASK-006-api-communication-patterns-adr.md)** - Create ADR for API & Communication Patterns (3 days)
 - **[TASK-007](../tasks/TASK-007-cloud-infrastructure-adr.md)** - Create ADR for Cloud Infrastructure (3 days)
 - **[TASK-008](../tasks/TASK-008-monitoring-observability-adr.md)** - Create ADR for Monitoring & Observability (3 days)
 - **[TASK-009](../tasks/TASK-009-security-authentication-adr.md)** - Create ADR for Security & Authentication (3 days)
@@ -30,7 +29,6 @@
 
 | Task ID | Title | Priority | Effort | Type | Status |
 |---------|-------|----------|--------|------|--------|
-| TASK-006 | API Communication Patterns ADR | High | 3 days | Research/Infrastructure | Ready |
 | TASK-007 | Cloud Infrastructure ADR | High | 3 days | Research/Infrastructure | Ready |
 | TASK-008 | Monitoring & Observability ADR | High | 3 days | Research/Infrastructure | Ready |
 | TASK-009 | Security & Authentication ADR | High | 3 days | Research/Infrastructure | Ready |
@@ -55,13 +53,13 @@
 
 ## 📊 Ready Queue Health
 
-- **Total Ready Tasks**: 12
-- **High Priority**: 5
+- **Total Ready Tasks**: 11
+- **High Priority**: 4
 - **Medium Priority**: 4
 - **Low Priority**: 3
 - **Average Age**: 0 days (recently created)
-- **Total Effort**: 37 days
-- **High Priority Effort**: 18 days
+- **Total Effort**: 34 days
+- **High Priority Effort**: 15 days
 - **Medium Priority Effort**: 13 days
 - **Low Priority Effort**: 8 days
 
@@ -84,7 +82,6 @@ When picking up tasks from this queue:
 
 ### Recommended Task Sequence
 For optimal learning and dependency management:
-1. **TASK-006**: API Communication Patterns ADR (service integration)
 2. **TASK-007**: Cloud Infrastructure ADR (platform decisions)
 3. **TASK-008**: Monitoring & Observability ADR (operational visibility)
 4. **TASK-009**: Security & Authentication ADR (security foundation)
