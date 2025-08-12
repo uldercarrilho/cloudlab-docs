@@ -301,6 +301,13 @@
 - **Backup Restoration:** Point-in-time recovery procedures with testing
 - **Performance Tuning:** Query optimization and configuration tuning guides
 
+### Common Database Operations
+- **Connection Pool Management:** Monitor and adjust pool sizes based on load
+- **Index Maintenance:** Automated index rebuilding and statistics updates
+- **Vacuum Operations:** Regular cleanup of dead tuples and table maintenance
+- **Replication Lag Monitoring:** Alert when replica lag exceeds 30 seconds
+- **Disk Space Management:** Automated cleanup of old logs and temporary files
+
 ### Saga Pattern Implementation
 - **Order Processing Saga:**
   1. Reserve inventory (PostgreSQL)
@@ -336,3 +343,23 @@
 - **Data Ingestion:** 100,000+ rows per second
 - **Compression Ratio:** >10:1 for typical data
 - **Query Concurrency:** Support 50+ concurrent analytical queries
+
+## 17. Testing and Validation
+
+### Performance Testing
+- **Load Testing:** Simulate 2x expected production load
+- **Stress Testing:** Identify breaking points at 5x expected load
+- **Endurance Testing:** 24-hour sustained load testing
+- **Failover Testing:** Automated failover scenarios every week
+
+### Consistency Validation
+- **Automated Checks:** Run consistency validation every 5 minutes
+- **Data Integrity:** Verify referential integrity across all databases
+- **Event Ordering:** Ensure event sourcing maintains correct sequence
+- **Cross-Region Sync:** Validate data synchronization across regions
+
+### Disaster Recovery Testing
+- **Monthly DR Tests:** Full disaster recovery simulation
+- **Backup Validation:** Weekly backup restoration testing
+- **RTO/RPO Validation:** Measure actual recovery times vs targets
+- **Documentation Updates:** Update runbooks based on test results
