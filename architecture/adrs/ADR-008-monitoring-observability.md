@@ -51,7 +51,7 @@ We will implement a comprehensive observability stack using **Prometheus + Grafa
 | ELK Stack | 5/10 | 9/10 | 4/10 | 6/10 | 7/10 | 7/10 | 6.4/10 | ❌ Rejected |
 | Splunk | 3/10 | 9/10 | 6/10 | 7/10 | 3/10 | 6/10 | 5.8/10 | ❌ Rejected |
 
-**Loki Selection Rationale**: Cost-effective integration with existing Grafana infrastructure, lightweight resource usage, and no vendor lock-in.
+**Loki Selection Rationale**: Cost-effective integration with existing Grafana infrastructure, lightweight resource usage, and no vendor lock-in. Note: ELK Stack is used for business analytics and long-term data retention as specified in business rules, while Loki handles operational logging for system monitoring.
 
 ### Distributed Tracing
 | Alternative | Cost (25%) | Technical (25%) | Operational (20%) | Integration (15%) | Lock-in (10%) | Learning (5%) | Total Score | Decision |
@@ -563,6 +563,19 @@ spec:
 - **Conversion Rate**: Cart to purchase ratio
 - **Inventory Levels**: Stock availability
 
+### Business Metrics Alignment with Business Rules
+Our monitoring dashboards ensure comprehensive coverage of all business metrics specified in the business rules:
+
+- **User Management**: Customer registration rates, authentication success/failure rates, MFA adoption
+- **Product & Catalog**: Product creation rates, category performance, inventory turnover
+- **Order Processing**: Order volume, fulfillment rates, shipping performance, return rates
+- **Payment Processing**: Transaction success rates, fraud detection metrics, payment method distribution
+- **Multi-tenancy**: Vendor performance metrics, commission tracking, payout efficiency
+- **Social Features**: Review submission rates, moderation efficiency, recommendation accuracy
+- **Compliance**: GDPR consent rates, data deletion requests, PCI DSS compliance metrics
+
+This alignment ensures that all business rules are properly monitored and measured for operational excellence.
+
 ## Security Considerations
 
 ### Data Protection
@@ -577,6 +590,32 @@ spec:
 - **Authentication**: Grafana with SSO integration
 - **Audit Logging**: All access attempts logged
 
+### Compliance Monitoring Capabilities
+Our monitoring and observability stack provides comprehensive coverage for all compliance requirements specified in the business rules:
+
+#### **GDPR Compliance Monitoring**
+- **Data Access Tracking**: Monitor all data access patterns and user consent status
+- **Data Deletion Verification**: Track data deletion requests and completion rates
+- **Data Portability**: Monitor data export request processing times
+- **Consent Management**: Track user consent changes and opt-out rates
+- **Data Retention**: Monitor compliance with retention policies (2 years for analytics, 7 years for business data)
+
+#### **PCI DSS Compliance Monitoring**
+- **Payment Processing Security**: Monitor payment gateway health and security metrics
+- **Fraud Detection**: Track fraud detection system performance and false positive rates
+- **Access Control**: Monitor authentication and authorization patterns
+- **Data Encryption**: Verify encryption status for all payment-related data
+- **Security Incident Response**: Track security incident detection and resolution times
+
+#### **SOC2 Compliance Monitoring**
+- **System Availability**: Monitor 99.9% uptime requirements
+- **Data Integrity**: Track data consistency and validation metrics
+- **Change Management**: Monitor deployment success rates and rollback frequency
+- **Incident Response**: Track incident detection and resolution metrics
+- **Capacity Planning**: Monitor resource utilization and scaling metrics
+
+This comprehensive compliance monitoring ensures we can demonstrate adherence to all regulatory requirements and business rules.
+
 ## Operational Considerations
 
 ### Backup & Recovery
@@ -584,6 +623,17 @@ spec:
 - **Grafana**: Dashboard and user configuration backups
 - **Loki**: Log retention policies (30 days hot, 90 days warm)
 - **Jaeger**: Trace data retention (7 days)
+
+### Data Retention Strategy Alignment
+Our monitoring data retention policies are designed to align with business requirements while optimizing operational efficiency:
+
+- **Operational Logs (Loki)**: 30 days hot, 90 days warm - Sufficient for incident investigation and debugging
+- **Business Analytics (ELK Stack)**: 2 years retention as per business rules for long-term trend analysis
+- **Business Data**: 7 years retention for compliance (GDPR, tax reporting) as specified in business rules
+- **Metrics (Prometheus)**: 1 year retention for performance trending and capacity planning
+- **Traces (Jaeger)**: 7 days retention for recent incident investigation and performance analysis
+
+This strategy ensures we meet compliance requirements while maintaining cost-effective operational monitoring.
 
 ### Scaling Strategy
 - **Horizontal Scaling**: Add Prometheus instances for high availability
@@ -599,7 +649,7 @@ spec:
 ## Success Metrics
 
 ### Implementation Success
-- [ ] All services instrumented with metrics
+- [ ] All services, databases, and infrastructure components instrumented with metrics
 - [ ] Centralized logging operational
 - [ ] Distributed tracing functional
 - [ ] Alerting system operational
