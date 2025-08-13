@@ -642,11 +642,12 @@ The implementation strategy focuses on incremental deployment with comprehensive
             │   RDS Multi-AZ  │         │   RDS Multi-AZ   │
             │   + ElastiCache │         │   + ElastiCache  │
             └─────────────────┘         └──────────────────┘
-                    │
-            ┌───────▼───────┐
-            │   eu-west-1   │
-            │  (Secondary)  │
-            └───────┬───────┘
+                    │                           │
+                    │                           │
+            ┌───────▼───────┐         ┌─────────▼─────────┐
+            │   eu-west-1   │         │   Cross-Region    │
+            │  (Secondary)  │◄────────┤   Replication     │
+            └───────┬───────┘         └───────────────────┘
                     │
             ┌───────▼───────┐
             │   EKS Cluster │
@@ -680,6 +681,11 @@ The implementation strategy focuses on incremental deployment with comprehensive
             ┌───────▼───────┐         ┌─────────▼─────────┐
             │  Monitoring   │         │   Backup          │
             │  Module       │         │   Module          │
+            └───────┬───────┘         └─────────┬─────────┘
+                    │                           │
+            ┌───────▼───────┐         ┌─────────▼─────────┐
+            │  Compliance   │         │   Disaster        │
+            │  Module       │         │   Recovery        │
             └───────────────┘         └───────────────────┘
 ```
 
@@ -704,7 +710,13 @@ The implementation strategy focuses on incremental deployment with comprehensive
                     │                           │
             ┌───────▼───────┐         ┌─────────▼─────────┐
             │   Cross-Region│         │   Cross-Region    │
-            │   Replication │◄────────┤   Replication     │
+            │   Replication │────────►│   Replication     │
+            └───────────────┘         └───────────────────┘
+                    │                           │
+                    │                           │
+            ┌───────▼───────┐         ┌─────────▼─────────┐
+            │   eu-west-1   │         │   Data Sync       │
+            │  (Secondary)  │◄────────┤   & Backup        │
             └───────────────┘         └───────────────────┘
 ```
 
