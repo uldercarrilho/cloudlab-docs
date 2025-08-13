@@ -9,7 +9,6 @@
 ### High Priority
 
 ### Medium Priority
-- **[TASK-011](../tasks/TASK-011-performance-caching-adr.md)** - Create ADR for Performance & Caching (3 days)
 - **[TASK-012](../tasks/TASK-012-search-analytics-adr.md)** - Create ADR for Search & Analytics (3 days)
 - **[TASK-013](../tasks/TASK-013-multi-region-global-distribution-adr.md)** - Create ADR for Multi-Region & Global Distribution (4 days)
 - **[TASK-014](../tasks/TASK-014-testing-quality-assurance-adr.md)** - Create ADR for Testing & Quality Assurance (3 days)
@@ -25,7 +24,6 @@
 
 | Task ID | Title | Priority | Effort | Type | Status |
 |---------|-------|----------|--------|------|--------|
-| TASK-011 | Performance & Caching ADR | Medium | 3 days | Research/Infrastructure | Ready |
 | TASK-012 | Search & Analytics ADR | Medium | 3 days | Research/Infrastructure | Ready |
 | TASK-013 | Multi-Region & Global Distribution ADR | Medium | 4 days | Research/Infrastructure | Ready |
 | TASK-014 | Testing & Quality Assurance ADR | Medium | 3 days | Research/Infrastructure | Ready |
@@ -45,15 +43,15 @@
 
 ## 📊 Ready Queue Health
 
-- **Total Ready Tasks**: 7
-- **High Priority**: 1
+- **Total Ready Tasks**: 6
+- **High Priority**: 0
 - **Medium Priority**: 3
 - **Low Priority**: 3
 - **Average Age**: 0 days (recently created)
-- **Total Effort**: 22 days
-- **High Priority Effort**: 3 days
+- **Total Effort**: 19 days
+- **High Priority Effort**: 0 days
 - **Medium Priority Effort**: 10 days
-- **Low Priority Effort**: 8 days
+- **Low Priority Effort**: 9 days
 
 ## 🤖 AI Agent Instructions
 
@@ -74,9 +72,6 @@ When picking up tasks from this queue:
 
 ### Recommended Task Sequence
 For optimal learning and dependency management:
-1. **TASK-009**: Security & Authentication ADR (security foundation)
-2. **TASK-010**: CI/CD & Deployment ADR (delivery pipeline)
-3. **TASK-011**: Performance & Caching ADR (optimization)
 4. **TASK-012**: Search & Analytics ADR (data insights)
 5. **TASK-013**: Multi-Region & Global Distribution ADR (scaling)
 6. **TASK-014**: Testing & Quality Assurance ADR (quality)
