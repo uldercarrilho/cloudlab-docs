@@ -115,6 +115,21 @@ Deploy the distributed e-commerce platform on AWS using Terraform-managed infras
 - **Data Replication:** Cross-region replication for critical data with eventual consistency
 - **Failover Strategy:** Automated failover with RTO < 15 minutes and RPO < 1 hour
 
+### Multi-Region Strategy Decision Matrix
+
+| Criteria | Weight | Active-Active | Active-Passive | Hub-Spoke | Global Active |
+|----------|--------|---------------|----------------|-----------|---------------|
+| Performance | 25% | 10 | 6 | 7 | 9 |
+| Cost Efficiency | 20% | 7 | 9 | 8 | 6 |
+| Complexity | 20% | 6 | 9 | 7 | 5 |
+| Disaster Recovery | 20% | 9 | 8 | 7 | 9 |
+| Maintenance | 15% | 7 | 9 | 8 | 6 |
+| **Total Score** | **100%** | **7.8** | **8.2** | **7.4** | **7.0** |
+
+**Selected Strategy: Active-Active with Regional Failover**
+- **Why Active-Active**: Best performance for global users, excellent disaster recovery, supports traffic spikes
+- **Trade-offs**: Higher complexity and costs, but provides best user experience and business continuity
+
 ### Alternatives Considered
 
 #### Cloud Provider Alternatives:
