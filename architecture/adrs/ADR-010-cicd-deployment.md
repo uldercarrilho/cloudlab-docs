@@ -1,7 +1,7 @@
 # ADR-010: CI/CD & Deployment Architecture
 
 ## Status
-**Status**: Draft  
+**Status**: Accepted  
 **Date**: 2025-01-27
 **Author**: AI Agent (Ulder Carrilho Júnior oversight)  
 **Supersedes**: None  
@@ -167,6 +167,35 @@ The deployment strategy selector provides a unified interface to choose and conf
 - **Benefits**: Instant feature control, user targeting, gradual rollout
 - **Learning Value**: Feature management and user targeting patterns
 
+#### 6. Saga Pattern Deployment
+- **Use Case**: Order processing workflow with distributed transaction support
+- **Configuration**:
+  ```yaml
+  strategy: saga-pattern
+  services:
+    - name: order-service
+      deploymentOrder: 1
+      rollbackStrategy: compensation
+    - name: payment-service
+      deploymentOrder: 2
+      rollbackStrategy: compensation
+    - name: inventory-service
+      deploymentOrder: 3
+      rollbackStrategy: compensation
+    - name: shipping-service
+      deploymentOrder: 4
+      rollbackStrategy: compensation
+  eventStreaming:
+    kafkaTopics:
+      - order-events
+      - payment-events
+      - inventory-events
+      - shipping-events
+    consistencyLevel: causal
+  ```
+- **Benefits**: Coordinated service deployment, distributed transaction support, automated compensation
+- **Learning Value**: Distributed transaction patterns, event-driven architecture, saga orchestration
+
 ### 1. Continuous Integration Pipeline
 - **Source Control**: GitHub with branch protection and required reviews
 - **Build Automation**: GitHub Actions with multi-stage builds
@@ -191,16 +220,62 @@ The deployment strategy selector provides a unified interface to choose and conf
 - **A/B Testing**: Split traffic between versions for user experience testing
 - **Feature Flags**: LaunchDarkly integration for gradual feature rollouts
 - **Rollback Automation**: Automated rollback on health check failures
-- **Database Migrations**: Automated schema updates with rollback support
+- **Database Migrations**: Automated schema updates with rollback support for multi-database architecture
 - **Configuration Management**: Environment-specific configuration injection
+- **Saga Pattern Integration**: Order processing workflow deployment with distributed transaction support
+- **Multi-Database Strategy**: Coordinated deployment across PostgreSQL, ClickHouse, and Elasticsearch
+- **Event Streaming Integration**: Apache Kafka event management during deployments
 
-### 4. Infrastructure as Code
+### 4. Saga Pattern Integration & Order Processing
+
+#### **Order Processing Workflow Deployment**
+- **Distributed Transaction Support**: Coordinated deployment of order processing services
+- **Saga Orchestration**: Automated deployment of saga coordinator and participant services
+- **Compensation Actions**: Deployment strategies that support rollback of distributed transactions
+- **Event Ordering**: Apache Kafka integration for maintaining event sequence during deployments
+- **State Management**: Coordinated deployment of state management services
+
+#### **Multi-Database Deployment Strategy**
+- **PostgreSQL Core Services**: Order, user, and product data deployment coordination
+- **ClickHouse Analytics**: Analytics data migration and deployment procedures
+- **Elasticsearch Search**: Search index updates and deployment coordination
+- **Cross-Database Consistency**: Deployment strategies that maintain referential integrity
+- **Data Migration Coordination**: Automated migration scripts for schema updates across databases
+
+#### **Event Streaming Integration**
+- **Apache Kafka Deployment**: MSK cluster deployment and configuration
+- **Event Schema Management**: Automated event schema validation during deployments
+- **Cross-Region Event Replication**: Deployment strategies for multi-region event streaming
+- **Event Ordering Guarantees**: Maintaining causal consistency during service deployments
+
+### 5. Infrastructure as Code
 - **Terraform Modules**: Reusable infrastructure components
 - **Environment Templates**: Consistent environment provisioning
 - **Secret Management**: HashiCorp Vault integration for sensitive data
 - **Network Security**: Automated security group and firewall configuration
 - **Compliance**: Automated compliance checks and audit logging
 - **Cost Optimization**: Resource tagging and cost monitoring
+
+### 6. Multi-Region Deployment & Cross-Region Consistency
+
+#### **Geographic Distribution Strategy**
+- **Primary Region**: us-east-1 with full service deployment
+- **Secondary Regions**: us-west-2 and eu-west-1 with read replicas and disaster recovery
+- **Global Load Balancing**: Route53 with health checks and failover routing
+- **CDN Integration**: CloudFlare for global content delivery and edge caching
+
+#### **Cross-Region Data Consistency**
+- **User Data Replication**: 1-minute replication SLA for user profile updates
+- **Order Data Replication**: 30-second replication SLA for critical order data
+- **Product Data Replication**: 5-minute replication SLA for catalog updates
+- **Analytics Data Replication**: 1-hour replication SLA for non-critical analytics
+- **Event Streaming Replication**: Real-time event replication between regions using MSK Connect
+
+#### **Disaster Recovery Procedures**
+- **Automated Failover**: Health check-based failover to secondary regions
+- **Data Recovery**: Point-in-time recovery with cross-region backup replication
+- **Service Restoration**: Automated service restoration in failover regions
+- **Traffic Routing**: Dynamic traffic routing based on region health and latency
 
 ## Implementation Strategy
 
@@ -452,6 +527,13 @@ To use different deployment strategies, simply add the appropriate label to your
 3. **Documentation**: Runbooks and operational procedures
 4. **Training**: Team training and knowledge transfer
 
+### Phase 5: Multi-Database & Event Streaming (Week 9-10)
+1. **PostgreSQL Core Services**: Order, user, and product data deployment coordination
+2. **ClickHouse Analytics**: Analytics data migration and deployment procedures
+3. **Elasticsearch Search**: Search index updates and deployment coordination
+4. **Apache Kafka Integration**: Event streaming deployment and configuration
+5. **Cross-Database Consistency**: Deployment strategies that maintain referential integrity
+
 ## Operational Procedures
 
 ### Deployment Process
@@ -469,6 +551,33 @@ To use different deployment strategies, simply add the appropriate label to your
 4. **Configuration Rollback**: Environment configuration rollback
 5. **Communication**: Automated notification of rollback events
 
+### Multi-Database Deployment Procedures
+1. **Coordinated Schema Updates**: Synchronized deployment across all database types
+2. **PostgreSQL Core Services**: Order, user, and product data migration coordination
+3. **ClickHouse Analytics**: Analytics data migration with minimal downtime
+4. **Elasticsearch Search**: Search index updates with zero-downtime reindexing
+5. **Cross-Database Consistency**: Validation of referential integrity after deployments
+6. **Event Streaming Coordination**: Apache Kafka topic and schema management
+7. **Data Migration Rollback**: Automated rollback of database schema changes
+
+### Saga Pattern Deployment Procedures
+1. **Service Deployment Order**: Coordinated deployment of saga participant services
+2. **Event Stream Validation**: Verification of Apache Kafka topic availability and schema compatibility
+3. **Compensation Action Deployment**: Deployment of rollback and compensation logic
+4. **State Management**: Coordinated deployment of saga state management services
+5. **Transaction Boundary Validation**: Verification of distributed transaction boundaries
+6. **Rollback Coordination**: Automated rollback of entire saga workflow on failures
+7. **Event Ordering Verification**: Validation of causal consistency during deployments
+
+### Multi-Region Deployment Procedures
+1. **Primary Region Deployment**: Full service deployment in us-east-1
+2. **Secondary Region Deployment**: Read replica and disaster recovery setup in us-west-2 and eu-west-1
+3. **Cross-Region Data Replication**: Automated setup of data replication pipelines
+4. **Global Load Balancing**: Route53 configuration with health checks and failover routing
+5. **CDN Integration**: CloudFlare configuration for global content delivery
+6. **Cross-Region Monitoring**: Unified monitoring across all regions
+7. **Disaster Recovery Testing**: Automated failover testing and validation
+
 ### Emergency Procedures
 1. **Incident Response**: PagerDuty integration for critical issues
 2. **Escalation**: Clear escalation path for deployment failures
@@ -484,6 +593,9 @@ To use different deployment strategies, simply add the appropriate label to your
 - **Performance Tests**: Load testing and performance validation
 - **Security Tests**: SAST, dependency, and container scanning
 - **Compliance Tests**: Automated compliance and policy checks
+- **Multi-Database Tests**: Cross-database consistency and migration validation
+- **Event Streaming Tests**: Apache Kafka topic and schema compatibility testing
+- **Saga Pattern Tests**: Distributed transaction workflow validation
 
 ### Deployment Validation
 - **Health Checks**: Automated health verification after deployment
@@ -491,6 +603,9 @@ To use different deployment strategies, simply add the appropriate label to your
 - **Integration Tests**: End-to-end workflow testing
 - **Performance Monitoring**: Real-time performance metrics
 - **Error Rate Monitoring**: Automated error rate tracking
+- **Multi-Database Validation**: Cross-database consistency verification
+- **Event Streaming Validation**: Apache Kafka topic availability and schema validation
+- **Saga Pattern Validation**: Distributed transaction workflow verification
 
 ### Post-Deployment Monitoring
 - **Application Metrics**: Response time, throughput, and error rates
@@ -498,6 +613,9 @@ To use different deployment strategies, simply add the appropriate label to your
 - **Business Metrics**: Transaction volume, success rates, and user experience
 - **Security Monitoring**: Access logs, authentication events, and security alerts
 - **Compliance Monitoring**: Audit logs and compliance verification
+- **Multi-Database Monitoring**: Cross-database consistency and performance metrics
+- **Event Streaming Monitoring**: Apache Kafka cluster health and event throughput
+- **Saga Pattern Monitoring**: Distributed transaction success rates and compensation actions
 
 ## Security and Compliance
 
@@ -507,13 +625,30 @@ To use different deployment strategies, simply add the appropriate label to your
 - **Audit Logging**: Comprehensive logging of all deployment activities
 - **Secret Management**: Secure storage and rotation of sensitive data
 - **Network Security**: Secure communication between CI/CD components
+- **Database Access Control**: Role-based access to different database types
+- **Event Streaming Security**: Secure access to Apache Kafka topics and schemas
+- **Cross-Region Security**: Secure communication between regions during deployments
 
 ### Compliance Requirements
 - **PCI DSS**: Secure handling of payment-related deployments
+  - **Payment Data Isolation**: Separate deployment pipelines for payment services
+  - **Encryption Validation**: Automated verification of encryption during deployments
+  - **Access Control**: Strict RBAC for payment service deployments
+  - **Audit Logging**: Comprehensive logging of all payment-related deployment activities
+  - **Vulnerability Scanning**: Automated security scanning before payment service deployments
+  - **Database Security**: Secure deployment of payment-related database schemas
+  - **Event Streaming Security**: Secure deployment of payment event topics
 - **GDPR**: Data protection during deployment processes
+  - **Data Minimization**: Deployment strategies that minimize data exposure
+  - **Consent Management**: Automated consent validation during deployments
+  - **Data Portability**: Support for data export during service migrations
+  - **Right to Erasure**: Automated data cleanup procedures during rollbacks
+  - **Cross-Region Data**: Compliance with data residency requirements during deployments
 - **SOC 2**: Security and availability controls
 - **Audit Trail**: Complete audit trail for compliance verification
 - **Change Management**: Formal change management procedures
+- **Multi-Database Compliance**: Compliance validation across all database types
+- **Event Streaming Compliance**: Audit trail for all event streaming deployments
 
 ## Cost Analysis
 
@@ -529,6 +664,9 @@ To use different deployment strategies, simply add the appropriate label to your
 - **Storage**: $50-100/month for artifact and log storage
 - **Network**: $50-100/month for secure communication
 - **Backup**: $100-200/month for disaster recovery
+- **Multi-Database Costs**: $200-400/month for cross-database deployment coordination
+- **Event Streaming Costs**: $150-300/month for Apache Kafka MSK deployment management
+- **Cross-Region Costs**: $300-500/month for multi-region deployment coordination
 
 ### Operational Costs
 - **Team Training**: $5,000-10,000 initial training investment
@@ -543,6 +681,16 @@ To use different deployment strategies, simply add the appropriate label to your
 - **Security Vulnerabilities**: Automated security scanning and updates
 - **Integration Issues**: Comprehensive integration testing
 - **Data Loss**: Automated backup and recovery procedures
+- **Multi-Database Inconsistency**: Cross-database coordination failures and data integrity issues
+- **Event Streaming Failures**: Apache Kafka cluster failures and event ordering issues
+- **Saga Pattern Failures**: Distributed transaction coordination failures and compensation issues
+- **Cross-Region Failures**: Multi-region deployment coordination failures and data replication issues
+
+### Risk Mitigation Strategies
+- **Multi-Database Coordination**: Automated validation of cross-database consistency and referential integrity
+- **Event Streaming Resilience**: Apache Kafka cluster health monitoring and automatic failover
+- **Saga Pattern Reliability**: Comprehensive testing of distributed transaction workflows and compensation actions
+- **Cross-Region Coordination**: Automated health checks and failover procedures for multi-region deployments
 
 ### Operational Risks
 - **Team Skills**: Comprehensive training and documentation
@@ -573,6 +721,10 @@ To use different deployment strategies, simply add the appropriate label to your
 - **Performance**: Target: < 100ms response time degradation
 - **Error Rate**: Target: < 0.1% error rate increase
 - **User Experience**: Target: No user-visible deployment impact
+- **Multi-Database Consistency**: Target: 100% cross-database referential integrity
+- **Event Streaming Reliability**: Target: 99.9% Apache Kafka cluster availability
+- **Saga Pattern Success**: Target: 99.5% distributed transaction success rate
+- **Cross-Region Coordination**: Target: < 5 minute cross-region data replication
 
 ### Business Metrics
 - **Development Velocity**: Target: 20% increase in feature delivery
@@ -596,6 +748,10 @@ To use different deployment strategies, simply add the appropriate label to your
 - **Automated Remediation**: Self-healing infrastructure and applications
 - **Advanced Testing**: Chaos engineering and resilience testing
 - **Continuous Optimization**: Automated performance and cost optimization
+- **Multi-Database Intelligence**: AI-powered cross-database optimization and consistency validation
+- **Event Streaming Analytics**: Advanced event pattern analysis and optimization
+- **Saga Pattern Evolution**: Automated saga workflow optimization and performance tuning
+- **Cross-Region Intelligence**: AI-powered cross-region deployment optimization and failover prediction
 
 ### Integration Opportunities
 - **Service Mesh**: Advanced service mesh integration
@@ -603,6 +759,10 @@ To use different deployment strategies, simply add the appropriate label to your
 - **Security**: Advanced security features and compliance
 - **Compliance**: Automated compliance and audit capabilities
 - **Governance**: Advanced governance and policy management
+- **Multi-Database Integration**: Advanced cross-database coordination and optimization
+- **Event Streaming Integration**: Advanced Apache Kafka integration and management
+- **Saga Pattern Integration**: Advanced distributed transaction management and optimization
+- **Cross-Region Integration**: Advanced multi-region coordination and optimization
 
 ## Quick Reference: Deployment Strategy Selection
 
@@ -615,6 +775,7 @@ To use different deployment strategies, simply add the appropriate label to your
 | **Rolling** | Resource efficiency, continuous updates | Low | Medium | Resource management |
 | **A/B Testing** | User experience validation | Low | Fast | Metrics and analysis |
 | **Feature Flag** | Instant control, user targeting | Low | Instant | Feature management |
+| **Saga Pattern** | Distributed transactions, order processing | Medium | Coordinated | Distributed transaction patterns |
 
 ### Quick Strategy Selection
 
@@ -634,6 +795,9 @@ To use different deployment strategies, simply add the appropriate label to your
 
 # Practice Feature Flag deployment
 ./scripts/deploy.sh --strategy feature-flag --config configs/feature-flag.yaml
+
+# Practice Saga Pattern deployment
+./scripts/deploy.sh --strategy saga-pattern --config configs/saga-pattern.yaml
 ```
 
 #### For Production Use
@@ -652,6 +816,9 @@ To use different deployment strategies, simply add the appropriate label to your
 
 # Controlled feature rollout
 ./scripts/deploy.sh --strategy feature-flag --env production --target-users 10%
+
+# Distributed transaction deployment
+./scripts/deploy.sh --strategy saga-pattern --env production --coordinated-rollout
 ```
 
 ## Learning and Practice Opportunities
@@ -718,6 +885,19 @@ To use different deployment strategies, simply add the appropriate label to your
   3. Monitor performance and user feedback
   4. Practice instant rollback via flags
 
+#### 6. Saga Pattern Deployment Practice
+- **Scenario**: Deploy order processing workflow with distributed transactions
+- **Learning Goals**:
+  - Understand distributed transaction patterns
+  - Practice saga orchestration and coordination
+  - Learn compensation action deployment
+- **Practice Steps**:
+  1. Deploy saga coordinator service
+  2. Deploy participant services in order
+  3. Validate event streaming and topic availability
+  4. Practice compensation action deployment
+  5. Test distributed transaction rollback scenarios
+
 ### Practice Environment Setup
 
 #### Development Environment
@@ -734,6 +914,17 @@ istioctl install --set profile=demo -y
 
 # Deploy sample applications
 kubectl apply -f k8s/sample-apps/
+
+# Set up multi-database environment
+kubectl apply -f k8s/databases/postgresql.yaml
+kubectl apply -f k8s/databases/clickhouse.yaml
+kubectl apply -f k8s/databases/elasticsearch.yaml
+
+# Set up Apache Kafka MSK cluster
+kubectl apply -f k8s/event-streaming/kafka-msk.yaml
+
+# Set up cross-region replication
+kubectl apply -f k8s/multi-region/replication.yaml
 ```
 
 #### Practice Workflow
@@ -745,6 +936,13 @@ kubectl apply -f k8s/sample-apps/
 6. **Analyze Results**: Review deployment metrics and learnings
 7. **Document Learnings**: Record insights and best practices
 
+### Multi-Database & Event Streaming Practice Workflow
+1. **Database Coordination**: Practice coordinated deployment across PostgreSQL, ClickHouse, and Elasticsearch
+2. **Event Streaming**: Practice Apache Kafka topic management and schema evolution during deployments
+3. **Saga Pattern**: Practice distributed transaction deployment and compensation action management
+4. **Cross-Region Coordination**: Practice multi-region deployment coordination and failover scenarios
+5. **Consistency Validation**: Practice cross-database consistency validation and referential integrity checks
+
 ### Metrics and Monitoring for Learning
 
 #### Deployment Success Metrics
@@ -754,6 +952,13 @@ kubectl apply -f k8s/sample-apps/
 - **User Impact**: User experience during deployment
 - **Resource Usage**: Resource consumption patterns
 
+#### Multi-Database & Event Streaming Metrics
+- **Cross-Database Consistency**: Validation of referential integrity across databases
+- **Event Streaming Reliability**: Apache Kafka cluster health and event throughput
+- **Saga Pattern Success**: Distributed transaction success rates and compensation actions
+- **Cross-Region Coordination**: Multi-region deployment coordination and failover times
+- **Data Replication Latency**: Cross-region data replication performance and consistency
+
 #### Learning Progress Tracking
 - **Strategy Mastery**: Track proficiency with each strategy
 - **Common Mistakes**: Document and learn from errors
@@ -761,10 +966,19 @@ kubectl apply -f k8s/sample-apps/
 - **Tool Proficiency**: Master deployment tools and scripts
 - **Troubleshooting**: Develop debugging and problem-solving skills
 
+#### Multi-Database & Event Streaming Learning Progress
+- **Database Coordination**: Track proficiency with cross-database deployment coordination
+- **Event Streaming Management**: Track proficiency with Apache Kafka deployment and management
+- **Saga Pattern Implementation**: Track proficiency with distributed transaction deployment
+- **Cross-Region Coordination**: Track proficiency with multi-region deployment coordination
+- **Consistency Validation**: Track proficiency with cross-database consistency validation
+
 ## Conclusion
 
 The selected CI/CD and deployment architecture provides a robust foundation for rapid, reliable, and safe software delivery. By combining GitHub Actions, Blue-Green deployment, LaunchDarkly, Terraform, and ArgoCD, we achieve operational excellence, high development velocity, and comprehensive learning opportunities while maintaining cost efficiency and security.
 
-This architecture supports the distributed e-commerce platform's requirements for zero-downtime deployments, automated testing, feature flag management, and infrastructure automation. The phased implementation approach ensures gradual complexity increase while maintaining system stability and team productivity.
+This architecture supports the distributed e-commerce platform's requirements for zero-downtime deployments, automated testing, feature flag management, and infrastructure automation. The enhanced multi-database deployment strategy ensures coordinated deployment across PostgreSQL, ClickHouse, and Elasticsearch while maintaining data consistency and referential integrity.
 
-The comprehensive testing, monitoring, and rollback procedures ensure high reliability and rapid recovery from any deployment issues. The security and compliance features maintain enterprise-grade security while supporting rapid development and deployment cycles.
+The comprehensive event streaming integration with Apache Kafka MSK provides robust event management during deployments, supporting the saga pattern for distributed transactions and ensuring causal consistency across services. The multi-region deployment capabilities enable global distribution with cross-region data replication and disaster recovery.
+
+The phased implementation approach ensures gradual complexity increase while maintaining system stability and team productivity. The comprehensive testing, monitoring, and rollback procedures ensure high reliability and rapid recovery from any deployment issues. The security and compliance features maintain enterprise-grade security while supporting rapid development and deployment cycles.
