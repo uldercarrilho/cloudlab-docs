@@ -373,6 +373,38 @@ We will implement a **multi-level caching architecture** using **Redis Cluster**
 - **Performance Tuning**: Guidelines for adjusting TTL values and eviction policies
 - **Capacity Planning**: Procedures for monitoring and scaling cache infrastructure
 
+#### Detailed Cache Warming Procedures
+1. **Pre-deployment Analysis**
+   - Identify frequently accessed data patterns from production logs
+   - Analyze user behavior and peak usage times
+   - Determine cache warming priority based on access frequency
+
+2. **Cache Population Strategy**
+   - **Hot Data**: Product catalog, user sessions, shopping cart data
+   - **Warm Data**: User preferences, order history, analytics data
+   - **Cold Data**: Historical data, archived orders, old analytics
+
+3. **Implementation Steps**
+   ```bash
+   # 1. Analyze access patterns
+   redis-cli --cluster info
+   redis-cli info stats | grep keyspace
+   
+   # 2. Populate hot data
+   curl -X POST /api/cache/warm/products
+   curl -X POST /api/cache/warm/sessions
+   
+   # 3. Verify cache population
+   redis-cli dbsize
+   redis-cli info memory
+   ```
+
+4. **Validation Checklist**
+   - [ ] Cache hit rate >95% for hot data
+   - [ ] Memory usage within 80% of allocated capacity
+   - [ ] Response times <100ms for cached endpoints
+   - [ ] No cache evictions during normal operation
+
 ### 2. Incident Response Procedures
 - **Cache Failures**: Response procedures for Redis cluster failures
 - **Performance Degradation**: Troubleshooting steps for slow response times
@@ -384,6 +416,43 @@ We will implement a **multi-level caching architecture** using **Redis Cluster**
 - **Dashboard Setup**: Key performance indicators and monitoring views
 - **Log Analysis**: Procedures for analyzing cache performance logs
 - **Capacity Alerts**: Memory usage and connection limit monitoring
+
+#### Specific Alert Thresholds & Escalation
+1. **Critical Alerts (Immediate Response)**
+   - Cache hit rate <90% for 5 consecutive minutes
+   - Response time >500ms for 95th percentile
+   - Redis memory usage >90%
+   - Cache connection failures >10%
+
+2. **Warning Alerts (Response within 15 minutes)**
+   - Cache hit rate <95% for 10 consecutive minutes
+   - Response time >200ms for 95th percentile
+   - Redis memory usage >80%
+   - Cache eviction rate >100/second
+
+3. **Escalation Procedures**
+   - **Level 1**: On-call engineer (immediate)
+   - **Level 2**: Senior engineer (15 minutes)
+   - **Level 3**: Engineering manager (30 minutes)
+
+#### Dashboard KPI Configuration
+1. **Performance Dashboard**
+   - Response time percentiles (P50, P95, P99)
+   - Throughput (requests/second)
+   - Cache hit/miss rates by service
+   - Error rates and timeout percentages
+
+2. **Infrastructure Dashboard**
+   - Redis cluster health and node status
+   - Memory usage and eviction rates
+   - Network I/O and connection counts
+   - CDN performance and cache efficiency
+
+3. **Business Dashboard**
+   - User experience metrics (page load times)
+   - Conversion rates and cart abandonment
+   - Peak traffic handling capacity
+   - Cost per request and ROI metrics
 
 ## Cost-Benefit Analysis
 
@@ -627,6 +696,37 @@ func refreshCacheAhead(productID, cacheKey string) {
 - **Latency Testing**: Measure response times under various load conditions
 - **Cache Hit Rate Testing**: Validate cache effectiveness and hit rates
 - **Stress Testing**: Test system behavior under extreme conditions
+
+#### Specific Test Scenarios & Expected Results
+1. **Baseline Load Test (1x Normal Traffic)**
+   - **Test Parameters**: 1,000 concurrent users, 5-minute duration
+   - **Expected Results**: 
+     - Response time P95 <200ms
+     - Cache hit rate >95%
+     - Error rate <1%
+     - Redis memory usage <70%
+
+2. **Peak Load Test (10x Normal Traffic)**
+   - **Test Parameters**: 10,000 concurrent users, 10-minute duration
+   - **Expected Results**:
+     - Response time P95 <500ms
+     - Cache hit rate >90%
+     - Error rate <5%
+     - Redis memory usage <85%
+
+3. **Cache Warming Test**
+   - **Test Parameters**: Cold start with empty cache, 1,000 users
+   - **Expected Results**:
+     - Initial response time <1s (cache miss penalty)
+     - Response time P95 <200ms after 5 minutes
+     - Cache hit rate >95% after 10 minutes
+
+4. **Failover Test**
+   - **Test Parameters**: Simulate Redis node failure during peak load
+   - **Expected Results**:
+     - Automatic failover within 30 seconds
+     - Response time degradation <50% during failover
+     - Service availability >99% throughout failover
 
 ### 2. Cache Validation
 - **Data Consistency Testing**: Verify cache invalidation and data freshness
