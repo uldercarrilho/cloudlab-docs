@@ -320,11 +320,68 @@ Deploy the distributed e-commerce platform on AWS using Terraform-managed infras
    - Implement monitoring and logging with CloudWatch and X-Ray
    - Set up backup and disaster recovery procedures
 
+2. **Service Mesh and Traffic Management**
+   - **Istio Multi-Region Deployment**: Configure Istio across all regions
+     - Primary Istio control plane in us-east-1 with regional control planes
+     - Cross-region service discovery and communication via Istio Gateway
+     - Multi-cluster Istio configuration for seamless service mesh
+     - Automated failover and traffic routing between regions
+   
+   - **Advanced Traffic Management**: Implement Istio traffic patterns
+     - Circuit breaker patterns for service resilience
+     - Retry and timeout policies for cross-region communication
+     - Load balancing strategies for multi-region service distribution
+     - Traffic splitting for canary deployments and A/B testing
+   
+   - **Security and Policy Enforcement**: Secure service-to-service communication
+     - mTLS encryption for all inter-service communication
+     - Authorization policies for service access control
+     - Rate limiting and quota management per region
+     - Security monitoring and threat detection integration
+
 2. **Data and Storage**
    - Configure RDS Multi-AZ deployments
    - Implement S3 cross-region replication for critical data
    - Set up ElastiCache for Redis and Memcached
    - Configure backup and retention policies
+
+3. **Analytics and Search Infrastructure**
+   - **ClickHouse Deployment**: Deploy ClickHouse clusters in each region using EKS with persistent storage
+     - Primary cluster in us-east-1 with read replicas in us-west-2 and eu-west-1
+     - Cross-region data replication for analytics data with eventual consistency
+     - Automated backup to S3 with cross-region replication
+     - Integration with monitoring stack for performance optimization
+   
+   - **Elasticsearch Deployment**: Deploy Elasticsearch clusters using EKS with dedicated node groups
+     - Multi-zone Elasticsearch clusters in each region for high availability
+     - Cross-region index replication for search data synchronization
+     - Automated snapshot management to S3 with cross-region replication
+     - Integration with Istio service mesh for traffic management
+   
+   - **Data Pipeline Integration**: Implement cross-region data synchronization
+     - Event-driven data replication using Apache Kafka
+     - Real-time data streaming between regions for analytics and search
+     - Automated data consistency monitoring and alerting
+     - Disaster recovery procedures for analytics and search services
+
+4. **Message Queue and Event Streaming Infrastructure**
+   - **Apache Kafka Deployment**: Deploy Amazon MSK (Managed Streaming for Apache Kafka) clusters
+     - Multi-region MSK clusters with cross-region replication
+     - Primary cluster in us-east-1 with replicas in us-west-2 and eu-west-1
+     - Automated topic replication and partition management
+     - Integration with monitoring and alerting systems
+   
+   - **Cross-Region Event Streaming**: Implement event-driven architecture patterns
+     - Real-time event replication between regions using MSK Connect
+     - Event ordering and consistency guarantees for business workflows
+     - Automated failover and recovery procedures for event processing
+     - Performance monitoring and optimization for event throughput
+   
+   - **Event Processing Integration**: Connect Kafka with business services
+     - Integration with Istio service mesh for service-to-service communication
+     - Event-driven microservices architecture for order processing and inventory management
+     - Real-time analytics and monitoring for event processing pipelines
+     - Disaster recovery procedures for event processing services
 
 ### Phase 4: Optimization and Testing (Week 7-8)
 1. **Performance and Cost Optimization**
@@ -338,6 +395,25 @@ Deploy the distributed e-commerce platform on AWS using Terraform-managed infras
    - Validate backup and recovery processes
    - Conduct load testing for traffic spikes
    - Document runbooks and operational procedures
+
+### Phase 5: Enhanced Infrastructure Integration (Week 9-10)
+1. **Analytics and Search Platform Integration**
+   - Deploy and configure ClickHouse clusters across all regions
+   - Set up Elasticsearch clusters with cross-region replication
+   - Implement automated data synchronization and backup procedures
+   - Configure monitoring and alerting for analytics services
+
+2. **Event Streaming Platform Setup**
+   - Deploy Amazon MSK clusters in all regions
+   - Configure cross-region topic replication and failover
+   - Implement event processing pipelines for business workflows
+   - Set up monitoring and alerting for event streaming services
+
+3. **Business Rule Validation Infrastructure**
+   - Deploy business rule validation services
+   - Implement automated testing and compliance monitoring
+   - Configure real-time business metrics and KPI dashboards
+   - Set up automated alerting for business rule violations
 
 ---
 
@@ -374,6 +450,25 @@ Deploy the distributed e-commerce platform on AWS using Terraform-managed infras
    - AWS GuardDuty for threat detection
    - CloudTrail for audit logging
    - Incident response procedures and runbooks
+
+5. **Business Rule Validation Infrastructure**
+   - **Business Logic Monitoring**: Implement infrastructure for business rule compliance
+     - Real-time monitoring of business rule execution and validation
+     - Automated alerting for business rule violations and anomalies
+     - Integration with business workflow engines for rule enforcement
+     - Performance monitoring for business rule execution efficiency
+   
+   - **Compliance Automation**: Automate business rule validation processes
+     - Automated testing of business rule implementations
+     - Integration with CI/CD pipelines for rule validation
+     - Real-time compliance reporting and dashboards
+     - Automated correction mechanisms for rule violations where possible
+   
+   - **Business Process Integration**: Connect infrastructure with business workflows
+     - Event-driven business rule validation using Apache Kafka
+     - Integration with order processing and payment workflows
+     - Real-time business metrics and KPI monitoring
+     - Automated business process optimization and tuning
 
 ---
 
@@ -425,6 +520,25 @@ Deploy the distributed e-commerce platform on AWS using Terraform-managed infras
    - Budget alerts and notifications
    - Resource utilization optimization
    - Cost forecasting and planning
+
+4. **Enhanced Infrastructure Monitoring**
+   - **Analytics Platform Monitoring**: Monitor ClickHouse and Elasticsearch performance
+     - Query performance metrics and optimization
+     - Cluster health and resource utilization
+     - Cross-region replication status and performance
+     - Automated alerting for performance degradation
+   
+   - **Event Streaming Monitoring**: Monitor Apache Kafka and event processing
+     - Topic throughput and lag monitoring
+     - Producer and consumer performance metrics
+     - Cross-region replication status and health
+     - Event processing pipeline performance and alerting
+   
+   - **Business Rule Validation Monitoring**: Monitor business logic execution
+     - Business rule execution performance and success rates
+     - Compliance violation detection and alerting
+     - Business metrics and KPI tracking
+     - Automated business process optimization insights
 
 ---
 
@@ -552,6 +666,34 @@ Deploy the distributed e-commerce platform on AWS using Terraform-managed infras
    - Update disaster recovery procedures
    - Conduct lessons learned session
 
+### Enhanced Infrastructure Operations Runbook
+1. **Analytics Platform Operations**
+   - **ClickHouse Cluster Management**: Monitor and maintain ClickHouse clusters
+     - Daily cluster health checks and performance monitoring
+     - Weekly query performance analysis and optimization
+     - Monthly capacity planning and resource optimization
+     - Quarterly disaster recovery testing and validation
+   
+   - **Elasticsearch Cluster Management**: Monitor and maintain Elasticsearch clusters
+     - Daily index health checks and performance monitoring
+     - Weekly search performance analysis and optimization
+     - Monthly snapshot management and backup validation
+     - Quarterly cross-region replication testing and validation
+
+2. **Event Streaming Platform Operations**
+   - **Apache Kafka Cluster Management**: Monitor and maintain MSK clusters
+     - Daily topic health checks and throughput monitoring
+     - Weekly producer and consumer performance analysis
+     - Monthly cross-region replication testing and validation
+     - Quarterly disaster recovery testing and failover procedures
+
+3. **Business Rule Validation Operations**
+   - **Business Logic Monitoring**: Monitor and maintain business rule validation
+     - Daily business rule execution monitoring and alerting
+     - Weekly compliance violation analysis and reporting
+     - Monthly business metrics and KPI analysis
+     - Quarterly business process optimization and tuning
+
 ---
 
 ## 15. Integration Patterns and Architectural Diagrams
@@ -574,6 +716,25 @@ Deploy the distributed e-commerce platform on AWS using Terraform-managed infras
    - Circuit breaker patterns
    - Retry and timeout policies
    - Distributed tracing and observability
+
+4. **Analytics and Search Integration**
+   - **ClickHouse Integration**: Real-time analytics data processing
+     - Cross-region data replication and synchronization
+     - Automated backup and disaster recovery procedures
+     - Performance optimization and query tuning
+     - Integration with business intelligence tools
+   
+   - **Elasticsearch Integration**: Search and log analytics platform
+     - Cross-region index replication and synchronization
+     - Automated snapshot management and backup
+     - Search performance optimization and monitoring
+     - Integration with logging and monitoring systems
+   
+   - **Event-Driven Analytics**: Real-time data processing pipeline
+     - Apache Kafka integration for event streaming
+     - Real-time analytics and reporting capabilities
+     - Automated data quality monitoring and validation
+     - Integration with business rule validation systems
 
 ### Data Flow Patterns
 1. **Multi-Region Data Replication**
@@ -641,13 +802,23 @@ The implementation strategy focuses on incremental deployment with comprehensive
             ┌───────▼─────────┐         ┌───────▼──────────┐
             │   RDS Multi-AZ  │         │   RDS Multi-AZ   │
             │   + ElastiCache │         │   + ElastiCache  │
+            └───────┬─────────┘         └───────┬──────────┘
+                    │                           │
+            ┌───────▼─────────┐         ┌───────▼──────────┐
+            │ ClickHouse      │         │ ClickHouse       │
+            │ + Elasticsearch │         │ + Elasticsearch  │
+            └───────┬─────────┘         └───────┬──────────┘
+                    │                           │
+            ┌───────▼─────────┐         ┌───────▼──────────┐
+            │ Apache Kafka    │         │ Apache Kafka     │
+            │ (Amazon MSK)    │         │ (Amazon MSK)     │
             └─────────────────┘         └──────────────────┘
                     │                           │
                     │                           │
             ┌───────▼───────┐         ┌─────────▼─────────┐
             │   eu-west-1   │         │   Cross-Region    │
             │  (Secondary)  │◄────────┤   Replication     │
-            └───────┬───────┘         └───────────────────┘
+            └───────────────┘         └───────────────────┘
                     │
             ┌───────▼───────┐
             │   EKS Cluster │
@@ -657,7 +828,17 @@ The implementation strategy focuses on incremental deployment with comprehensive
             ┌───────▼────────┐
             │   RDS Multi-AZ │
             │   + ElastiCache│
-            └────────────────┘
+            └───────┬────────┘
+                    │
+            ┌───────▼─────────┐
+            │ ClickHouse      │
+            │ + Elasticsearch │
+            └───────┬─────────┘
+                    │
+            ┌───────▼─────────┐
+            │ Apache Kafka    │
+            │ (Amazon MSK)    │
+            └─────────────────┘
 ```
 
 ### Infrastructure as Code Structure
@@ -718,6 +899,45 @@ The implementation strategy focuses on incremental deployment with comprehensive
             │   eu-west-1   │         │   Data Sync       │
             │  (Secondary)  │◄────────┤   & Backup        │
             └───────────────┘         └───────────────────┘
+```
+
+### Enhanced Data Integration Architecture
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           Business Services Layer                           │
+│                    (Order, Payment, Inventory, User)                        │
+└─────────────────────────────────┬───────────────────────────────────────────┘
+                                  │
+                    ┌─────────────┴─────────────┐
+                    │                           │
+            ┌───────▼───────┐         ┌─────────▼─────────┐
+            │   Istio       │         │   Business Rule   │
+            │ Service Mesh  │         │   Validation      │
+            └───────┬───────┘         └─────────┬─────────┘
+                    │                           │
+            ┌───────▼─────────┐         ┌───────▼──────────┐
+            │ Apache Kafka    │         │   Monitoring &   │
+            │ Event Stream    │         │   Alerting       │
+            └───────┬─────────┘         └──────────────────┘
+                    │
+            ┌───────▼─────────┐
+            │   Data Layer    │
+            └───────┬─────────┘
+                    │
+        ┌───────────┴───────────┐
+        │                       │
+┌───────▼──────┐    ┌───────────▼──────────┐    ┌───────────▼────────┐
+│ PostgreSQL   │    │    ClickHouse        │    │   Elasticsearch    │
+│ (Orders,     │    │   (Analytics,        │    │   (Search,         │
+│  Users)      │    │    Metrics)          │    │    Logs)           │
+└──────────────┘    └──────────────────────┘    └────────────────────┘
+        │                       │                       │
+        └───────────┬───────────┴───────────┬───────────┘
+                    │                       │
+            ┌───────▼──────┐    ┌───────────▼──────────┐
+            │   Redis      │    │   S3 + CloudFront    │
+            │ (Caching)    │    │   (Storage + CDN)    │
+            └──────────────┘    └──────────────────────┘
 ```
 
 ---
