@@ -51,7 +51,13 @@ We will implement a comprehensive observability stack using **Prometheus + Grafa
 | ELK Stack | 5/10 | 9/10 | 4/10 | 6/10 | 7/10 | 7/10 | 6.4/10 | ❌ Rejected |
 | Splunk | 3/10 | 9/10 | 6/10 | 7/10 | 3/10 | 6/10 | 5.8/10 | ❌ Rejected |
 
-**Loki Selection Rationale**: Cost-effective integration with existing Grafana infrastructure, lightweight resource usage, and no vendor lock-in. Note: ELK Stack is used for business analytics and long-term data retention as specified in business rules, while Loki handles operational logging for system monitoring.
+**Loki Selection Rationale**: Cost-effective integration with existing Grafana infrastructure, lightweight resource usage, and no vendor lock-in. 
+
+**Dual Logging Strategy**: This ADR implements a dual logging approach to optimize for different use cases:
+- **Loki + Grafana**: Handles operational logging for system monitoring, debugging, and incident response
+- **ELK Stack**: Used for business analytics and long-term data retention as specified in business rules (see Section 6.1 Data Protection in BUSINESS-RULES-001-ecommerce-platform.md)
+
+This separation ensures operational efficiency while meeting business intelligence and compliance requirements.
 
 ### Distributed Tracing
 | Alternative | Cost (25%) | Technical (25%) | Operational (20%) | Integration (15%) | Lock-in (10%) | Learning (5%) | Total Score | Decision |
@@ -134,6 +140,8 @@ We will implement a comprehensive observability stack using **Prometheus + Grafa
    - **Contingency**: Migration plan to alternative tools
 
 ## Implementation Strategy
+
+**Note**: This implementation strategy aligns with Phase 6 (Weeks 33-36) of the development plan (see DEVELOPMENT-PLAN-001-distributed-ecommerce-platform.md Section 5.6).
 
 ### Phase 1: Foundation (Week 1-2)
 1. **Prometheus Setup**
@@ -564,17 +572,17 @@ spec:
 - **Inventory Levels**: Stock availability
 
 ### Business Metrics Alignment with Business Rules
-Our monitoring dashboards ensure comprehensive coverage of all business metrics specified in the business rules:
+Our monitoring dashboards ensure comprehensive coverage of all business metrics specified in the business rules (see BUSINESS-RULES-001-ecommerce-platform.md):
 
-- **User Management**: Customer registration rates, authentication success/failure rates, MFA adoption
-- **Product & Catalog**: Product creation rates, category performance, inventory turnover
-- **Order Processing**: Order volume, fulfillment rates, shipping performance, return rates
-- **Payment Processing**: Transaction success rates, fraud detection metrics, payment method distribution
-- **Multi-tenancy**: Vendor performance metrics, commission tracking, payout efficiency
-- **Social Features**: Review submission rates, moderation efficiency, recommendation accuracy
-- **Compliance**: GDPR consent rates, data deletion requests, PCI DSS compliance metrics
+- **User Management** (Section 3.1): Customer registration rates, authentication success/failure rates, MFA adoption, session management metrics
+- **Product & Catalog** (Section 3.2): Product creation rates, category performance, inventory turnover, vendor product limits
+- **Order Processing** (Section 3.3): Order volume, fulfillment rates, shipping performance, return rates, saga pattern monitoring
+- **Payment Processing** (Section 3.4): Transaction success rates, fraud detection metrics, payment method distribution, PCI DSS compliance
+- **Multi-tenancy** (Section 3.6): Vendor performance metrics, commission tracking, payout efficiency, tenant isolation monitoring
+- **Social Features** (Section 3.7): Review submission rates, moderation efficiency, recommendation accuracy, user-generated content metrics
+- **Compliance** (Section 6.1-6.3): GDPR consent rates, data deletion requests, PCI DSS compliance metrics, tax compliance monitoring
 
-This alignment ensures that all business rules are properly monitored and measured for operational excellence.
+This alignment ensures that all business rules are properly monitored and measured for operational excellence, with direct traceability to specific business rule sections.
 
 ## Security Considerations
 
@@ -591,30 +599,30 @@ This alignment ensures that all business rules are properly monitored and measur
 - **Audit Logging**: All access attempts logged
 
 ### Compliance Monitoring Capabilities
-Our monitoring and observability stack provides comprehensive coverage for all compliance requirements specified in the business rules:
+Our monitoring and observability stack provides comprehensive coverage for all compliance requirements specified in the business rules (see BUSINESS-RULES-001-ecommerce-platform.md Section 6):
 
-#### **GDPR Compliance Monitoring**
+#### **GDPR Compliance Monitoring** (Section 6.1)
 - **Data Access Tracking**: Monitor all data access patterns and user consent status
 - **Data Deletion Verification**: Track data deletion requests and completion rates
 - **Data Portability**: Monitor data export request processing times
 - **Consent Management**: Track user consent changes and opt-out rates
 - **Data Retention**: Monitor compliance with retention policies (2 years for analytics, 7 years for business data)
 
-#### **PCI DSS Compliance Monitoring**
+#### **PCI DSS Compliance Monitoring** (Section 6.2)
 - **Payment Processing Security**: Monitor payment gateway health and security metrics
 - **Fraud Detection**: Track fraud detection system performance and false positive rates
 - **Access Control**: Monitor authentication and authorization patterns
 - **Data Encryption**: Verify encryption status for all payment-related data
 - **Security Incident Response**: Track security incident detection and resolution times
 
-#### **SOC2 Compliance Monitoring**
+#### **SOC2 Compliance Monitoring** (Development Plan Section 4.3)
 - **System Availability**: Monitor 99.9% uptime requirements
 - **Data Integrity**: Track data consistency and validation metrics
 - **Change Management**: Monitor deployment success rates and rollback frequency
 - **Incident Response**: Track incident detection and resolution metrics
 - **Capacity Planning**: Monitor resource utilization and scaling metrics
 
-This comprehensive compliance monitoring ensures we can demonstrate adherence to all regulatory requirements and business rules.
+This comprehensive compliance monitoring ensures we can demonstrate adherence to all regulatory requirements and business rules, with direct traceability to specific compliance sections.
 
 ## Operational Considerations
 
@@ -625,7 +633,7 @@ This comprehensive compliance monitoring ensures we can demonstrate adherence to
 - **Jaeger**: Trace data retention (7 days)
 
 ### Data Retention Strategy Alignment
-Our monitoring data retention policies are designed to align with business requirements while optimizing operational efficiency:
+Our monitoring data retention policies are designed to align with business requirements while optimizing operational efficiency (see BUSINESS-RULES-001-ecommerce-platform.md Section 6.1):
 
 - **Operational Logs (Loki)**: 30 days hot, 90 days warm - Sufficient for incident investigation and debugging
 - **Business Analytics (ELK Stack)**: 2 years retention as per business rules for long-term trend analysis
@@ -633,7 +641,7 @@ Our monitoring data retention policies are designed to align with business requi
 - **Metrics (Prometheus)**: 1 year retention for performance trending and capacity planning
 - **Traces (Jaeger)**: 7 days retention for recent incident investigation and performance analysis
 
-This strategy ensures we meet compliance requirements while maintaining cost-effective operational monitoring.
+This strategy ensures we meet compliance requirements while maintaining cost-effective operational monitoring, with retention periods directly aligned with business rule specifications.
 
 ### Scaling Strategy
 - **Horizontal Scaling**: Add Prometheus instances for high availability
@@ -648,9 +656,11 @@ This strategy ensures we meet compliance requirements while maintaining cost-eff
 
 ## Success Metrics
 
+**Note**: These success metrics align with the development plan's Phase 6 objectives and business rule compliance requirements.
+
 ### Implementation Success
 - [ ] All services, databases, and infrastructure components instrumented with metrics
-- [ ] Centralized logging operational
+- [ ] Centralized logging operational (Loki for operational, ELK for business analytics)
 - [ ] Distributed tracing functional
 - [ ] Alerting system operational
 - [ ] Dashboards created and accessible
@@ -685,5 +695,36 @@ This architecture will enable us to:
 - Make data-driven decisions about capacity and performance
 - Provide excellent developer experience for debugging and optimization
 - Build a foundation for advanced AIOps capabilities in the future
+- Ensure full compliance with all business rules and regulatory requirements
 
 The phased implementation approach ensures we can start with basic monitoring and gradually add sophisticated observability features as our team's expertise grows.
+
+## Cross-Document Traceability
+
+This ADR maintains full consistency with:
+- **Business Rules** (BUSINESS-RULES-001-ecommerce-platform.md): All monitoring requirements and compliance needs are addressed
+- **Development Plan** (DEVELOPMENT-PLAN-001-distributed-ecommerce-platform.md): Technology stack and implementation phases are aligned
+- **System Architecture**: Supports all planned distributed patterns and microservices architecture
+
+The dual logging strategy (Loki for operational, ELK for business analytics) ensures optimal performance while meeting all business intelligence and compliance requirements specified in the business rules.
+
+## References
+
+### Related Documents
+- [Business Rules Document](../../business/backlog/BUSINESS-RULES-001-ecommerce-platform.md) - Defines business requirements and compliance needs
+- [Development Plan](../../business/backlog/DEVELOPMENT-PLAN-001-distributed-ecommerce-platform.md) - Outlines implementation phases and technology stack
+- [System Overview](../../rfcs/system-overview.md) - Provides high-level system architecture context
+
+### Business Rules Sections Referenced
+- **Section 3.1**: User Management & Authentication monitoring requirements
+- **Section 3.2**: Product & Catalog management metrics
+- **Section 3.3**: Order Processing & Fulfillment monitoring
+- **Section 3.4**: Payment Processing security and compliance
+- **Section 3.6**: Multi-Tenancy & Vendor Management metrics
+- **Section 3.7**: Social Features & User-Generated Content monitoring
+- **Section 6.1-6.3**: Compliance requirements (GDPR, PCI DSS, Tax)
+
+### Development Plan Alignment
+- **Phase 6 (Weeks 33-36)**: Monitoring & Observability implementation phase
+- **Technology Stack**: Go backend, Kubernetes, AWS infrastructure support
+- **Performance Targets**: <200ms API response, 99.9% uptime monitoring
