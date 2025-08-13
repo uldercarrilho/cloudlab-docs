@@ -243,24 +243,30 @@
 
 #### **Monitoring Stack:**
 - [ ] **Metrics Collection**: Prometheus, Grafana
-- [ ] **Logging**: ELK Stack (Elasticsearch, Logstash, Kibana)
+- [ ] **Dual Logging Strategy**: 
+  - **Operational Logging**: Loki + Grafana for system monitoring and debugging
+  - **Business Analytics**: ELK Stack (Elasticsearch, Logstash, Kibana) for long-term business intelligence
 - [ ] **Tracing**: Jaeger distributed tracing
 - [ ] **APM (Application Performance Monitoring)**: Application performance monitoring
 - [ ] **Alerting**: PagerDuty integration
 - [ ] **Health Checks**: Kubernetes probes
 
 #### **AI Tasks:**
-- Configure monitoring tools
-- Create Grafana dashboards
+- Configure monitoring tools (Prometheus, Grafana, Loki, Jaeger)
+- Set up dual logging strategy (Loki for operational, ELK for business analytics)
+- Create Grafana dashboards for metrics and operational logs
+- Set up ELK Stack for business intelligence and long-term analytics
 - Set up alerting rules
 - Implement health checks
 - Generate operational runbooks
 
 #### **Success Criteria:**
-- [ ] All services are monitored
-- [ ] Dashboards provide system visibility
+- [ ] All services are monitored with Prometheus metrics
+- [ ] Dual logging strategy operational (Loki for operational, ELK for business analytics)
+- [ ] Grafana dashboards provide system visibility for metrics and operational logs
+- [ ] ELK Stack provides business intelligence and long-term analytics
 - [ ] Alerts trigger appropriately
-- [ ] Distributed tracing works end-to-end
+- [ ] Distributed tracing works end-to-end with Jaeger
 - [ ] Health checks validate service status
 
 ---
@@ -552,6 +558,7 @@
 - **v1.0** (2025-08-11): Initial development plan creation
 - **v1.1** (2025-08-11): Updated for solo development, Go backend, GitHub CI/CD
 - **v1.2** (2025-08-13): Enhanced consistency with ADR-007, added detailed analytics infrastructure specifications, clarified Istio service mesh and EKS references
+- **v1.3** (2025-01-27): Enhanced monitoring phase with dual logging strategy clarification (Loki for operational, ELK for business analytics), improved ADR consistency
 
 ### **Review Schedule**
 - **Weekly**: Progress updates and milestone tracking
