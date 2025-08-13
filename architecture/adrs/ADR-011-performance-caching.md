@@ -38,6 +38,7 @@ We will implement a **multi-level caching architecture** using **Redis Cluster**
 ## Alternatives Considered
 
 ### Caching Technologies
+
 | Alternative | Performance (30%) | Cost (25%) | Operational (20%) | Consistency (15%) | Learning (10%) | Total Score | Decision |
 |-------------|-------------------|------------|-------------------|-------------------|----------------|-------------|----------|
 | **Redis Cluster** | 9/10 | 8/10 | 7/10 | 8/10 | 9/10 | **8.3/10** | ✅ **Selected** |
@@ -45,9 +46,78 @@ We will implement a **multi-level caching architecture** using **Redis Cluster**
 | Hazelcast | 7/10 | 6/10 | 6/10 | 7/10 | 8/10 | 6.8/10 | ❌ Rejected |
 | In-Memory Cache | 6/10 | 9/10 | 9/10 | 5/10 | 6/10 | 7.1/10 | ❌ Rejected |
 
-**Redis Cluster Selection Rationale**: Excellent performance, persistence capabilities, clustering support, and rich data structures. Industry standard with excellent learning value and operational maturity.
+#### Redis Cluster ✅ **Selected**
+**Description**: Distributed in-memory data structure store with clustering capabilities, supporting multiple data types and persistence options.
+
+**Pros**:
+- **Performance**: Excellent read/write performance with sub-millisecond response times
+- **Data Structures**: Rich data types (Strings, Hashes, Lists, Sets, Sorted Sets) enabling complex caching patterns
+- **Persistence**: RDB snapshots + AOF for data durability and recovery
+- **Clustering**: Built-in clustering with automatic sharding and failover
+- **Ecosystem**: Extensive tooling, monitoring, and community support
+- **Learning Value**: Industry standard with comprehensive documentation and examples
+
+**Cons**:
+- **Memory Usage**: Higher memory overhead compared to simpler solutions
+- **Complexity**: Clustering configuration requires careful planning and expertise
+- **Operational Overhead**: Requires monitoring, backup, and maintenance procedures
+
+**Decision**: Selected for its excellent performance, rich data structures, and industry-standard status. The clustering capabilities and persistence features outweigh the operational complexity.
+
+#### Memcached ❌ **Rejected**
+**Description**: High-performance, distributed memory object caching system focused on simplicity and speed.
+
+**Pros**:
+- **Simplicity**: Easy to deploy, configure, and operate
+- **Performance**: Excellent raw performance for simple key-value operations
+- **Memory Efficiency**: Lower memory overhead per object
+- **Maturity**: Battle-tested in production environments
+
+**Cons**:
+- **Limited Data Types**: Only supports strings, limiting caching pattern flexibility
+- **No Persistence**: Data loss on restart, requiring cache warming strategies
+- **No Clustering**: Manual sharding required for horizontal scaling
+- **Limited Learning Value**: Simpler architecture provides fewer learning opportunities
+
+**Decision**: Rejected due to lack of persistence, limited data structures, and manual clustering requirements. While simpler to operate, it doesn't meet our performance and learning objectives.
+
+#### Hazelcast ❌ **Rejected**
+**Description**: In-memory data grid with distributed computing capabilities, built on Java technology stack.
+
+**Pros**:
+- **Distributed Computing**: Advanced features like distributed locks and transactions
+- **Java Integration**: Excellent integration with Java/Spring ecosystems
+- **Enterprise Features**: Built-in security, monitoring, and management tools
+
+**Cons**:
+- **Java Dependency**: Requires JVM, increasing resource overhead
+- **Performance**: Higher latency compared to Redis for simple caching operations
+- **Complexity**: Over-engineered for basic caching requirements
+- **Learning Curve**: Steep learning curve for non-Java developers
+- **Resource Usage**: Higher memory and CPU requirements
+
+**Decision**: Rejected due to Java dependency, higher resource overhead, and complexity that exceeds our caching needs. Better suited for enterprise Java applications requiring advanced distributed computing features.
+
+#### In-Memory Cache ❌ **Rejected**
+**Description**: Application-level caching using local memory with no persistence or distribution capabilities.
+
+**Pros**:
+- **Zero Latency**: Fastest possible access times within application
+- **No Network Overhead**: Eliminates network latency and serialization costs
+- **Simple Implementation**: Easy to implement and maintain
+- **Cost Effective**: No additional infrastructure costs
+
+**Cons**:
+- **No Persistence**: Data loss on application restart
+- **No Sharing**: Cannot share cache across multiple application instances
+- **Memory Limitations**: Limited by application memory constraints
+- **No Distribution**: Cannot scale horizontally across multiple nodes
+- **Limited Learning Value**: Basic caching provides minimal distributed systems learning
+
+**Decision**: Rejected due to lack of persistence, sharing capabilities, and horizontal scaling. While simple and fast, it doesn't meet our distributed architecture requirements.
 
 ### CDN Providers
+
 | Alternative | Performance (30%) | Cost (25%) | Operational (20%) | Consistency (15%) | Learning (10%) | Total Score | Decision |
 |-------------|-------------------|------------|-------------------|-------------------|----------------|-------------|----------|
 | **CloudFlare** | 9/10 | 9/10 | 8/10 | 8/10 | 8/10 | **8.4/10** | ✅ **Selected** |
@@ -55,9 +125,80 @@ We will implement a **multi-level caching architecture** using **Redis Cluster**
 | Fastly | 9/10 | 6/10 | 7/10 | 8/10 | 7/10 | 7.4/10 | ❌ Rejected |
 | Akamai | 8/10 | 5/10 | 6/10 | 8/10 | 6/10 | 6.6/10 | ❌ Rejected |
 
-**CloudFlare Selection Rationale**: Excellent performance, competitive pricing, developer-friendly features, and comprehensive security. Provides edge computing capabilities and excellent learning value.
+#### CloudFlare ✅ **Selected**
+**Description**: Global CDN with 200+ edge locations, comprehensive security features, and edge computing capabilities through Workers.
+
+**Pros**:
+- **Global Coverage**: 200+ edge locations providing excellent global performance
+- **Cost Effectiveness**: Competitive pricing with generous free tier and predictable costs
+- **Security Features**: Built-in DDoS protection, WAF, and SSL/TLS management
+- **Edge Computing**: Workers platform for dynamic content optimization at the edge
+- **Developer Experience**: Excellent API, documentation, and developer tools
+- **Origin Shield**: Reduces origin server load and improves cache efficiency
+- **Learning Value**: Comprehensive platform for learning CDN and edge computing concepts
+
+**Cons**:
+- **Vendor Lock-in**: Proprietary features may create dependency
+- **Complexity**: Advanced features require learning and configuration
+- **Support**: Enterprise support requires paid plans
+
+**Decision**: Selected for its excellent global coverage, competitive pricing, and comprehensive feature set. The edge computing capabilities and developer-friendly approach provide excellent learning value.
+
+#### AWS CloudFront ❌ **Rejected**
+**Description**: Amazon's global content delivery network integrated with AWS ecosystem and services.
+
+**Pros**:
+- **AWS Integration**: Seamless integration with other AWS services (S3, Lambda@Edge)
+- **Performance**: Excellent performance with AWS edge locations
+- **Scalability**: Automatic scaling with AWS infrastructure
+- **Lambda@Edge**: Serverless edge computing capabilities
+- **Monitoring**: Integrated with CloudWatch and AWS monitoring tools
+
+**Cons**:
+- **Vendor Lock-in**: Tightly coupled with AWS ecosystem
+- **Cost**: Higher costs compared to CloudFlare, especially for high traffic
+- **Complexity**: AWS-specific knowledge required for optimal configuration
+- **Learning Value**: Limited to AWS ecosystem, reducing broader CDN learning
+
+**Decision**: Rejected due to higher costs, AWS vendor lock-in, and limited learning value outside the AWS ecosystem. While excellent for AWS-native applications, it doesn't provide the cost-effectiveness and learning breadth we require.
+
+#### Fastly ❌ **Rejected**
+**Description**: High-performance CDN with real-time purging and edge computing capabilities through VCL (Varnish Configuration Language).
+
+**Pros**:
+- **Performance**: Excellent performance with sub-100ms response times
+- **Real-time Control**: Instant cache purging and real-time configuration changes
+- **Edge Computing**: VCL-based edge computing for dynamic content
+- **Developer Control**: Granular control over caching behavior and edge logic
+
+**Cons**:
+- **Cost**: Higher pricing compared to CloudFlare, especially for high traffic
+- **Complexity**: VCL learning curve for edge computing features
+- **Operational Overhead**: Requires expertise in VCL and edge computing
+- **Learning Curve**: Steep learning curve for non-developers
+
+**Decision**: Rejected due to higher costs and complexity. While offering excellent performance and control, the operational complexity and cost don't align with our requirements for simplicity and cost-effectiveness.
+
+#### Akamai ❌ **Rejected**
+**Description**: Enterprise-grade CDN with extensive global network and advanced security features.
+
+**Pros**:
+- **Global Network**: Extensive edge network with excellent coverage
+- **Enterprise Features**: Advanced security, analytics, and enterprise support
+- **Performance**: Excellent performance and reliability
+- **Security**: Comprehensive security features and compliance
+
+**Cons**:
+- **Cost**: Highest pricing among considered alternatives
+- **Complexity**: Enterprise-focused with complex configuration options
+- **Vendor Lock-in**: Proprietary features and enterprise contracts
+- **Learning Value**: Limited learning value due to enterprise focus and complexity
+- **Operational Overhead**: Requires enterprise-level expertise and support
+
+**Decision**: Rejected due to high costs, complexity, and enterprise focus. While offering excellent performance and features, it exceeds our budget and complexity requirements while providing limited learning value for our distributed systems project.
 
 ### Caching Patterns
+
 | Alternative | Performance (30%) | Cost (25%) | Operational (20%) | Consistency (15%) | Learning (10%) | Total Score | Decision |
 |-------------|-------------------|------------|-------------------|-------------------|----------------|-------------|----------|
 | **Cache-Aside** | 8/10 | 9/10 | 9/10 | 7/10 | 9/10 | **8.4/10** | ✅ **Selected** |
@@ -65,7 +206,74 @@ We will implement a **multi-level caching architecture** using **Redis Cluster**
 | Write-Behind | 6/10 | 7/10 | 6/10 | 8/10 | 7/10 | 6.8/10 | ❌ Rejected |
 | Refresh-Ahead | 8/10 | 6/10 | 7/10 | 7/10 | 8/10 | 7.2/10 | ❌ Rejected |
 
-**Cache-Aside Selection Rationale**: Simple to implement, excellent performance, low operational complexity, and excellent learning value. Provides good balance of performance and consistency.
+#### Cache-Aside ✅ **Selected**
+**Description**: Application-managed caching where the application checks the cache first, then fetches from the data source if not found, and updates the cache with the result.
+
+**Pros**:
+- **Simplicity**: Easy to implement and understand, making it ideal for learning
+- **Performance**: Excellent read performance with lazy loading approach
+- **Flexibility**: Application has full control over cache behavior and invalidation
+- **Cost Effective**: Minimal operational overhead and infrastructure requirements
+- **Learning Value**: Fundamental caching pattern that teaches core caching concepts
+- **Debugging**: Easy to debug and troubleshoot cache-related issues
+
+**Cons**:
+- **Consistency**: Potential for stale data if cache invalidation is not properly managed
+- **Cache Misses**: Initial cache misses can impact performance until cache is populated
+- **Complexity**: Requires careful cache invalidation logic for data consistency
+
+**Decision**: Selected for its simplicity, excellent performance, and fundamental learning value. The pattern provides a solid foundation for understanding caching concepts while maintaining operational simplicity.
+
+#### Write-Through ❌ **Rejected**
+**Description**: Cache is updated synchronously whenever the data source is updated, ensuring immediate consistency between cache and data source.
+
+**Pros**:
+- **Consistency**: Guarantees immediate consistency between cache and data source
+- **Reliability**: No risk of stale data in the cache
+- **Simplicity**: Straightforward implementation with predictable behavior
+
+**Cons**:
+- **Performance**: Synchronous writes can impact application performance
+- **Latency**: Write operations are slower due to dual-write requirement
+- **Complexity**: Requires coordination between cache and data source updates
+- **Operational Overhead**: Higher operational complexity for failure handling
+- **Learning Value**: Limited learning value as it's a simpler pattern
+
+**Decision**: Rejected due to performance impact and limited learning value. While providing excellent consistency, the synchronous nature doesn't align with our performance objectives.
+
+#### Write-Behind ❌ **Rejected**
+**Description**: Cache is updated immediately, but data source updates are queued and processed asynchronously in the background.
+
+**Pros**:
+- **Performance**: Excellent write performance with immediate cache updates
+- **Scalability**: Can handle high write loads through asynchronous processing
+- **User Experience**: Fast response times for write operations
+
+**Cons**:
+- **Complexity**: High operational complexity with queue management and failure handling
+- **Consistency**: Eventual consistency model with potential for data loss
+- **Operational Overhead**: Requires monitoring, retry logic, and error handling
+- **Learning Curve**: Complex pattern that may overwhelm initial learning objectives
+- **Risk**: Potential for data loss if background processing fails
+
+**Decision**: Rejected due to high complexity and operational overhead. While offering excellent performance, the complexity exceeds our current learning objectives and operational capabilities.
+
+#### Refresh-Ahead ❌ **Rejected**
+**Description**: Cache is proactively refreshed before expiration, ensuring data is always fresh and available.
+
+**Pros**:
+- **Performance**: Eliminates cache misses by proactive refresh
+- **User Experience**: Consistent response times without cache miss penalties
+- **Freshness**: Ensures data is always current and relevant
+
+**Cons**:
+- **Complexity**: Requires background refresh logic and timing coordination
+- **Resource Usage**: Higher resource consumption due to proactive updates
+- **Operational Overhead**: Complex monitoring and refresh scheduling required
+- **Cost**: Higher infrastructure costs due to increased resource usage
+- **Learning Value**: Complex pattern that may not provide proportional learning benefits
+
+**Decision**: Rejected due to complexity and resource overhead. While eliminating cache misses is beneficial, the operational complexity and resource costs don't justify the benefits for our learning-focused project.
 
 ## Performance Architecture Components
 
