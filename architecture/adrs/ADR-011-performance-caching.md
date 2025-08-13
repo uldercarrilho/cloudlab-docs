@@ -442,6 +442,14 @@ We will implement a **multi-level caching architecture** using **Redis Cluster**
    - [ ] All critical data types successfully cached
    - [ ] Cache warming scripts completed without errors
    - [ ] Performance baseline established and documented
+   - [ ] Cache warming performance metrics recorded
+   - [ ] Memory allocation per data type verified
+   - [ ] Cache key distribution analyzed and optimized
+   - [ ] Background refresh processes confirmed active
+   - [ ] Cache warming completion time within SLA (<30 minutes)
+   - [ ] All geographic regions showing improved performance
+   - [ ] Cache warming scripts added to deployment pipeline
+   - [ ] Monitoring dashboards updated with warming metrics
 
 ### 2. Incident Response Procedures
 - **Cache Failures**: Response procedures for Redis cluster failures
@@ -473,6 +481,74 @@ We will implement a **multi-level caching architecture** using **Redis Cluster**
    - **Level 2**: Senior engineer (15 minutes)
    - **Level 3**: Engineering manager (30 minutes)
 
+#### Alert Configuration Examples
+**Prometheus AlertManager Configuration:**
+```yaml
+groups:
+  - name: cache-performance
+    rules:
+      - alert: CacheHitRateLow
+        expr: cache_hit_rate < 0.90
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Cache hit rate below 90%"
+          description: "Cache hit rate is {{ $value }}% for 5 minutes"
+      
+      - alert: RedisMemoryHigh
+        expr: redis_memory_usage_bytes / redis_memory_max_bytes > 0.90
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Redis memory usage above 90%"
+          description: "Redis memory usage is {{ $value | humanizePercentage }}"
+
+      - alert: ResponseTimeHigh
+        expr: http_request_duration_seconds{quantile="0.95"} > 0.5
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "95th percentile response time above 500ms"
+          description: "Response time is {{ $value | humanizeDuration }}"
+```
+
+**Grafana Alerting Configuration:**
+```json
+{
+  "alert": {
+    "name": "Cache Performance Degradation",
+    "message": "Cache hit rate has dropped below 95%",
+    "conditions": [
+      {
+        "type": "query",
+        "query": {
+          "params": ["A", "5m", "now"]
+        },
+        "reducer": {
+          "type": "avg",
+          "params": []
+        },
+        "evaluator": {
+          "type": "lt",
+          "params": [0.95]
+        }
+      }
+    ],
+    "frequency": "1m",
+    "handler": 1,
+    "message": "Cache performance is degrading",
+    "notifications": [
+      {
+        "uid": "cache-team"
+      }
+    ]
+  }
+}
+```
+
 #### Dashboard KPI Configuration
 1. **Performance Dashboard**
    - Response time percentiles (P50, P95, P99) with trend lines
@@ -497,6 +573,68 @@ We will implement a **multi-level caching architecture** using **Redis Cluster**
    - Cost per request and ROI metrics with optimization suggestions
    - Geographic performance analysis and user satisfaction scores
    - Business impact of performance improvements and caching effectiveness
+
+#### Dashboard Setup Examples
+**Grafana Dashboard Configuration:**
+```json
+{
+  "dashboard": {
+    "title": "Cache Performance Overview",
+    "panels": [
+      {
+        "title": "Cache Hit Rate",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "rate(cache_hits_total[5m]) / (rate(cache_hits_total[5m]) + rate(cache_misses_total[5m])) * 100",
+            "legendFormat": "Hit Rate %"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "steps": [
+                {"color": "red", "value": null},
+                {"color": "yellow", "value": 90},
+                {"color": "green", "value": 95}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "title": "Response Time Percentiles",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "P95"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(http_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "P99"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+**Prometheus Recording Rules:**
+```yaml
+groups:
+  - name: cache-recording-rules
+    rules:
+      - record: cache_hit_rate
+        expr: rate(cache_hits_total[5m]) / (rate(cache_hits_total[5m]) + rate(cache_misses_total[5m]))
+      
+      - record: redis_memory_usage_percent
+        expr: (redis_memory_used_bytes / redis_memory_max_bytes) * 100
+      
+      - record: cache_warming_progress
+        expr: cache_warmed_keys / cache_total_keys * 100
+```
 
 ## Cost-Benefit Analysis
 
