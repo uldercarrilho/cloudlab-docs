@@ -44,10 +44,10 @@
 - [ ] Multi-channel user notifications
 
 ### 4.2 Technical Requirements
-- [ ] Microservices architecture with service mesh
+- [ ] Microservices architecture with Istio service mesh
 - [ ] Event-driven architecture with Apache Kafka
 - [ ] Multi-database strategy (PostgreSQL, ClickHouse, Elasticsearch)
-- [ ] Kubernetes-based container orchestration
+- [ ] Kubernetes-based container orchestration (EKS)
 - [ ] GraphQL API for flexible data querying
 - [ ] Multi-region deployment capability
 - [ ] Comprehensive monitoring and observability
@@ -139,12 +139,33 @@
 - [ ] **Data Sharding**: Product catalog distribution
 - [ ] **Replication**: Cross-region data sync
 
+#### **Analytics and Search Infrastructure:**
+- [ ] **ClickHouse Analytics Platform**: Deploy ClickHouse clusters across all regions
+  - Primary cluster in us-east-1 with read replicas in us-west-2 and eu-west-1
+  - Cross-region data replication for analytics data with eventual consistency
+  - Automated backup to S3 with cross-region replication
+  - Integration with monitoring stack for performance optimization
+- [ ] **Elasticsearch Search Platform**: Deploy Elasticsearch clusters with dedicated node groups
+  - Multi-zone Elasticsearch clusters in each region for high availability
+  - Cross-region index replication for search data synchronization
+  - Automated snapshot management to S3 with cross-region replication
+  - Integration with Istio service mesh for traffic management
+- [ ] **Event Streaming Platform**: Deploy Apache Kafka (MSK) clusters
+  - Multi-region MSK clusters with cross-region replication
+  - Real-time event replication between regions using MSK Connect
+  - Event ordering and consistency guarantees for business workflows
+  - Performance monitoring and optimization for event throughput
+
 #### **AI Tasks:**
 - Generate event schemas and handlers
 - Implement saga orchestration
 - Create CQRS read/write models
 - Set up data replication patterns
 - Implement consistency mechanisms
+- Deploy and configure ClickHouse analytics clusters
+- Set up Elasticsearch search clusters with cross-region replication
+- Configure Apache Kafka MSK clusters for event streaming
+- Implement cross-region data synchronization and backup procedures
 
 #### **Success Criteria:**
 - [ ] Order processing follows saga pattern
@@ -152,6 +173,10 @@
 - [ ] CQRS separates read/write operations
 - [ ] Data consistency models are implemented
 - [ ] Cross-region replication is functional
+- [ ] ClickHouse analytics clusters are operational across all regions
+- [ ] Elasticsearch search clusters provide cross-region search capabilities
+- [ ] Apache Kafka MSK clusters enable real-time event streaming
+- [ ] Cross-region data synchronization and backup procedures are functional
 
 ---
 
@@ -402,17 +427,32 @@
 
 ### **7.2 Infrastructure & Deployment**
 - **Containerization**: Docker with multi-stage builds
-- **Orchestration**: Kubernetes with Helm charts
+- **Orchestration**: Kubernetes (EKS) with Helm charts
 - **CI/CD**: GitHub Actions with automated testing and deployment
 - **Infrastructure as Code**: Terraform for cloud resources
-- **Service Mesh**: Istio for service-to-service communication
+- **Service Mesh**: Istio for service-to-service communication and traffic management
 
 ### **7.3 Data Management**
 - **Primary Database**: PostgreSQL with Go driver
+  - Multi-AZ deployments with cross-region read replicas
+  - Automated backup and point-in-time recovery
+  - Integration with business services for order processing and user management
 - **Caching**: Redis with Go client
+  - Multi-AZ clusters with cross-region replication
+  - Session and cache synchronization across regions
+  - Automated failover and recovery procedures
 - **Search**: Elasticsearch with Go client
+  - Multi-zone clusters in each region for high availability
+  - Cross-region index replication for search data synchronization
+  - Automated snapshot management with S3 backup
 - **Analytics**: ClickHouse with Go client
+  - Primary cluster with cross-region read replicas
+  - Cross-region data replication for analytics data
+  - Automated backup to S3 with cross-region replication
 - **Message Queue**: Apache Kafka with Go client
+  - Multi-region MSK clusters with cross-region replication
+  - Event-driven architecture for business workflows
+  - Real-time data streaming between regions
 
 ---
 
@@ -494,14 +534,15 @@
 - [Go Best Practices](https://golang.org/doc/effective_go.html)
 
 ### **11.3 Tools & Technologies**
-- **Containerization**: Docker, Kubernetes
+- **Containerization**: Docker, Kubernetes (EKS)
 - **Service Mesh**: Istio
 - **Databases**: PostgreSQL, ClickHouse, Elasticsearch, Redis
-- **Message Queue**: Apache Kafka
+- **Message Queue**: Apache Kafka (Amazon MSK)
+- **Cloud Provider**: AWS with Terraform
 - **Monitoring**: Prometheus, Grafana, ELK Stack
 - **Security**: HashiCorp Vault, OAuth2, JWT
 - **CI/CD**: GitHub Actions
-- **Infrastructure**: Terraform, AWS/GCP/Azure
+- **Infrastructure**: Terraform, AWS
 
 ---
 
@@ -510,6 +551,7 @@
 ### **Version History**
 - **v1.0** (2025-08-11): Initial development plan creation
 - **v1.1** (2025-08-11): Updated for solo development, Go backend, GitHub CI/CD
+- **v1.2** (2025-08-13): Enhanced consistency with ADR-007, added detailed analytics infrastructure specifications, clarified Istio service mesh and EKS references
 
 ### **Review Schedule**
 - **Weekly**: Progress updates and milestone tracking
