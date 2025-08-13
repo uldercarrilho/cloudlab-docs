@@ -23,35 +23,53 @@ Without proper monitoring and observability:
 
 We will implement a comprehensive observability stack using **Prometheus + Grafana** for metrics collection and visualization, **Loki + Grafana** for log aggregation, **Jaeger** for distributed tracing, and **custom APM instrumentation** for application performance monitoring. This stack will be complemented with **PagerDuty** for alerting and **custom health checks** for service discovery.
 
+## Decision Criteria & Weighting
+
+### Evaluation Criteria (Total Weight: 100%)
+- **Cost Efficiency**: 25% - Licensing, infrastructure, and operational costs
+- **Technical Capability**: 25% - Features, performance, and scalability
+- **Operational Complexity**: 20% - Setup, maintenance, and team expertise required
+- **Integration**: 15% - Ease of integration with existing systems
+- **Vendor Lock-in**: 10% - Dependency on specific vendors or platforms
+- **Learning Value**: 5% - Educational benefits for the team
+
 ## Alternatives Considered
 
 ### Metrics Collection
-| Alternative | Pros | Cons | Decision |
-|-------------|------|------|----------|
-| **Prometheus** | Open-source, pull-based, powerful query language, excellent ecosystem | Requires dedicated storage, not ideal for high-cardinality data | ✅ **Selected** - Best balance of features and ecosystem |
-| InfluxDB | High-performance time-series database, good for IoT data | Proprietary, complex setup, expensive at scale | ❌ Rejected - Overkill for our needs |
-| Graphite | Mature, simple, good for business metrics | Limited query language, scaling challenges | ❌ Rejected - Limited functionality |
+| Alternative | Cost (25%) | Technical (25%) | Operational (20%) | Integration (15%) | Lock-in (10%) | Learning (5%) | Total Score | Decision |
+|-------------|------------|-----------------|-------------------|-------------------|---------------|---------------|-------------|----------|
+| **Prometheus** | 9/10 | 9/10 | 7/10 | 9/10 | 10/10 | 9/10 | **8.7/10** | ✅ **Selected** |
+| InfluxDB | 6/10 | 8/10 | 5/10 | 7/10 | 6/10 | 7/10 | 6.5/10 | ❌ Rejected |
+| Graphite | 8/10 | 6/10 | 8/10 | 6/10 | 9/10 | 6/10 | 7.1/10 | ❌ Rejected |
+
+**Prometheus Selection Rationale**: Best balance of features, ecosystem, and cost-effectiveness. Open-source with excellent Kubernetes integration and powerful query language.
 
 ### Logging Solutions
-| Alternative | Pros | Cons | Decision |
-|-------------|------|------|----------|
-| **Loki + Grafana** | Lightweight, cost-effective, integrates with existing Grafana | Less mature than ELK, limited log parsing capabilities | ✅ **Selected** - Cost-effective and integrated |
-| ELK Stack (Elasticsearch) | Mature, powerful search, excellent parsing | Resource-intensive, expensive, complex setup | ❌ Rejected - Too heavy for our scale |
-| Splunk | Enterprise-grade, powerful analytics | Very expensive, vendor lock-in | ❌ Rejected - Cost prohibitive |
+| Alternative | Cost (25%) | Technical (25%) | Operational (20%) | Integration (15%) | Lock-in (10%) | Learning (5%) | Total Score | Decision |
+|-------------|------------|-----------------|-------------------|-------------------|---------------|---------------|-------------|----------|
+| **Loki + Grafana** | 9/10 | 7/10 | 8/10 | 9/10 | 10/10 | 8/10 | **8.4/10** | ✅ **Selected** |
+| ELK Stack | 5/10 | 9/10 | 4/10 | 6/10 | 7/10 | 7/10 | 6.4/10 | ❌ Rejected |
+| Splunk | 3/10 | 9/10 | 6/10 | 7/10 | 3/10 | 6/10 | 5.8/10 | ❌ Rejected |
+
+**Loki Selection Rationale**: Cost-effective integration with existing Grafana infrastructure, lightweight resource usage, and no vendor lock-in.
 
 ### Distributed Tracing
-| Alternative | Pros | Cons | Decision |
-|-------------|------|------|----------|
-| **Jaeger** | Open-source, CNCF project, excellent Go support, flexible storage | Requires dedicated infrastructure, learning curve | ✅ **Selected** - Best open-source option |
-| Zipkin | Mature, simple, lightweight | Limited features, less active development | ❌ Rejected - Limited functionality |
-| AWS X-Ray | Native AWS integration, managed service | Vendor lock-in, expensive, limited customization | ❌ Rejected - Vendor lock-in |
+| Alternative | Cost (25%) | Technical (25%) | Operational (20%) | Integration (15%) | Lock-in (10%) | Learning (5%) | Total Score | Decision |
+|-------------|------------|-----------------|-------------------|-------------------|---------------|---------------|-------------|----------|
+| **Jaeger** | 9/10 | 8/10 | 7/10 | 8/10 | 10/10 | 9/10 | **8.3/10** | ✅ **Selected** |
+| Zipkin | 9/10 | 6/10 | 8/10 | 7/10 | 9/10 | 7/10 | 7.6/10 | ❌ Rejected |
+| AWS X-Ray | 6/10 | 8/10 | 8/10 | 5/10 | 4/10 | 6/10 | 6.5/10 | ❌ Rejected |
+
+**Jaeger Selection Rationale**: CNCF project with excellent Go support, flexible storage options, and active community development.
 
 ### APM Tools
-| Alternative | Pros | Cons | Decision |
-|-------------|------|------|----------|
-| **Custom Instrumentation** | Full control, no vendor lock-in, cost-effective | Requires development effort, maintenance overhead | ✅ **Selected** - Best long-term value |
-| New Relic | Comprehensive APM, excellent UI, managed service | Very expensive, vendor lock-in, data ownership concerns | ❌ Rejected - Cost and lock-in |
-| Datadog | Powerful analytics, good integrations, managed service | Expensive, complex pricing, vendor lock-in | ❌ Rejected - Cost and complexity |
+| Alternative | Cost (25%) | Technical (25%) | Operational (20%) | Integration (15%) | Lock-in (10%) | Learning (5%) | Total Score | Decision |
+|-------------|------------|-----------------|-------------------|-------------------|---------------|---------------|-------------|----------|
+| **Custom Instrumentation** | 9/10 | 7/10 | 6/10 | 9/10 | 10/10 | 9/10 | **8.2/10** | ✅ **Selected** |
+| New Relic | 3/10 | 9/10 | 9/10 | 6/10 | 3/10 | 6/10 | 5.8/10 | ❌ Rejected |
+| Datadog | 4/10 | 8/10 | 8/10 | 7/10 | 4/10 | 6/10 | 6.2/10 | ❌ Rejected |
+
+**Custom Instrumentation Rationale**: Full control over data, no vendor lock-in, and excellent learning value for the team.
 
 ## Consequences
 
@@ -73,6 +91,47 @@ We will implement a comprehensive observability stack using **Prometheus + Grafa
 - **Documentation**: Comprehensive runbooks and troubleshooting guides
 - **Training**: Invest in team training on observability best practices
 - **Automation**: Automate deployment and configuration management
+
+## Risk Assessment & Mitigation
+
+### High-Risk Areas
+1. **Complexity Risk**: Observability stack learning curve
+   - **Probability**: High (70%)
+   - **Impact**: Medium - Delayed implementation
+   - **Mitigation**: Start with simple metrics, phased rollout, comprehensive training
+   - **Contingency**: Fallback to basic monitoring if complexity becomes overwhelming
+
+2. **Performance Risk**: Monitoring overhead on production systems
+   - **Probability**: Medium (40%)
+   - **Impact**: High - System performance degradation
+   - **Mitigation**: Careful sampling, resource limits, performance testing
+   - **Contingency**: Reduce monitoring frequency or implement circuit breakers
+
+3. **Cost Risk**: High monitoring infrastructure costs
+   - **Probability**: Low (20%)
+   - **Impact**: Medium - Budget overruns
+   - **Mitigation**: Start with open-source tools, gradual scaling
+   - **Contingency**: Optimize storage retention, implement data archiving
+
+### Medium-Risk Areas
+4. **Integration Risk**: Complex integration between multiple tools
+   - **Probability**: Medium (50%)
+   - **Impact**: Medium - Delayed functionality
+   - **Mitigation**: Use proven integration patterns, thorough testing
+   - **Contingency**: Implement integration incrementally
+
+5. **Data Loss Risk**: Monitoring data corruption or loss
+   - **Probability**: Low (30%)
+   - **Impact**: High - Loss of historical data
+   - **Mitigation**: Regular backups, data validation, redundancy
+   - **Contingency**: Data recovery procedures, alert on data anomalies
+
+### Low-Risk Areas
+6. **Vendor Risk**: Open-source tool discontinuation
+   - **Probability**: Very Low (10%)
+   - **Impact**: Low - Alternative tools available
+   - **Mitigation**: Monitor project health, maintain alternatives
+   - **Contingency**: Migration plan to alternative tools
 
 ## Implementation Strategy
 
@@ -167,6 +226,134 @@ We will implement a comprehensive observability stack using **Prometheus + Grafa
 │   Service   │───▶│    Jaeger    │───▶│   Jaeger    │───▶│   Trace     │
 │  (Traces)   │     │(Collector)  │     │(Query UI)   │     │Analysis     │
 └─────────────┘     └─────────────┘     └─────────────┘     └─────────────┘
+```
+
+### Service Integration Patterns
+
+#### Metrics Collection Integration
+```go
+// Prometheus metrics integration example
+import (
+    "github.com/prometheus/client_golang/prometheus"
+    "github.com/prometheus/client_golang/prometheus/promhttp"
+)
+
+var (
+    httpRequestsTotal = prometheus.NewCounterVec(
+        prometheus.CounterOpts{
+            Name: "http_requests_total",
+            Help: "Total number of HTTP requests",
+        },
+        []string{"method", "endpoint", "status"},
+    )
+    
+    httpRequestDuration = prometheus.NewHistogramVec(
+        prometheus.HistogramOpts{
+            Name:    "http_request_duration_seconds",
+            Help:    "HTTP request duration in seconds",
+            Buckets: prometheus.DefBuckets,
+        },
+        []string{"method", "endpoint"},
+    )
+)
+
+// Middleware for automatic metrics collection
+func MetricsMiddleware() gin.HandlerFunc {
+    return func(c *gin.Context) {
+        start := time.Now()
+        
+        c.Next()
+        
+        duration := time.Since(start).Seconds()
+        status := strconv.Itoa(c.Writer.Status())
+        
+        httpRequestsTotal.WithLabelValues(c.Request.Method, c.Request.URL.Path, status).Inc()
+        httpRequestDuration.WithLabelValues(c.Request.Method, c.Request.URL.Path).Observe(duration)
+    }
+}
+```
+
+#### Logging Integration
+```go
+// Structured logging with Loki integration
+import (
+    "go.uber.org/zap"
+    "go.uber.org/zap/zapcore"
+)
+
+func SetupLogging() *zap.Logger {
+    config := zap.NewProductionConfig()
+    config.EncoderConfig.TimeKey = "timestamp"
+    config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+    
+    logger, _ := config.Build()
+    return logger
+}
+
+// Usage in services
+func (h *Handler) ProcessOrder(c *gin.Context) {
+    logger := h.logger.With(
+        zap.String("user_id", c.GetString("user_id")),
+        zap.String("order_id", c.Param("order_id")),
+        zap.String("trace_id", c.GetHeader("X-Trace-ID")),
+    )
+    
+    logger.Info("Processing order request")
+    
+    // ... order processing logic
+    
+    logger.Info("Order processed successfully", 
+        zap.String("status", "completed"),
+        zap.Duration("processing_time", time.Since(start)),
+    )
+}
+```
+
+#### Distributed Tracing Integration
+```go
+// OpenTelemetry integration with Jaeger
+import (
+    "go.opentelemetry.io/otel"
+    "go.opentelemetry.io/otel/exporters/jaeger"
+    "go.opentelemetry.io/otel/sdk/trace"
+)
+
+func SetupTracing(serviceName string) (*trace.TracerProvider, error) {
+    // Jaeger exporter
+    exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint("http://jaeger:14268/api/traces")))
+    if err != nil {
+        return nil, err
+    }
+    
+    tp := trace.NewTracerProvider(
+        trace.WithBatcher(exp),
+        trace.WithResource(resource.NewWithAttributes(
+            semconv.SchemaURL,
+            semconv.ServiceNameKey.String(serviceName),
+        )),
+    )
+    
+    otel.SetTracerProvider(tp)
+    return tp, nil
+}
+
+// Usage in HTTP handlers
+func (h *Handler) GetUser(c *gin.Context) {
+    ctx := c.Request.Context()
+    tracer := otel.Tracer("user-service")
+    
+    ctx, span := tracer.Start(ctx, "GetUser")
+    defer span.End()
+    
+    span.SetAttributes(
+        attribute.String("user.id", c.Param("id")),
+        attribute.String("request.method", c.Request.Method),
+    )
+    
+    // ... user retrieval logic
+    
+    span.SetStatus(codes.Ok, "User retrieved successfully")
+}
 ```
 
 ## Metrics & SLI/SLO Definitions
