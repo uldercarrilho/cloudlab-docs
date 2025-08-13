@@ -324,6 +324,29 @@ We will implement a **multi-level caching architecture** using **Redis Cluster**
 - **Performance ROI**: 3x performance improvement per dollar spent
 - **Operational Overhead**: <10% of development time
 
+## Cache Key Management & Naming Conventions
+
+### 1. Cache Key Structure
+- **Format**: `{service}:{entity}:{id}:{version}`
+- **Examples**: 
+  - `product:catalog:12345:v1`
+  - `user:session:abc123:v1`
+  - `order:details:67890:v1`
+- **Versioning**: Semantic versioning for cache invalidation
+- **Namespace Separation**: Clear separation between different data types
+
+### 2. Cache Key Patterns
+- **Entity Keys**: `{entity}:{id}` for individual records
+- **Collection Keys**: `{entity}:list:{filters}` for filtered collections
+- **Relationship Keys**: `{entity}:{id}:{relation}` for related data
+- **Search Keys**: `{entity}:search:{query_hash}` for search results
+
+### 3. Cache Key Management
+- **Automatic Expiration**: TTL-based expiration with appropriate values
+- **Manual Invalidation**: Event-driven invalidation for data changes
+- **Bulk Operations**: Pattern-based invalidation for related data
+- **Key Monitoring**: Track cache key distribution and memory usage
+
 ## Cache Invalidation & Consistency Strategies
 
 ### 1. TTL-Based Expiration
@@ -364,6 +387,10 @@ We will implement a **multi-level caching architecture** using **Redis Cluster**
 - **Predictive Caching**: ML-based cache prediction algorithms
 - **Adaptive TTL**: Dynamic TTL adjustment based on access patterns
 - **Load Balancing**: Intelligent cache distribution and load sharing
+- **Compression**: Data compression for memory efficiency
+- **Serialization**: Optimized serialization formats (MessagePack, Protocol Buffers)
+- **Connection Pooling**: Efficient Redis connection management
+- **Pipeline Operations**: Batch Redis operations for improved throughput
 
 ## Operational Procedures & Runbooks
 
@@ -378,6 +405,7 @@ We will implement a **multi-level caching architecture** using **Redis Cluster**
    - Identify frequently accessed data patterns from production logs
    - Analyze user behavior and peak usage times
    - Determine cache warming priority based on access frequency
+   - Review historical cache hit/miss patterns and performance metrics
 
 2. **Cache Population Strategy**
    - **Hot Data**: Product catalog, user sessions, shopping cart data
@@ -389,14 +417,21 @@ We will implement a **multi-level caching architecture** using **Redis Cluster**
    # 1. Analyze access patterns
    redis-cli --cluster info
    redis-cli info stats | grep keyspace
+   redis-cli info keyspace
    
    # 2. Populate hot data
    curl -X POST /api/cache/warm/products
    curl -X POST /api/cache/warm/sessions
+   curl -X POST /api/cache/warm/categories
    
    # 3. Verify cache population
    redis-cli dbsize
    redis-cli info memory
+   redis-cli info keyspace
+   
+   # 4. Monitor cache performance
+   redis-cli info stats | grep keyspace_hits
+   redis-cli info stats | grep keyspace_misses
    ```
 
 4. **Validation Checklist**
@@ -404,6 +439,9 @@ We will implement a **multi-level caching architecture** using **Redis Cluster**
    - [ ] Memory usage within 80% of allocated capacity
    - [ ] Response times <100ms for cached endpoints
    - [ ] No cache evictions during normal operation
+   - [ ] All critical data types successfully cached
+   - [ ] Cache warming scripts completed without errors
+   - [ ] Performance baseline established and documented
 
 ### 2. Incident Response Procedures
 - **Cache Failures**: Response procedures for Redis cluster failures
@@ -437,22 +475,28 @@ We will implement a **multi-level caching architecture** using **Redis Cluster**
 
 #### Dashboard KPI Configuration
 1. **Performance Dashboard**
-   - Response time percentiles (P50, P95, P99)
-   - Throughput (requests/second)
-   - Cache hit/miss rates by service
-   - Error rates and timeout percentages
+   - Response time percentiles (P50, P95, P99) with trend lines
+   - Throughput (requests/second) with capacity planning indicators
+   - Cache hit/miss rates by service with historical trends
+   - Error rates and timeout percentages with alert thresholds
+   - Cache warming status and progress indicators
+   - Performance degradation alerts and notifications
 
 2. **Infrastructure Dashboard**
-   - Redis cluster health and node status
-   - Memory usage and eviction rates
-   - Network I/O and connection counts
-   - CDN performance and cache efficiency
+   - Redis cluster health and node status with failover indicators
+   - Memory usage and eviction rates with capacity warnings
+   - Network I/O and connection counts with bottleneck detection
+   - CDN performance and cache efficiency by geographic region
+   - Cache key distribution and memory allocation per data type
+   - Cluster rebalancing and sharding status
 
 3. **Business Dashboard**
-   - User experience metrics (page load times)
-   - Conversion rates and cart abandonment
-   - Peak traffic handling capacity
-   - Cost per request and ROI metrics
+   - User experience metrics (page load times) with conversion correlation
+   - Conversion rates and cart abandonment with performance impact
+   - Peak traffic handling capacity with scaling recommendations
+   - Cost per request and ROI metrics with optimization suggestions
+   - Geographic performance analysis and user satisfaction scores
+   - Business impact of performance improvements and caching effectiveness
 
 ## Cost-Benefit Analysis
 
