@@ -7,7 +7,6 @@
 ## 📋 Available Tasks
 
 ### High Priority
-- **[TASK-009](../tasks/TASK-009-security-authentication-adr.md)** - Create ADR for Security & Authentication (3 days)
 - **[TASK-010](../tasks/TASK-010-cicd-deployment-adr.md)** - Create ADR for CI/CD & Deployment (3 days)
 
 ### Medium Priority
@@ -27,7 +26,6 @@
 
 | Task ID | Title | Priority | Effort | Type | Status |
 |---------|-------|----------|--------|------|--------|
-| TASK-009 | Security & Authentication ADR | High | 3 days | Research/Infrastructure | Ready |
 | TASK-010 | CI/CD & Deployment ADR | High | 3 days | Research/Infrastructure | Ready |
 | TASK-011 | Performance & Caching ADR | Medium | 3 days | Research/Infrastructure | Ready |
 | TASK-012 | Search & Analytics ADR | Medium | 3 days | Research/Infrastructure | Ready |
@@ -49,13 +47,13 @@
 
 ## 📊 Ready Queue Health
 
-- **Total Ready Tasks**: 9
-- **High Priority**: 2
+- **Total Ready Tasks**: 8
+- **High Priority**: 1
 - **Medium Priority**: 4
 - **Low Priority**: 3
 - **Average Age**: 0 days (recently created)
-- **Total Effort**: 28 days
-- **High Priority Effort**: 9 days
+- **Total Effort**: 25 days
+- **High Priority Effort**: 6 days
 - **Medium Priority Effort**: 13 days
 - **Low Priority Effort**: 8 days
 
