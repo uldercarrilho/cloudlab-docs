@@ -1,8 +1,8 @@
 # ADR-011: Performance & Caching Architecture
 
 ## Status
-**Status**: Draft  
-**Date**: 2025-01-27
+**Status**: Accepted  
+**Date**: 2025-08-13
 **Author**: AI Agent (Ulder Carrilho Júnior oversight)  
 **Supersedes**: None  
 
@@ -365,6 +365,26 @@ We will implement a **multi-level caching architecture** using **Redis Cluster**
 - **Adaptive TTL**: Dynamic TTL adjustment based on access patterns
 - **Load Balancing**: Intelligent cache distribution and load sharing
 
+## Operational Procedures & Runbooks
+
+### 1. Cache Management Operations
+- **Cache Warming Procedures**: Step-by-step cache population for new deployments
+- **Cache Invalidation Runbook**: Procedures for manual cache clearing and updates
+- **Performance Tuning**: Guidelines for adjusting TTL values and eviction policies
+- **Capacity Planning**: Procedures for monitoring and scaling cache infrastructure
+
+### 2. Incident Response Procedures
+- **Cache Failures**: Response procedures for Redis cluster failures
+- **Performance Degradation**: Troubleshooting steps for slow response times
+- **CDN Issues**: Procedures for CloudFlare configuration and troubleshooting
+- **Data Consistency Issues**: Steps for resolving cache inconsistency problems
+
+### 3. Monitoring & Alerting Setup
+- **Alert Configuration**: Specific alert thresholds and escalation procedures
+- **Dashboard Setup**: Key performance indicators and monitoring views
+- **Log Analysis**: Procedures for analyzing cache performance logs
+- **Capacity Alerts**: Memory usage and connection limit monitoring
+
 ## Cost-Benefit Analysis
 
 ### Infrastructure Costs
@@ -384,6 +404,195 @@ We will implement a **multi-level caching architecture** using **Redis Cluster**
 - **Monthly Savings**: $2,000-5,000 (reduced infrastructure costs)
 - **Break-even Period**: 2-5 months
 - **Annual ROI**: 200-500% return on investment
+
+## Integration Patterns & Examples
+
+### 1. Service Integration Patterns
+- **API Gateway Integration**: Cache responses at the gateway level for common requests
+- **Microservice Communication**: Inter-service caching for shared data and responses
+- **Database Integration**: Query result caching with automatic invalidation
+- **Session Management**: Distributed session storage across multiple services
+
+### 2. Cache Implementation Examples
+
+#### Cache-Aside Pattern ✅ **Selected**
+```go
+// Redis Cache-Aside Pattern Example
+func GetProductDetails(productID string) (*Product, error) {
+    // Try cache first
+    cacheKey := fmt.Sprintf("product:%s", productID)
+    if cached, err := redis.Get(cacheKey); err == nil {
+        var product Product
+        if json.Unmarshal([]byte(cached), &product) == nil {
+            return &product, nil
+        }
+    }
+    
+    // Cache miss - fetch from database
+    product, err := db.GetProduct(productID)
+    if err != nil {
+        return nil, err
+    }
+    
+    // Update cache
+    if data, err := json.Marshal(product); err == nil {
+        redis.SetEx(cacheKey, string(data), 3600) // 1 hour TTL
+    }
+    
+    return product, nil
+}
+```
+
+#### Write-Through Pattern ❌ **Rejected**
+```go
+// Write-Through Pattern Example (for reference)
+func UpdateProductDetails(productID string, updates ProductUpdates) error {
+    // Update database first
+    product, err := db.UpdateProduct(productID, updates)
+    if err != nil {
+        return err
+    }
+    
+    // Synchronously update cache
+    cacheKey := fmt.Sprintf("product:%s", productID)
+    if data, err := json.Marshal(product); err == nil {
+        // This synchronous write can impact performance
+        err = redis.SetEx(cacheKey, string(data), 3600)
+        if err != nil {
+            log.Printf("Cache update failed for product %s: %v", productID, err)
+            // Consider if you want to fail the entire operation
+        }
+    }
+    
+    return nil
+}
+```
+
+#### Write-Behind Pattern ❌ **Rejected**
+```go
+// Write-Behind Pattern Example (for reference)
+type CacheUpdate struct {
+    Key   string
+    Value interface{}
+    TTL   time.Duration
+}
+
+var updateQueue = make(chan CacheUpdate, 1000)
+
+// Start background processor
+func StartCacheProcessor() {
+    go func() {
+        for update := range updateQueue {
+            if err := processCacheUpdate(update); err != nil {
+                log.Printf("Cache update failed: %v", err)
+                // Implement retry logic here
+            }
+        }
+    }()
+}
+
+func UpdateProductWithWriteBehind(productID string, updates ProductUpdates) error {
+    // Update cache immediately for fast response
+    product, err := db.GetProduct(productID)
+    if err != nil {
+        return err
+    }
+    
+    // Apply updates to product
+    product.ApplyUpdates(updates)
+    
+    // Update cache immediately
+    cacheKey := fmt.Sprintf("product:%s", productID)
+    if data, err := json.Marshal(product); err == nil {
+        redis.SetEx(cacheKey, string(data), 3600)
+    }
+    
+    // Queue database update for background processing
+    go func() {
+        if err := db.UpdateProduct(productID, updates); err != nil {
+            log.Printf("Background update failed: %v", err)
+            // Queue for retry
+            updateQueue <- CacheUpdate{
+                Key:   cacheKey,
+                Value: product,
+                TTL:   3600,
+            }
+        }
+    }()
+    
+    return nil
+}
+
+func processCacheUpdate(update CacheUpdate) error {
+    // Process queued cache updates
+    if data, err := json.Marshal(update.Value); err == nil {
+        return redis.SetEx(update.Key, string(data), update.TTL)
+    }
+    return fmt.Errorf("failed to marshal cache value")
+}
+```
+
+#### Refresh-Ahead Pattern ❌ **Rejected**
+```go
+// Refresh-Ahead Pattern Example (for reference)
+type CacheEntry struct {
+    Value      interface{}
+    ExpiresAt  time.Time
+    Refreshed  bool
+}
+
+func GetProductWithRefreshAhead(productID string) (*Product, error) {
+    cacheKey := fmt.Sprintf("product:%s", productID)
+    
+    // Check if we need to refresh proactively
+    if shouldRefreshAhead(cacheKey) {
+        go refreshCacheAhead(productID, cacheKey)
+    }
+    
+    // Return cached value (may be stale but available)
+    if cached, err := redis.Get(cacheKey); err == nil {
+        var product Product
+        if json.Unmarshal([]byte(cached), &product) == nil {
+            return &product, nil
+        }
+    }
+    
+    // Fallback to database if cache is empty
+    return db.GetProduct(productID)
+}
+
+func shouldRefreshAhead(cacheKey string) bool {
+    // Check if cache entry is approaching expiration
+    ttl, err := redis.TTL(cacheKey)
+    if err != nil {
+        return false
+    }
+    
+    // Refresh if TTL is less than 10% of original TTL
+    return ttl < 360 // 10% of 1 hour (3600 seconds)
+}
+
+func refreshCacheAhead(productID, cacheKey string) {
+    // Fetch fresh data from database
+    product, err := db.GetProduct(productID)
+    if err != nil {
+        log.Printf("Refresh-ahead failed for product %s: %v", productID, err)
+        return
+    }
+    
+    // Update cache with fresh data
+    if data, err := json.Marshal(product); err == nil {
+        redis.SetEx(cacheKey, string(data), 3600)
+        log.Printf("Cache refreshed ahead for product %s", productID)
+    }
+}
+```
+
+### 3. CDN Integration Examples
+- **Cache Headers**: Proper HTTP cache control headers for different content types
+- **Edge Computing**: CloudFlare Workers for dynamic content optimization
+- **Origin Shielding**: Reducing origin server load through intelligent caching
+- **Geographic Distribution**: Optimizing content delivery based on user location
 
 ## Implementation Roadmap
 
@@ -410,6 +619,26 @@ We will implement a **multi-level caching architecture** using **Redis Cluster**
 - [ ] Performance baseline establishment
 - [ ] Monitoring and alerting setup
 - [ ] Documentation and training
+
+## Testing & Validation Strategies
+
+### 1. Performance Testing
+- **Load Testing**: Simulate 10x traffic spikes to validate scalability
+- **Latency Testing**: Measure response times under various load conditions
+- **Cache Hit Rate Testing**: Validate cache effectiveness and hit rates
+- **Stress Testing**: Test system behavior under extreme conditions
+
+### 2. Cache Validation
+- **Data Consistency Testing**: Verify cache invalidation and data freshness
+- **Failover Testing**: Test Redis cluster failover scenarios
+- **Memory Pressure Testing**: Validate eviction policies under memory constraints
+- **Network Partition Testing**: Test behavior during network failures
+
+### 3. CDN Validation
+- **Global Performance Testing**: Measure performance across different geographic regions
+- **Cache Rule Testing**: Validate CDN caching behavior and rules
+- **Edge Computing Testing**: Test CloudFlare Workers functionality
+- **Security Testing**: Validate DDoS protection and WAF functionality
 
 ## Risk Assessment & Mitigation
 
