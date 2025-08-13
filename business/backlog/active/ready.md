@@ -7,7 +7,6 @@
 ## 📋 Available Tasks
 
 ### High Priority
-- **[TASK-010](../tasks/TASK-010-cicd-deployment-adr.md)** - Create ADR for CI/CD & Deployment (3 days)
 
 ### Medium Priority
 - **[TASK-011](../tasks/TASK-011-performance-caching-adr.md)** - Create ADR for Performance & Caching (3 days)
@@ -26,7 +25,6 @@
 
 | Task ID | Title | Priority | Effort | Type | Status |
 |---------|-------|----------|--------|------|--------|
-| TASK-010 | CI/CD & Deployment ADR | High | 3 days | Research/Infrastructure | Ready |
 | TASK-011 | Performance & Caching ADR | Medium | 3 days | Research/Infrastructure | Ready |
 | TASK-012 | Search & Analytics ADR | Medium | 3 days | Research/Infrastructure | Ready |
 | TASK-013 | Multi-Region & Global Distribution ADR | Medium | 4 days | Research/Infrastructure | Ready |
@@ -47,14 +45,14 @@
 
 ## 📊 Ready Queue Health
 
-- **Total Ready Tasks**: 8
+- **Total Ready Tasks**: 7
 - **High Priority**: 1
-- **Medium Priority**: 4
+- **Medium Priority**: 3
 - **Low Priority**: 3
 - **Average Age**: 0 days (recently created)
-- **Total Effort**: 25 days
-- **High Priority Effort**: 6 days
-- **Medium Priority Effort**: 13 days
+- **Total Effort**: 22 days
+- **High Priority Effort**: 3 days
+- **Medium Priority Effort**: 10 days
 - **Low Priority Effort**: 8 days
 
 ## 🤖 AI Agent Instructions
