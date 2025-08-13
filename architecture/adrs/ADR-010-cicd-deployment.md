@@ -80,6 +80,93 @@ We will implement a comprehensive CI/CD architecture using **GitHub Actions** fo
 
 ## CI/CD Architecture Components
 
+## Deployment Strategy Selector
+
+### Overview
+The deployment strategy selector provides a unified interface to choose and configure different deployment strategies for each deployment. This allows developers and operators to practice and experiment with various deployment patterns while maintaining consistent tooling and monitoring.
+
+### Strategy Selection Methods
+1. **GitHub Pull Request Labels**: Use PR labels to specify deployment strategy
+2. **Deployment Configuration Files**: YAML/JSON configuration in deployment manifests
+3. **Command Line Interface**: CLI tools for manual strategy selection
+4. **Web Dashboard**: ArgoCD dashboard for strategy selection and monitoring
+5. **API Endpoints**: REST API for automated strategy selection
+
+### Supported Deployment Strategies
+
+#### 1. Blue-Green Deployment
+- **Use Case**: Zero-downtime deployments with instant rollback
+- **Configuration**: 
+  ```yaml
+  strategy: blue-green
+  healthCheckPath: /health
+  rollbackThreshold: 30s
+  cleanupOldVersions: true
+  ```
+- **Benefits**: Instant rollback, no downtime, simple to understand
+- **Learning Value**: Foundation deployment pattern for distributed systems
+
+#### 2. Canary Deployment
+- **Use Case**: Gradual rollout with monitoring and controlled risk
+- **Configuration**:
+  ```yaml
+  strategy: canary
+  initialTraffic: 5%
+  maxTraffic: 100%
+  stepSize: 10%
+  stepInterval: 5m
+  healthCheckPath: /health
+  rollbackThreshold: 2% error rate
+  ```
+- **Benefits**: Risk mitigation, gradual validation, performance monitoring
+- **Learning Value**: Traffic management and gradual rollout patterns
+
+#### 3. Rolling Deployment
+- **Use Case**: Incremental updates with health checks
+- **Configuration**:
+  ```yaml
+  strategy: rolling
+  maxUnavailable: 1
+  maxSurge: 1
+  healthCheckPath: /health
+  healthCheckTimeout: 30s
+  ```
+- **Benefits**: Resource efficient, continuous availability, gradual updates
+- **Learning Value**: Resource management and health check patterns
+
+#### 4. A/B Testing Deployment
+- **Use Case**: Split traffic between versions for user experience testing
+- **Configuration**:
+  ```yaml
+  strategy: ab-testing
+  trafficSplit:
+    version-a: 50%
+    version-b: 50%
+  duration: 24h
+  metrics:
+    - response_time
+    - error_rate
+    - user_satisfaction
+  ```
+- **Benefits**: User experience validation, data-driven decisions, controlled experimentation
+- **Learning Value**: Traffic splitting and metrics analysis
+
+#### 5. Feature Flag Deployment
+- **Use Case**: Gradual feature rollout with instant control
+- **Configuration**:
+  ```yaml
+  strategy: feature-flag
+  flags:
+    - name: new-feature
+      rollout: gradual
+      targetUsers: 20%
+      conditions:
+        - userType: premium
+        - region: us-east
+  ```
+- **Benefits**: Instant feature control, user targeting, gradual rollout
+- **Learning Value**: Feature management and user targeting patterns
+
 ### 1. Continuous Integration Pipeline
 - **Source Control**: GitHub with branch protection and required reviews
 - **Build Automation**: GitHub Actions with multi-stage builds
@@ -97,9 +184,12 @@ We will implement a comprehensive CI/CD architecture using **GitHub Actions** fo
 - **Alerting**: PagerDuty integration for deployment failures
 
 ### 3. Deployment Strategies
+- **Deployment Strategy Selector**: Configurable deployment strategy per deployment
 - **Blue-Green Deployment**: Zero-downtime deployments with instant rollback
+- **Canary Deployment**: Gradual traffic shifting with monitoring and rollback
+- **Rolling Deployment**: Incremental updates with health checks
+- **A/B Testing**: Split traffic between versions for user experience testing
 - **Feature Flags**: LaunchDarkly integration for gradual feature rollouts
-- **Canary Testing**: Traffic splitting for risk mitigation
 - **Rollback Automation**: Automated rollback on health check failures
 - **Database Migrations**: Automated schema updates with rollback support
 - **Configuration Management**: Environment-specific configuration injection
@@ -113,6 +203,230 @@ We will implement a comprehensive CI/CD architecture using **GitHub Actions** fo
 - **Cost Optimization**: Resource tagging and cost monitoring
 
 ## Implementation Strategy
+
+## Deployment Strategy Implementation
+
+### GitHub Actions Workflow with Strategy Selection
+
+```yaml
+name: Deploy with Strategy Selection
+on:
+  pull_request:
+    types: [labeled, unlabeled]
+  workflow_dispatch:
+    inputs:
+      strategy:
+        description: 'Deployment Strategy'
+        required: true
+        default: 'blue-green'
+        type: choice
+        options:
+          - blue-green
+          - canary
+          - rolling
+          - ab-testing
+          - feature-flag
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine Strategy
+        id: strategy
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "strategy=${{ github.event.inputs.strategy }}" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event_name }}" = "pull_request" ]; then
+            # Extract strategy from PR labels
+            if [[ "${{ github.event.pull_request.labels.*.name }}" == *"deploy:blue-green"* ]]; then
+              echo "strategy=blue-green" >> $GITHUB_OUTPUT
+            elif [[ "${{ github.event.pull_request.labels.*.name }}" == *"deploy:canary"* ]]; then
+              echo "strategy=canary" >> $GITHUB_OUTPUT
+            elif [[ "${{ github.event.pull_request.labels.*.name }}" == *"deploy:rolling"* ]]; then
+              echo "strategy=rolling" >> $GITHUB_OUTPUT
+            elif [[ "${{ github.event.pull_request.labels.*.name }}" == *"deploy:ab-testing"* ]]; then
+              echo "strategy=ab-testing" >> $GITHUB_OUTPUT
+            elif [[ "${{ github.event.pull_request.labels.*.name }}" == *"deploy:feature-flag"* ]]; then
+              echo "strategy=feature-flag" >> $GITHUB_OUTPUT
+            else
+              echo "strategy=blue-green" >> $GITHUB_OUTPUT
+            fi
+          fi
+          echo "Selected strategy: ${{ steps.strategy.outputs.strategy }}"
+
+      - name: Deploy with Selected Strategy
+        run: |
+          echo "Deploying using ${{ steps.strategy.outputs.strategy }} strategy"
+          # Call appropriate deployment script based on strategy
+          ./scripts/deploy-${{ steps.strategy.outputs.strategy }}.sh
+```
+
+### Strategy-Specific Deployment Scripts
+
+#### Blue-Green Deployment Script
+```bash
+#!/bin/bash
+# scripts/deploy-blue-green.sh
+
+STRATEGY="blue-green"
+HEALTH_CHECK_PATH="/health"
+ROLLBACK_THRESHOLD=30
+
+echo "Starting Blue-Green deployment..."
+
+# Deploy new version (green)
+kubectl apply -f k8s/green-deployment.yaml
+kubectl apply -f k8s/green-service.yaml
+
+# Wait for green deployment to be ready
+kubectl wait --for=condition=available --timeout=300s deployment/green-deployment
+
+# Run health checks
+echo "Running health checks on green deployment..."
+for i in {1..10}; do
+  if curl -f "http://green-service$HEALTH_CHECK_PATH" > /dev/null 2>&1; then
+    echo "Health check passed"
+    break
+  fi
+  if [ $i -eq 10 ]; then
+    echo "Health check failed, rolling back..."
+    ./scripts/rollback.sh
+    exit 1
+  fi
+  sleep 3
+done
+
+# Switch traffic to green
+echo "Switching traffic to green deployment..."
+kubectl patch service main-service -p '{"spec":{"selector":{"version":"green"}}}'
+
+# Verify traffic switch
+echo "Verifying traffic switch..."
+sleep 10
+if curl -f "http://main-service$HEALTH_CHECK_PATH" > /dev/null 2>&1; then
+  echo "Blue-Green deployment successful!"
+  # Clean up blue deployment
+  kubectl delete -f k8s/blue-deployment.yaml
+  kubectl delete -f k8s/blue-service.yaml
+else
+  echo "Traffic switch failed, rolling back..."
+  ./scripts/rollback.sh
+  exit 1
+fi
+```
+
+#### Canary Deployment Script
+```bash
+#!/bin/bash
+# scripts/deploy-canary.sh
+
+STRATEGY="canary"
+INITIAL_TRAFFIC=5
+MAX_TRAFFIC=100
+STEP_SIZE=10
+STEP_INTERVAL=300
+HEALTH_CHECK_PATH="/health"
+ERROR_THRESHOLD=2
+
+echo "Starting Canary deployment..."
+
+# Deploy canary version
+kubectl apply -f k8s/canary-deployment.yaml
+
+# Initial traffic shift
+echo "Shifting $INITIAL_TRAFFIC% traffic to canary..."
+kubectl patch service main-service -p "{\"spec\":{\"selector\":{\"version\":\"canary\"}}}"
+
+current_traffic=$INITIAL_TRAFFIC
+
+while [ $current_traffic -lt $MAX_TRAFFIC ]; do
+  echo "Current canary traffic: $current_traffic%"
+  
+  # Monitor for specified interval
+  echo "Monitoring for $STEP_INTERVAL seconds..."
+  sleep $STEP_INTERVAL
+  
+  # Check error rate
+  error_rate=$(./scripts/check-error-rate.sh)
+  echo "Current error rate: $error_rate%"
+  
+  if (( $(echo "$error_rate > $ERROR_THRESHOLD" | bc -l) )); then
+    echo "Error rate $error_rate% exceeds threshold $ERROR_THRESHOLD%, rolling back..."
+    ./scripts/rollback.sh
+    exit 1
+  fi
+  
+  # Increase traffic
+  current_traffic=$((current_traffic + STEP_SIZE))
+  if [ $current_traffic -gt $MAX_TRAFFIC ]; then
+    current_traffic=$MAX_TRAFFIC
+  fi
+  
+  echo "Increasing canary traffic to $current_traffic%..."
+  # Update traffic split
+  kubectl patch service main-service -p "{\"spec\":{\"selector\":{\"version\":\"canary\"}}}"
+done
+
+echo "Canary deployment completed successfully!"
+```
+
+### ArgoCD Application with Strategy Selection
+
+```yaml
+# k8s/argocd-app.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ecommerce-platform
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/your-org/cloudlab
+    targetRevision: HEAD
+    path: k8s/overlays/production
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: production
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  # Strategy selection via annotations
+  metadata:
+    annotations:
+      deployment.strategy: "blue-green"  # Can be: blue-green, canary, rolling, ab-testing, feature-flag
+      deployment.healthCheckPath: "/health"
+      deployment.rollbackThreshold: "30s"
+      deployment.canary.initialTraffic: "5%"
+      deployment.canary.stepSize: "10%"
+      deployment.canary.stepInterval: "5m"
+```
+
+### Strategy Selection via Pull Request Labels
+
+To use different deployment strategies, simply add the appropriate label to your pull request:
+
+- **`deploy:blue-green`** - Zero-downtime deployment with instant rollback
+- **`deploy:canary`** - Gradual rollout with monitoring
+- **`deploy:rolling`** - Incremental updates with health checks
+- **`deploy:ab-testing`** - Split traffic for user experience testing
+- **`deploy:feature-flag`** - Feature flag controlled rollout
+
+### Manual Strategy Selection via CLI
+
+```bash
+# Deploy with specific strategy
+./scripts/deploy.sh --strategy canary --config configs/canary-config.yaml
+
+# List available strategies
+./scripts/deploy.sh --list-strategies
+
+# Get strategy help
+./scripts/deploy.sh --strategy canary --help
+```
 
 ### Phase 1: Foundation (Week 1-2)
 1. **GitHub Actions Setup**: Configure CI pipeline with basic build and test
@@ -289,6 +603,163 @@ We will implement a comprehensive CI/CD architecture using **GitHub Actions** fo
 - **Security**: Advanced security features and compliance
 - **Compliance**: Automated compliance and audit capabilities
 - **Governance**: Advanced governance and policy management
+
+## Quick Reference: Deployment Strategy Selection
+
+### Strategy Selection Cheat Sheet
+
+| Strategy | When to Use | Risk Level | Rollback Speed | Learning Focus |
+|----------|-------------|------------|----------------|----------------|
+| **Blue-Green** | Production releases, zero-downtime | Low | Instant | Zero-downtime patterns |
+| **Canary** | Gradual rollout, risk mitigation | Medium | Fast | Traffic management |
+| **Rolling** | Resource efficiency, continuous updates | Low | Medium | Resource management |
+| **A/B Testing** | User experience validation | Low | Fast | Metrics and analysis |
+| **Feature Flag** | Instant control, user targeting | Low | Instant | Feature management |
+
+### Quick Strategy Selection
+
+#### For Learning and Practice
+```bash
+# Practice Blue-Green deployment
+./scripts/deploy.sh --strategy blue-green --practice
+
+# Practice Canary deployment with custom config
+./scripts/deploy.sh --strategy canary --config configs/learning-canary.yaml
+
+# Practice Rolling deployment
+./scripts/deploy.sh --strategy rolling --practice
+
+# Practice A/B Testing
+./scripts/deploy.sh --strategy ab-testing --config configs/ab-test.yaml
+
+# Practice Feature Flag deployment
+./scripts/deploy.sh --strategy feature-flag --config configs/feature-flag.yaml
+```
+
+#### For Production Use
+```bash
+# Safe production deployment
+./scripts/deploy.sh --strategy blue-green --env production
+
+# Risk-averse deployment
+./scripts/deploy.sh --strategy canary --env production --initial-traffic 1
+
+# Resource-efficient deployment
+./scripts/deploy.sh --strategy rolling --env production
+
+# User experience testing
+./scripts/deploy.sh --strategy ab-testing --env production --duration 2h
+
+# Controlled feature rollout
+./scripts/deploy.sh --strategy feature-flag --env production --target-users 10%
+```
+
+## Learning and Practice Opportunities
+
+### Deployment Strategy Practice Scenarios
+
+#### 1. Blue-Green Deployment Practice
+- **Scenario**: Deploy a new version of the user authentication service
+- **Learning Goals**: 
+  - Understand zero-downtime deployment patterns
+  - Practice instant rollback procedures
+  - Learn health check implementation
+- **Practice Steps**:
+  1. Deploy new version alongside existing version
+  2. Run comprehensive health checks
+  3. Switch traffic when ready
+  4. Practice rollback on simulated failure
+
+#### 2. Canary Deployment Practice
+- **Scenario**: Deploy a new payment processing algorithm
+- **Learning Goals**:
+  - Understand gradual rollout patterns
+  - Practice traffic management and monitoring
+  - Learn error rate monitoring and thresholds
+- **Practice Steps**:
+  1. Deploy to 5% of users initially
+  2. Monitor error rates and performance
+  3. Gradually increase traffic based on metrics
+  4. Practice rollback on threshold violations
+
+#### 3. Rolling Deployment Practice
+- **Scenario**: Update the product catalog service
+- **Learning Goals**:
+  - Understand incremental update patterns
+  - Practice resource management
+  - Learn health check timeouts and intervals
+- **Practice Steps**:
+  1. Update one pod at a time
+  2. Monitor health checks between updates
+  3. Practice handling failed updates
+  4. Learn resource efficiency patterns
+
+#### 4. A/B Testing Deployment Practice
+- **Scenario**: Test new checkout flow design
+- **Learning Goals**:
+  - Understand traffic splitting patterns
+  - Practice metrics collection and analysis
+  - Learn user experience validation
+- **Practice Steps**:
+  1. Deploy both versions simultaneously
+  2. Split traffic 50/50
+  3. Collect user experience metrics
+  4. Analyze results and make decisions
+
+#### 5. Feature Flag Deployment Practice
+- **Scenario**: Roll out new search algorithm
+- **Learning Goals**:
+  - Understand feature flag patterns
+  - Practice user targeting and segmentation
+  - Learn instant feature control
+- **Practice Steps**:
+  1. Deploy with feature flag disabled
+  2. Enable for specific user segments
+  3. Monitor performance and user feedback
+  4. Practice instant rollback via flags
+
+### Practice Environment Setup
+
+#### Development Environment
+```bash
+# Set up local Kubernetes cluster
+kind create cluster --name deployment-practice
+
+# Install ArgoCD
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+# Install Istio for traffic management
+istioctl install --set profile=demo -y
+
+# Deploy sample applications
+kubectl apply -f k8s/sample-apps/
+```
+
+#### Practice Workflow
+1. **Choose Strategy**: Select deployment strategy for current practice session
+2. **Configure Parameters**: Set strategy-specific configuration
+3. **Execute Deployment**: Run deployment with selected strategy
+4. **Monitor Progress**: Watch deployment progress and metrics
+5. **Practice Rollback**: Intentionally trigger rollback scenarios
+6. **Analyze Results**: Review deployment metrics and learnings
+7. **Document Learnings**: Record insights and best practices
+
+### Metrics and Monitoring for Learning
+
+#### Deployment Success Metrics
+- **Deployment Time**: Time from start to completion
+- **Rollback Frequency**: How often rollbacks occur
+- **Error Rates**: Error rates during deployment
+- **User Impact**: User experience during deployment
+- **Resource Usage**: Resource consumption patterns
+
+#### Learning Progress Tracking
+- **Strategy Mastery**: Track proficiency with each strategy
+- **Common Mistakes**: Document and learn from errors
+- **Best Practices**: Build personal deployment playbook
+- **Tool Proficiency**: Master deployment tools and scripts
+- **Troubleshooting**: Develop debugging and problem-solving skills
 
 ## Conclusion
 
