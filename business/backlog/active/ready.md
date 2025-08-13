@@ -7,7 +7,6 @@
 ## 📋 Available Tasks
 
 ### High Priority
-- **[TASK-008](../tasks/TASK-008-monitoring-observability-adr.md)** - Create ADR for Monitoring & Observability (3 days)
 - **[TASK-009](../tasks/TASK-009-security-authentication-adr.md)** - Create ADR for Security & Authentication (3 days)
 - **[TASK-010](../tasks/TASK-010-cicd-deployment-adr.md)** - Create ADR for CI/CD & Deployment (3 days)
 
@@ -28,7 +27,6 @@
 
 | Task ID | Title | Priority | Effort | Type | Status |
 |---------|-------|----------|--------|------|--------|
-| TASK-008 | Monitoring & Observability ADR | High | 3 days | Research/Infrastructure | Ready |
 | TASK-009 | Security & Authentication ADR | High | 3 days | Research/Infrastructure | Ready |
 | TASK-010 | CI/CD & Deployment ADR | High | 3 days | Research/Infrastructure | Ready |
 | TASK-011 | Performance & Caching ADR | Medium | 3 days | Research/Infrastructure | Ready |
@@ -51,13 +49,13 @@
 
 ## 📊 Ready Queue Health
 
-- **Total Ready Tasks**: 10
-- **High Priority**: 3
+- **Total Ready Tasks**: 9
+- **High Priority**: 2
 - **Medium Priority**: 4
 - **Low Priority**: 3
 - **Average Age**: 0 days (recently created)
-- **Total Effort**: 31 days
-- **High Priority Effort**: 12 days
+- **Total Effort**: 28 days
+- **High Priority Effort**: 9 days
 - **Medium Priority Effort**: 13 days
 - **Low Priority Effort**: 8 days
 
@@ -80,16 +78,15 @@ When picking up tasks from this queue:
 
 ### Recommended Task Sequence
 For optimal learning and dependency management:
-1. **TASK-008**: Monitoring & Observability ADR (operational visibility)
-2. **TASK-009**: Security & Authentication ADR (security foundation)
-3. **TASK-010**: CI/CD & Deployment ADR (delivery pipeline)
-4. **TASK-011**: Performance & Caching ADR (optimization)
-5. **TASK-012**: Search & Analytics ADR (data insights)
-6. **TASK-013**: Multi-Region & Global Distribution ADR (scaling)
-7. **TASK-014**: Testing & Quality Assurance ADR (quality)
-8. **TASK-015**: Compliance & Regulatory Requirements ADR (governance)
-9. **TASK-016**: Documentation & Knowledge Management ADR (knowledge)
-10. **TASK-017**: Business Continuity & Disaster Recovery ADR (resilience)
+1. **TASK-009**: Security & Authentication ADR (security foundation)
+2. **TASK-010**: CI/CD & Deployment ADR (delivery pipeline)
+3. **TASK-011**: Performance & Caching ADR (optimization)
+4. **TASK-012**: Search & Analytics ADR (data insights)
+5. **TASK-013**: Multi-Region & Global Distribution ADR (scaling)
+6. **TASK-014**: Testing & Quality Assurance ADR (quality)
+7. **TASK-015**: Compliance & Regulatory Requirements ADR (governance)
+8. **TASK-016**: Documentation & Knowledge Management ADR (knowledge)
+9. **TASK-017**: Business Continuity & Disaster Recovery ADR (resilience)
 
 ## 🔄 Queue Management
 
