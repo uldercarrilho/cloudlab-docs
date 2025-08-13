@@ -574,13 +574,24 @@ spec:
 ### Business Metrics Alignment with Business Rules
 Our monitoring dashboards ensure comprehensive coverage of all business metrics specified in the business rules (see BUSINESS-RULES-001-ecommerce-platform.md):
 
-- **User Management** (Section 3.1): Customer registration rates, authentication success/failure rates, MFA adoption, session management metrics
-- **Product & Catalog** (Section 3.2): Product creation rates, category performance, inventory turnover, vendor product limits
-- **Order Processing** (Section 3.3): Order volume, fulfillment rates, shipping performance, return rates, saga pattern monitoring
-- **Payment Processing** (Section 3.4): Transaction success rates, fraud detection metrics, payment method distribution, PCI DSS compliance
-- **Multi-tenancy** (Section 3.6): Vendor performance metrics, commission tracking, payout efficiency, tenant isolation monitoring
-- **Social Features** (Section 3.7): Review submission rates, moderation efficiency, recommendation accuracy, user-generated content metrics
-- **Compliance** (Section 6.1-6.3): GDPR consent rates, data deletion requests, PCI DSS compliance metrics, tax compliance monitoring
+#### **Core Business Operations Monitoring**
+- **User Management** (Section 3.1): Customer registration rates, authentication success/failure rates, MFA adoption, session management metrics, account lockout monitoring, password policy compliance
+- **Product & Catalog** (Section 3.2): Product creation rates, category performance, inventory turnover, vendor product limits, approval workflow monitoring, pricing change tracking
+- **Order Processing** (Section 3.3): Order volume, fulfillment rates, shipping performance, return rates, saga pattern monitoring, order status transition tracking, inventory reservation monitoring
+- **Payment Processing** (Section 3.4): Transaction success rates, fraud detection metrics, payment method distribution, PCI DSS compliance, authorization failure rates, refund processing times
+- **Shipping & Fulfillment** (Section 3.5): Shipping method performance, warehouse operations efficiency, same-day shipping success rates, international shipping compliance
+- **Multi-tenancy** (Section 3.6): Vendor performance metrics, commission tracking, payout efficiency, tenant isolation monitoring, vendor verification workflow monitoring
+- **Social Features** (Section 3.7): Review submission rates, moderation efficiency, recommendation accuracy, user-generated content metrics, review response times
+
+#### **Compliance & Regulatory Monitoring**
+- **Data Protection** (Section 6.1): GDPR consent rates, data deletion requests, data portability processing, consent change tracking, data retention compliance
+- **Payment Compliance** (Section 6.2): PCI DSS compliance metrics, fraud prevention effectiveness, security incident response times, access control monitoring
+- **Tax Compliance** (Section 6.3): Tax calculation accuracy, tax reporting compliance, international tax compliance, exemption tracking
+
+#### **Cross-Service Business Rules Monitoring**
+- **Data Consistency** (Section 5.1): Event ordering compliance, eventual consistency monitoring, data synchronization performance
+- **Transaction Boundaries** (Section 5.2): Saga pattern completion rates, compensation action effectiveness, distributed transaction performance
+- **Error Handling** (Section 5.3): Business rule violation rates, validation error patterns, circuit breaker effectiveness, graceful degradation monitoring
 
 This alignment ensures that all business rules are properly monitored and measured for operational excellence, with direct traceability to specific business rule sections.
 
@@ -607,6 +618,8 @@ Our monitoring and observability stack provides comprehensive coverage for all c
 - **Data Portability**: Monitor data export request processing times
 - **Consent Management**: Track user consent changes and opt-out rates
 - **Data Retention**: Monitor compliance with retention policies (2 years for analytics, 7 years for business data)
+- **Right to Object**: Track processing objection requests and compliance
+- **Data Breach Monitoring**: Monitor data breach detection and notification compliance
 
 #### **PCI DSS Compliance Monitoring** (Section 6.2)
 - **Payment Processing Security**: Monitor payment gateway health and security metrics
@@ -614,6 +627,8 @@ Our monitoring and observability stack provides comprehensive coverage for all c
 - **Access Control**: Monitor authentication and authorization patterns
 - **Data Encryption**: Verify encryption status for all payment-related data
 - **Security Incident Response**: Track security incident detection and resolution times
+- **Regular Security Testing**: Monitor security testing schedules and results
+- **Incident Response Procedures**: Track incident response plan execution effectiveness
 
 #### **SOC2 Compliance Monitoring** (Development Plan Section 4.3)
 - **System Availability**: Monitor 99.9% uptime requirements
@@ -621,6 +636,8 @@ Our monitoring and observability stack provides comprehensive coverage for all c
 - **Change Management**: Monitor deployment success rates and rollback frequency
 - **Incident Response**: Track incident detection and resolution metrics
 - **Capacity Planning**: Monitor resource utilization and scaling metrics
+- **Security Controls**: Monitor security control effectiveness and compliance
+- **Risk Assessment**: Track risk assessment and mitigation effectiveness
 
 This comprehensive compliance monitoring ensures we can demonstrate adherence to all regulatory requirements and business rules, with direct traceability to specific compliance sections.
 
@@ -635,11 +652,19 @@ This comprehensive compliance monitoring ensures we can demonstrate adherence to
 ### Data Retention Strategy Alignment
 Our monitoring data retention policies are designed to align with business requirements while optimizing operational efficiency (see BUSINESS-RULES-001-ecommerce-platform.md Section 6.1):
 
+#### **Operational Monitoring (Short-term)**
 - **Operational Logs (Loki)**: 30 days hot, 90 days warm - Sufficient for incident investigation and debugging
-- **Business Analytics (ELK Stack)**: 2 years retention as per business rules for long-term trend analysis
-- **Business Data**: 7 years retention for compliance (GDPR, tax reporting) as specified in business rules
 - **Metrics (Prometheus)**: 1 year retention for performance trending and capacity planning
 - **Traces (Jaeger)**: 7 days retention for recent incident investigation and performance analysis
+- **Health Checks**: Real-time status with 30-day historical data
+
+#### **Business Intelligence (Long-term)**
+- **Business Analytics (ELK Stack)**: 2 years retention as per business rules for long-term trend analysis
+- **Business Data**: 7 years retention for compliance (GDPR, tax reporting) as specified in business rules
+- **Compliance Records**: 7 years retention for audit and regulatory compliance
+- **Performance Trends**: 2 years retention for capacity planning and optimization
+
+This dual retention strategy ensures operational efficiency while meeting all business intelligence and compliance requirements specified in the business rules.
 
 This strategy ensures we meet compliance requirements while maintaining cost-effective operational monitoring, with retention periods directly aligned with business rule specifications.
 
@@ -706,6 +731,26 @@ This ADR maintains full consistency with:
 - **Development Plan** (DEVELOPMENT-PLAN-001-distributed-ecommerce-platform.md): Technology stack and implementation phases are aligned
 - **System Architecture**: Supports all planned distributed patterns and microservices architecture
 
+### **Business Rules Traceability Matrix**
+| Business Rule Section | Monitoring Coverage | Specific Metrics | Compliance Requirements |
+|----------------------|-------------------|------------------|------------------------|
+| **3.1 User Management** | ✅ Full Coverage | Registration rates, auth success/failure, MFA adoption | GDPR consent, data access tracking |
+| **3.2 Product & Catalog** | ✅ Full Coverage | Creation rates, inventory turnover, vendor limits | Business rule compliance monitoring |
+| **3.3 Order Processing** | ✅ Full Coverage | Order volume, fulfillment rates, saga monitoring | Transaction consistency, business workflow |
+| **3.4 Payment Processing** | ✅ Full Coverage | Transaction success, fraud detection, security | PCI DSS compliance, security monitoring |
+| **3.5 Shipping & Fulfillment** | ✅ Full Coverage | Shipping performance, warehouse efficiency | Operational compliance, SLA monitoring |
+| **3.6 Multi-tenancy** | ✅ Full Coverage | Vendor performance, commission tracking | Tenant isolation, business rule compliance |
+| **3.7 Social Features** | ✅ Full Coverage | Review rates, moderation efficiency | Content compliance, user experience |
+| **5.1-5.3 Cross-Service Rules** | ✅ Full Coverage | Data consistency, transaction boundaries, error handling | Business rule violation monitoring |
+| **6.1-6.3 Compliance** | ✅ Full Coverage | GDPR, PCI DSS, Tax compliance | Regulatory compliance monitoring |
+
+### **Development Plan Alignment Matrix**
+| Development Phase | Monitoring Implementation | Technology Stack | Success Criteria |
+|------------------|-------------------------|------------------|-----------------|
+| **Phase 6 (Weeks 33-36)** | ✅ Primary Implementation | Prometheus, Grafana, Loki, Jaeger, ELK | All monitoring objectives met |
+| **Phase 1-5 (Foundation)** | ✅ Prerequisites Met | Infrastructure, services, data layer | Monitoring foundation ready |
+| **Phase 7-10 (Advanced)** | ✅ Future Enhancement Ready | AIOps, predictive analytics | Monitoring evolution path |
+
 The dual logging strategy (Loki for operational, ELK for business analytics) ensures optimal performance while meeting all business intelligence and compliance requirements specified in the business rules.
 
 ## References
@@ -716,13 +761,27 @@ The dual logging strategy (Loki for operational, ELK for business analytics) ens
 - [System Overview](../../rfcs/system-overview.md) - Provides high-level system architecture context
 
 ### Business Rules Sections Referenced
+#### **Core Business Operations**
 - **Section 3.1**: User Management & Authentication monitoring requirements
 - **Section 3.2**: Product & Catalog management metrics
 - **Section 3.3**: Order Processing & Fulfillment monitoring
 - **Section 3.4**: Payment Processing security and compliance
+- **Section 3.5**: Shipping & Fulfillment performance monitoring
 - **Section 3.6**: Multi-Tenancy & Vendor Management metrics
 - **Section 3.7**: Social Features & User-Generated Content monitoring
-- **Section 6.1-6.3**: Compliance requirements (GDPR, PCI DSS, Tax)
+
+#### **Cross-Service Business Rules**
+- **Section 5.1**: Data consistency and event ordering monitoring
+- **Section 5.2**: Transaction boundaries and saga pattern monitoring
+- **Section 5.3**: Error handling and business rule violation monitoring
+
+#### **Compliance & Regulatory Requirements**
+- **Section 6.1**: GDPR compliance monitoring and data protection
+- **Section 6.2**: PCI DSS compliance monitoring and payment security
+- **Section 6.3**: Tax compliance monitoring and reporting requirements
+
+#### **Service-Specific Business Rules**
+- **Section 4.1-4.10**: Individual service monitoring requirements and business logic validation
 
 ### Development Plan Alignment
 - **Phase 6 (Weeks 33-36)**: Monitoring & Observability implementation phase
