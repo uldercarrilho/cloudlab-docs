@@ -11,8 +11,6 @@
 ### Medium Priority
 
 ### Low Priority  
-- **[TASK-015](../tasks/TASK-015-compliance-regulatory-requirements-adr.md)** - Create ADR for Compliance & Regulatory Requirements (3 days)
-- **[TASK-017](../tasks/TASK-017-business-continuity-disaster-recovery-adr.md)** - Create ADR for Business Continuity & Disaster Recovery (3 days)
 
 ---
 
@@ -20,8 +18,6 @@
 
 | Task ID | Title | Priority | Effort | Type | Status |
 |---------|-------|----------|--------|------|--------|
-| TASK-015 | Compliance & Regulatory Requirements ADR | Low | 3 days | Research/Infrastructure | Ready |
-| TASK-017 | Business Continuity & Disaster Recovery ADR | Low | 3 days | Research/Infrastructure | Ready |
 
 ---
 
