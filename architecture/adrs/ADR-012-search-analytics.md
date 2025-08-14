@@ -26,6 +26,24 @@ Without proper search and analytics infrastructure:
 
 We will implement a **hybrid search and analytics architecture** using **Elasticsearch** for search engine capabilities, **ClickHouse** for real-time analytics, **Apache Kafka** for data streaming, and **Redis** for caching and session management. This architecture will achieve sub-100ms search response times, provide real-time analytics with sub-second query performance, handle large-scale data processing, and maintain operational simplicity while ensuring cost efficiency and learning value.
 
+**Technology Role Clarification:**
+- **PostgreSQL**: Product catalog storage and transactional data (ACID compliance)
+- **Elasticsearch**: Product search, user-generated content search, and real-time analytics
+- **ClickHouse**: Business intelligence, performance metrics, and long-term analytics
+- **Redis**: Search result caching and session data
+
+**Search Architecture Pattern:**
+- **Write-Through**: Product updates written to PostgreSQL first, then indexed in Elasticsearch
+- **Event-Driven**: Search index updates triggered by product catalog events via Kafka
+- **Caching Strategy**: Redis caches frequent search results and user preferences
+- **Consistency Model**: Eventual consistency for search (5-minute propagation delay acceptable)
+
+**Data Retention Policies:**
+- **Search Data (Elasticsearch)**: 2 years for search analytics, 7 years for audit logs
+- **Analytics Data (ClickHouse)**: 2 years for detailed analytics, 7 years for aggregated metrics
+- **Cache Data (Redis)**: 24 hours for search results, 7 days for user preferences
+- **Business Intelligence**: 2 years for detailed data, 7 years for compliance requirements
+
 ## Decision Criteria & Weighting
 
 ### Evaluation Criteria (Total Weight: 100%)
