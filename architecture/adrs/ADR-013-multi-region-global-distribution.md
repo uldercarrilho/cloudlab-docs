@@ -26,6 +26,14 @@ Without proper multi-region deployment:
 
 We will implement a **hybrid multi-region architecture** using **active-active deployment** for primary regions (North America, Europe, Asia-Pacific) with **active-passive** for secondary regions, **regional data residency** for compliance, **cross-region data synchronization** for critical business data, and **global load balancing** with intelligent routing. This architecture will achieve sub-200ms response times globally, ensure compliance with regional regulations, provide 99.9% availability, and maintain cost efficiency while enabling learning of global-scale distributed systems.
 
+**Business Rule Considerations:**
+- **Regional Compliance**: GDPR (EU), CCPA (California), LGPD (Brazil) compliance per region
+- **Data Residency**: User data stored in user's region, vendor data in vendor's region
+- **Tax Compliance**: Regional tax rates and calculation rules applied per region
+- **Content Moderation**: Regional content standards and moderation rules
+- **Payment Processing**: Regional payment methods and compliance requirements
+- **Shipping Rules**: Regional shipping costs, delivery times, and restrictions
+
 ## Decision Criteria & Weighting
 
 ### Evaluation Criteria (Total Weight: 100%)
