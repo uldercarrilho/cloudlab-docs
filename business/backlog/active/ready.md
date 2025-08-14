@@ -12,7 +12,6 @@
 
 ### Low Priority  
 - **[TASK-015](../tasks/TASK-015-compliance-regulatory-requirements-adr.md)** - Create ADR for Compliance & Regulatory Requirements (3 days)
-- **[TASK-016](../tasks/TASK-016-documentation-knowledge-management-adr.md)** - Create ADR for Documentation & Knowledge Management (2 days)
 - **[TASK-017](../tasks/TASK-017-business-continuity-disaster-recovery-adr.md)** - Create ADR for Business Continuity & Disaster Recovery (3 days)
 
 ---
@@ -22,7 +21,6 @@
 | Task ID | Title | Priority | Effort | Type | Status |
 |---------|-------|----------|--------|------|--------|
 | TASK-015 | Compliance & Regulatory Requirements ADR | Low | 3 days | Research/Infrastructure | Ready |
-| TASK-016 | Documentation & Knowledge Management ADR | Low | 2 days | Research/Infrastructure | Ready |
 | TASK-017 | Business Continuity & Disaster Recovery ADR | Low | 3 days | Research/Infrastructure | Ready |
 
 ---
@@ -37,15 +35,15 @@
 
 ## 📊 Ready Queue Health
 
-- **Total Ready Tasks**: 3
+- **Total Ready Tasks**: 2
 - **High Priority**: 0
 - **Medium Priority**: 0
-- **Low Priority**: 3
+- **Low Priority**: 2
 - **Average Age**: 0 days (recently created)
-- **Total Effort**: 9 days
+- **Total Effort**: 6 days
 - **High Priority Effort**: 0 days
 - **Medium Priority Effort**: 0 days
-- **Low Priority Effort**: 9 days
+- **Low Priority Effort**: 6 days
 
 ## 🤖 AI Agent Instructions
 
