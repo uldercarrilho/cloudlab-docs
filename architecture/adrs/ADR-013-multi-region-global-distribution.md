@@ -1,8 +1,8 @@
 # ADR-013: Multi-Region & Global Distribution Architecture
 
 ## Status
-**Status**: Proposed  
-**Date**: 2025-01-27
+**Status**: Accepted  
+**Date**: 2025-08-14
 **Author**: AI Agent (Ulder Carrilho Júnior oversight)  
 **Supersedes**: None  
 
@@ -276,11 +276,35 @@ We will implement a **hybrid multi-region architecture** using **active-active d
 
 ### Multi-Region Testing Approach
 - **Chaos Engineering**: Simulate regional failures and network partitions
+  - Regional outage simulation (power failure, network partition)
+  - Cross-region communication failure scenarios
+  - Database replication lag and consistency issues
+  - Service mesh connectivity failures
 - **Load Testing**: Regional and cross-region performance validation
+  - Regional capacity testing with realistic traffic patterns
+  - Cross-region data synchronization under load
+  - Failover performance under stress conditions
+  - Global load balancer performance validation
 - **Failover Testing**: Automated failover scenarios with recovery validation
+  - Primary region failure with automatic failover
+  - Cross-region service discovery and routing
+  - Data consistency verification after failover
+  - Rollback procedures and validation
 - **Data Consistency Testing**: Verify cross-region data synchronization accuracy
+  - Event ordering and causality validation
+  - Conflict resolution accuracy testing
+  - Replication lag monitoring and alerting
+  - Data integrity verification across regions
 - **Compliance Testing**: Automated compliance validation for data residency
+  - GDPR data residency verification
+  - CCPA compliance validation
+  - Regional data sovereignty testing
+  - Audit logging and compliance reporting
 - **Integration Testing**: End-to-end testing across all regions
+  - Complete user journey validation
+  - Cross-region transaction processing
+  - Service mesh communication validation
+  - Global load balancer routing accuracy
 
 ### Validation Criteria
 - **Performance**: Sub-200ms response times across all regions
@@ -299,9 +323,25 @@ We will implement a **hybrid multi-region architecture** using **active-active d
 
 ### Incident Response
 - **Regional Outage**: Automatic failover with manual verification
+  - Immediate failover to secondary region
+  - Manual verification of failover success
+  - Customer communication and status updates
+  - Root cause analysis and recovery planning
 - **Data Sync Issues**: Immediate alerting with automated recovery attempts
+  - Real-time replication lag monitoring
+  - Automated conflict resolution attempts
+  - Manual intervention for complex conflicts
+  - Data consistency verification after resolution
 - **Performance Degradation**: Automatic scaling and load redistribution
+  - Automatic resource scaling in affected region
+  - Load redistribution to healthy regions
+  - Performance bottleneck identification
+  - Capacity planning and optimization
 - **Compliance Violations**: Immediate alerting with legal team notification
+  - Immediate compliance violation detection
+  - Legal team notification within 1 hour
+  - Data access lockdown if necessary
+  - Compliance audit and remediation planning
 
 ### Maintenance Procedures
 - **Regional Updates**: Rolling updates with zero-downtime deployment
