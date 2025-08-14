@@ -9,7 +9,6 @@
 ### High Priority
 
 ### Medium Priority
-- **[TASK-014](../tasks/TASK-014-testing-quality-assurance-adr.md)** - Create ADR for Testing & Quality Assurance (3 days)
 
 ### Low Priority  
 - **[TASK-015](../tasks/TASK-015-compliance-regulatory-requirements-adr.md)** - Create ADR for Compliance & Regulatory Requirements (3 days)
@@ -22,7 +21,6 @@
 
 | Task ID | Title | Priority | Effort | Type | Status |
 |---------|-------|----------|--------|------|--------|
-| TASK-014 | Testing & Quality Assurance ADR | Medium | 3 days | Research/Infrastructure | Ready |
 | TASK-015 | Compliance & Regulatory Requirements ADR | Low | 3 days | Research/Infrastructure | Ready |
 | TASK-016 | Documentation & Knowledge Management ADR | Low | 2 days | Research/Infrastructure | Ready |
 | TASK-017 | Business Continuity & Disaster Recovery ADR | Low | 3 days | Research/Infrastructure | Ready |
@@ -39,14 +37,14 @@
 
 ## 📊 Ready Queue Health
 
-- **Total Ready Tasks**: 4
+- **Total Ready Tasks**: 3
 - **High Priority**: 0
-- **Medium Priority**: 1
+- **Medium Priority**: 0
 - **Low Priority**: 3
 - **Average Age**: 0 days (recently created)
-- **Total Effort**: 12 days
+- **Total Effort**: 9 days
 - **High Priority Effort**: 0 days
-- **Medium Priority Effort**: 3 days
+- **Medium Priority Effort**: 0 days
 - **Low Priority Effort**: 9 days
 
 ## 🤖 AI Agent Instructions
