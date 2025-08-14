@@ -9,7 +9,6 @@
 ### High Priority
 
 ### Medium Priority
-- **[TASK-013](../tasks/TASK-013-multi-region-global-distribution-adr.md)** - Create ADR for Multi-Region & Global Distribution (4 days)
 - **[TASK-014](../tasks/TASK-014-testing-quality-assurance-adr.md)** - Create ADR for Testing & Quality Assurance (3 days)
 
 ### Low Priority  
@@ -23,7 +22,6 @@
 
 | Task ID | Title | Priority | Effort | Type | Status |
 |---------|-------|----------|--------|------|--------|
-| TASK-013 | Multi-Region & Global Distribution ADR | Medium | 4 days | Research/Infrastructure | Ready |
 | TASK-014 | Testing & Quality Assurance ADR | Medium | 3 days | Research/Infrastructure | Ready |
 | TASK-015 | Compliance & Regulatory Requirements ADR | Low | 3 days | Research/Infrastructure | Ready |
 | TASK-016 | Documentation & Knowledge Management ADR | Low | 2 days | Research/Infrastructure | Ready |
@@ -41,14 +39,14 @@
 
 ## 📊 Ready Queue Health
 
-- **Total Ready Tasks**: 5
+- **Total Ready Tasks**: 4
 - **High Priority**: 0
-- **Medium Priority**: 2
+- **Medium Priority**: 1
 - **Low Priority**: 3
 - **Average Age**: 0 days (recently created)
-- **Total Effort**: 16 days
+- **Total Effort**: 12 days
 - **High Priority Effort**: 0 days
-- **Medium Priority Effort**: 7 days
+- **Medium Priority Effort**: 3 days
 - **Low Priority Effort**: 9 days
 
 ## 🤖 AI Agent Instructions
@@ -67,15 +65,6 @@ When picking up tasks from this queue:
 - Clear acceptance criteria
 - Appropriate skill match
 - Available capacity
-
-### Recommended Task Sequence
-For optimal learning and dependency management:
-4. **TASK-012**: Search & Analytics ADR (data insights)
-5. **TASK-013**: Multi-Region & Global Distribution ADR (scaling)
-6. **TASK-014**: Testing & Quality Assurance ADR (quality)
-7. **TASK-015**: Compliance & Regulatory Requirements ADR (governance)
-8. **TASK-016**: Documentation & Knowledge Management ADR (knowledge)
-9. **TASK-017**: Business Continuity & Disaster Recovery ADR (resilience)
 
 ## 🔄 Queue Management
 
