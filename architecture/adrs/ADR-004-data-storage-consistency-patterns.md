@@ -98,6 +98,18 @@
 - **Why:** Leverage existing PostgreSQL infrastructure, ACID compliance for event ordering, and familiar tooling
 - **Use Case:** Audit trails, data lineage, CQRS read models
 
+**Technology Role Clarification:**
+- **PostgreSQL (Primary)**: Product catalog, user accounts, orders, payments - ACID transactions
+- **Redis (Caching)**: Session data, product cache, API responses - High-performance caching
+- **ClickHouse (Analytics)**: Business intelligence, user behavior, performance metrics - Analytical queries
+- **Event Sourcing**: Order history, audit trails, data lineage - Immutable event logs
+
+**Business Rule Integration Pattern:**
+- **Service-Level Validation**: Each microservice validates business rules within its domain
+- **Event-Driven Consistency**: Business rule changes propagated via Kafka events
+- **Distributed Validation**: No centralized validation engine - rules enforced at service boundaries
+- **Audit Trail**: All business rule validations logged for compliance and debugging
+
 **Event Sourcing Alternatives Considered:**
 - **Traditional Audit Logging:** Simpler but limited querying and replay capabilities
 - **Change Data Capture (CDC):** Real-time but complex setup and potential data loss
