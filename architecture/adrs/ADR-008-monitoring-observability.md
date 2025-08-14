@@ -23,6 +23,13 @@ Without proper monitoring and observability:
 
 We will implement a comprehensive observability stack using **Prometheus + Grafana** for metrics collection and visualization, **Loki + Grafana** for log aggregation, **Jaeger** for distributed tracing, and **custom APM instrumentation** for application performance monitoring. This stack will be complemented with **PagerDuty** for alerting and **custom health checks** for service discovery.
 
+**Data Retention Policies:**
+- **Metrics Data (Prometheus)**: 15 days for high-resolution data, 1 year for aggregated data
+- **Log Data (Loki)**: 1 year for application logs, 7 years for audit logs
+- **Business Analytics (ELK Stack)**: 2 years for detailed data, 7 years for aggregated data
+- **Trace Data (Jaeger)**: 7 days for detailed traces, 30 days for aggregated traces
+- **Compliance Data**: 7 years minimum retention for regulatory requirements
+
 ## Decision Criteria & Weighting
 
 ### Evaluation Criteria (Total Weight: 100%)
