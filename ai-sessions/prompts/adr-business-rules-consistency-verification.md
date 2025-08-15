@@ -20,6 +20,14 @@ Use this prompt when you need to:
 - Understanding of distributed systems architecture principles
 - Familiarity with e-commerce platform business requirements
 
+## Project Learning Focus
+This project prioritizes learning distributed systems concepts over comprehensive business coverage. When analyzing consistency:
+- **Focus on distributed systems principles**: Authentication, data consistency, service communication, scalability, fault tolerance, and so on
+- **Minimal business rules**: Only business rules that demonstrate distributed systems concepts are essential
+- **Educational value first**: ADRs should teach distributed systems concepts, not solve every business problem
+- **Selective ADR creation**: New ADRs only when they cover missing distributed systems concepts
+- **Mock external services**: Use mocks for external dependencies to avoid overengineering multiple services and focus on core distributed systems concepts
+
 ## Expected Output
 - Executive summary with consistency score
 - Detailed analysis report with specific examples
@@ -55,18 +63,21 @@ Analyze all ADR documents and the Business Rules document to identify inconsiste
 - **Business Rule Coverage**: Verify all critical business rules have ADR decisions
 - **References Validation**: Check if all links for local and external documents and websites actually works
 - **Up-to-date information**: Check if any value or information is up-to-date
+- **Service Complexity**: Verify that external services are mocked appropriately to avoid overengineering
 
 ### 4. Gap Analysis
-- **Missing ADRs**: Identify business areas without corresponding ADRs
+- **Missing ADRs**: Identify business areas without corresponding ADRs, but only suggest creation if essential for covering distributed systems concepts
 - **Incomplete Coverage**: Find ADRs that don't fully address business requirements
 - **Conflicting Decisions**: Identify any contradictions between ADRs or with business rules
 - **Missing links**: Find references for local and external documents, or websites without a proper markdown link format
+- **Overengineering risks**: Identify areas where multiple services could be simplified with mocks to focus on core distributed systems concepts
 
 ### 5. Recommendations
 - **Immediate Actions**: Critical inconsistencies that must be resolved
-- **Missing ADRs**: New ADRs needed for uncovered business areas
+- **Missing ADRs**: New ADRs needed only if essential for covering distributed systems concepts (not for every business area)
 - **Document Updates**: Specific changes needed in existing ADRs
 - **Business Rule Updates**: Changes needed in business rules based on ADR decisions
+- **Service Simplification**: Recommendations for mocking external services to reduce complexity and focus on learning objectives
 
 ## Deliverables
 
@@ -81,25 +92,29 @@ Analyze all ADR documents and the Business Rules document to identify inconsiste
 - **Conflict Analysis**: Specific inconsistencies with examples
 - **Gap Analysis**: Missing decisions and coverage areas
 - **Cross-ADR Dependencies**: How ADRs relate to each other
+- **Service Complexity Assessment**: Evaluation of whether external services could be mocked to simplify the architecture
 
 ### 3. Action Plan
 - **Phase 1**: Critical fixes (immediate)
-- **Phase 2**: Missing ADR creation (short-term)
+- **Phase 2**: Missing ADR creation only for essential distributed systems concepts (short-term)
 - **Phase 3**: Document updates (medium-term)
 - **Phase 4**: Validation and testing (long-term)
+- **Phase 5**: Service simplification through mocking (if needed)
 
 ### 4. Specific Recommendations
 - **ADR Updates**: Exact changes needed in each ADR
-- **New ADRs**: Complete ADR documents for missing areas
+- **New ADRs**: Complete ADR documents only for areas essential to distributed systems learning
 - **Business Rule Updates**: Changes needed in business rules
 - **Consistency Matrix**: Reference document for future maintenance
+- **Mocking Strategy**: Specific recommendations for which external services to mock and how to implement them
 
 ## Success Criteria
-- All business rules have corresponding ADR decisions
+- All critical distributed systems concepts have corresponding ADR decisions
 - No conflicting decisions between ADRs
 - Technology choices fully support business requirements
 - Clear action plan for resolving identified issues
 - Comprehensive documentation for future maintenance
+- Architecture complexity is minimized through appropriate use of mocks for external services
 
 ## Important Notes
 - Focus on practical, actionable recommendations
@@ -107,6 +122,9 @@ Analyze all ADR documents and the Business Rules document to identify inconsiste
 - Consider the impact of changes on existing decisions
 - Maintain the educational value of the documentation
 - Ensure all recommendations align with the project's distributed systems learning goals
+- **Prioritize learning over completeness**: Only suggest new ADRs if they cover essential distributed systems concepts
+- **Minimal business coverage**: Focus on business rules that demonstrate distributed systems principles, not comprehensive business coverage
+- **Avoid overengineering**: Use mocks for external services to keep the architecture focused on learning distributed systems concepts rather than building complex integrations
 
 ## Output Format
 Please structure your response as a comprehensive report with clear sections, tables, and actionable recommendations. Use markdown formatting for readability and include specific file references and line numbers where applicable.
