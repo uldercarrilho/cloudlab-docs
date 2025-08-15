@@ -62,6 +62,8 @@ Implement a comprehensive, event-driven order processing and fulfillment archite
 - **Inventory Rules**: Real-time updates, low stock alerts (< 10), out-of-stock products hidden
 - **Order Processing**: Saga pattern workflow with compensation actions
 - **Payment Rules**: Pre-authorization, 7-day hold maximum, automatic capture on shipping
+- **Payment Fraud Detection**: Address verification, CVV validation, velocity checks, risk scoring algorithms
+- **Payment Retry Logic**: Exponential backoff with circuit breaker pattern for payment providers
 - **Shipping Rules**: 3-5 business days standard, 1-2 business days express, overnight available
 - **Order Status**: Draft → Pending Payment → Paid → Processing → Shipped → Delivered
 
@@ -122,6 +124,8 @@ Implement a comprehensive, event-driven order processing and fulfillment archite
 - **Why:** Handles payment failures gracefully, supports multiple payment methods, enables retry mechanisms, and maintains system responsiveness
 - **Implementation:** Payment service with circuit breaker pattern and exponential backoff
 - **Security:** PCI DSS compliance with tokenization and encryption
+- **Fraud Detection:** Address verification, CVV validation, velocity checks, risk scoring algorithms
+- **Retry Patterns:** Exponential backoff with jitter, circuit breaker for payment providers
 
 **Shipping Integration: Multi-Carrier API Gateway**
 - **Why:** Supports multiple shipping carriers, provides rate shopping, enables real-time tracking, and supports international shipping
