@@ -76,6 +76,26 @@ The distributed e-commerce platform requires a robust social features system tha
 - Must integrate with search and analytics (ADR-012)
 - Must support multi-region deployment (ADR-013)
 
+### 5.1 Mocking Strategy for External Services
+
+**Rationale**: To focus on distributed content management rather than external moderation service integration
+
+**Mocked Services**:
+- Content moderation services (AWS Rekognition, Google Vision API)
+- Copyright detection services
+- Language processing services
+
+**Mock Implementation**:
+- Simulate content filtering and moderation workflows
+- Generate realistic content analysis results
+- Provide configurable moderation rules and thresholds
+
+**Learning Benefits**:
+- Focus on distributed content management patterns
+- Test content moderation workflows and policies
+- Demonstrate distributed social feature coordination
+- Reduce external service integration complexity
+
 ---
 
 ## 6. Acceptance Criteria
