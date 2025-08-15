@@ -731,6 +731,40 @@ The testing strategy supports the development plan's success criteria:
 - **Event Ordering Testing**: Validate causal consistency and ordering
 - **Event Replay Testing**: Test event replay and state reconstruction
 
+---
+
+## Cross-ADR Dependencies
+
+### Direct Dependencies
+- **ADR-010: CI/CD & Deployment** - Provides testing integration and quality gates
+- **ADR-003: Container Orchestration** - Provides test environment infrastructure
+- **ADR-007: Cloud Infrastructure** - Provides test infrastructure and resource management
+- **ADR-008: Monitoring & Observability** - Provides test monitoring and metrics
+- **ADR-016: Documentation & Knowledge Management** - Provides testing documentation and runbooks
+
+### Supporting Dependencies
+- **ADR-001: User Management** - Provides user testing scenarios and data
+- **ADR-002: Order Processing** - Provides order testing scenarios and saga testing
+- **ADR-004: Data Storage** - Provides database testing patterns and data consistency
+- **ADR-005: Event Streaming** - Provides event-driven testing patterns
+- **ADR-006: API Communication** - Provides API testing patterns and validation
+
+### Dependency Matrix
+| ADR | Dependency Type | Impact | Integration Points |
+|-----|----------------|---------|-------------------|
+| ADR-010 | Direct | High | CI/CD integration, quality gates, test automation |
+| ADR-003 | Direct | High | Test environment infrastructure, container testing |
+| ADR-007 | Direct | Medium | Test infrastructure, resource provisioning |
+| ADR-008 | Direct | Medium | Test monitoring, metrics collection |
+| ADR-016 | Direct | Low | Testing documentation, runbooks, procedures |
+| ADR-001 | Supporting | Medium | User testing scenarios, authentication testing |
+| ADR-002 | Supporting | Medium | Order testing, saga pattern testing |
+| ADR-004 | Supporting | Medium | Database testing, data consistency validation |
+| ADR-005 | Supporting | Medium | Event testing, stream processing validation |
+| ADR-006 | Supporting | Medium | API testing, communication pattern validation |
+
+---
+
 ## References
 
 - [Go Testing Package](https://golang.org/pkg/testing/)

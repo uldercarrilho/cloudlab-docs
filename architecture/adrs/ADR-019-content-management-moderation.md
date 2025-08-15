@@ -406,6 +406,38 @@ CREATE TABLE content_events (
 
 ---
 
+## Cross-ADR Dependencies
+
+### Direct Dependencies
+- **ADR-004: Data Storage** - Provides content storage and metadata management
+- **ADR-005: Event Streaming** - Provides content event processing and workflows
+- **ADR-011: Performance & Caching** - Provides content delivery optimization
+- **ADR-021: Social Features** - Provides content moderation and social interaction
+- **ADR-016: Documentation & Knowledge Management** - Provides content documentation
+
+### Supporting Dependencies
+- **ADR-001: User Management** - Provides content creator management and permissions
+- **ADR-003: Container Orchestration** - Provides content service deployment
+- **ADR-006: API Communication** - Provides content API patterns
+- **ADR-007: Cloud Infrastructure** - Provides content storage and CDN
+- **ADR-008: Monitoring & Observability** - Provides content monitoring
+
+### Dependency Matrix
+| ADR | Dependency Type | Impact | Integration Points |
+|-----|----------------|---------|-------------------|
+| ADR-004 | Direct | High | Content storage, metadata, database patterns |
+| ADR-005 | Direct | High | Content events, workflow processing, moderation |
+| ADR-011 | Direct | Medium | Content delivery, caching, performance optimization |
+| ADR-021 | Direct | Medium | Content moderation, social features, user interaction |
+| ADR-016 | Direct | Low | Content documentation, knowledge management |
+| ADR-001 | Supporting | Medium | Content creator management, permissions, roles |
+| ADR-003 | Supporting | Medium | Content service deployment, orchestration |
+| ADR-006 | Supporting | Medium | Content API patterns, communication |
+| ADR-007 | Supporting | Medium | Content storage, CDN, infrastructure |
+| ADR-008 | Supporting | Low | Content monitoring, observability, metrics |
+
+---
+
 ## 14. Conclusion
 
 The content management and moderation architecture provides a comprehensive solution for content lifecycle management, automated moderation, and optimized delivery while maintaining performance and compliance requirements. The event-driven approach ensures real-time processing and scalability, while the dedicated service architecture provides clear boundaries and learning value for distributed systems concepts.

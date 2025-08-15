@@ -334,3 +334,35 @@ This approach provides the best balance of:
 | **Total Score** | 100% | **7.8/10** | **6.8/10** | **5.8/10** |
 
 **Decision**: Active-Active Multi-Region with Automated Failover (Score: 7.8/10)
+
+---
+
+## Cross-ADR Dependencies
+
+### Direct Dependencies
+- **ADR-007: Cloud Infrastructure** - Provides multi-region infrastructure and failover
+- **ADR-013: Multi-Region Distribution** - Provides global distribution and coordination
+- **ADR-008: Monitoring & Observability** - Provides DR monitoring and alerting
+- **ADR-004: Data Storage** - Provides data replication and consistency patterns
+- **ADR-005: Event Streaming** - Provides event synchronization across regions
+
+### Supporting Dependencies
+- **ADR-003: Container Orchestration** - Provides multi-region service deployment
+- **ADR-006: API Communication** - Provides global API routing and load balancing
+- **ADR-010: CI/CD & Deployment** - Provides DR deployment and automation
+- **ADR-015: Compliance & Regulatory** - Provides business continuity compliance
+- **ADR-016: Documentation & Knowledge Management** - Provides DR runbooks
+
+### Dependency Matrix
+| ADR | Dependency Type | Impact | Integration Points |
+|-----|----------------|---------|-------------------|
+| ADR-007 | Direct | High | Multi-region infrastructure, failover mechanisms |
+| ADR-013 | Direct | High | Global distribution, cross-region coordination |
+| ADR-008 | Direct | Medium | DR monitoring, alerting, incident response |
+| ADR-004 | Direct | Medium | Data replication, consistency, backup strategies |
+| ADR-005 | Direct | Low | Event synchronization, stream processing |
+| ADR-003 | Supporting | Medium | Multi-region service deployment, orchestration |
+| ADR-006 | Supporting | Medium | Global API routing, load balancing, failover |
+| ADR-010 | Supporting | Medium | DR deployment, automation, testing |
+| ADR-015 | Supporting | Low | Business continuity compliance, regulatory |
+| ADR-016 | Supporting | Low | DR documentation, runbooks, procedures |

@@ -384,22 +384,54 @@ Implement a comprehensive, event-driven order processing and fulfillment archite
 
 ---
 
-## 18. References & Resources
+## 18. Cross-ADR Dependencies
 
-### 18.1 Related Documents
+### 18.1 Direct Dependencies
+- **ADR-004: Data Storage & Consistency** - Provides data consistency patterns for order data
+- **ADR-005: Event Streaming** - Enables event-driven order processing and saga pattern
+- **ADR-020: Payment Processing** - Defines payment integration patterns
+- **ADR-022: Shipping & Logistics** - Defines shipping integration patterns
+- **ADR-015: Compliance & Regulatory** - Specifies compliance requirements for orders
+
+### 18.2 Supporting Dependencies
+- **ADR-001: User Management** - Provides user authentication and authorization
+- **ADR-003: Container Orchestration** - Provides deployment and scaling infrastructure
+- **ADR-006: API Communication** - Defines API patterns for order services
+- **ADR-008: Monitoring & Observability** - Provides order processing monitoring
+- **ADR-009: Security & Authentication** - Provides security framework for order data
+
+### 18.3 Dependency Matrix
+| ADR | Dependency Type | Impact | Integration Points |
+|-----|----------------|---------|-------------------|
+| ADR-004 | Direct | High | Order data storage, consistency patterns |
+| ADR-005 | Direct | High | Event streaming, saga pattern implementation |
+| ADR-020 | Direct | High | Payment processing integration |
+| ADR-022 | Direct | High | Shipping and logistics integration |
+| ADR-015 | Direct | Medium | Compliance and regulatory requirements |
+| ADR-001 | Supporting | Medium | User authentication and authorization |
+| ADR-003 | Supporting | Low | Deployment and scaling infrastructure |
+| ADR-006 | Supporting | Medium | API communication patterns |
+| ADR-008 | Supporting | Low | Monitoring and observability |
+| ADR-009 | Supporting | Medium | Security framework and data protection |
+
+---
+
+## 19. References & Resources
+
+### 19.1 Related Documents
 - [Business Rules Document](../../business/backlog/BUSINESS-RULES-001-ecommerce-platform.md) - Defines order processing business requirements
 - [ADR-004: Data Storage & Consistency](ADR-004-data-storage-consistency-patterns.md) - Data consistency patterns
 - [ADR-005: Event Streaming](ADR-005-message-queue-event-streaming.md) - Event-driven architecture
 - [ADR-015: Compliance & Regulatory](ADR-015-compliance-regulatory-requirements.md) - Compliance requirements
 
-### 18.2 Technical Resources
+### 19.2 Technical Resources
 - [Saga Pattern](https://microservices.io/patterns/data/saga.html)
 - [Event Sourcing](https://martinfowler.com/eaaDev/EventSourcing.html)
 - [CQRS Pattern](https://martinfowler.com/bliki/CQRS.html)
 - [Distributed Transactions](https://en.wikipedia.org/wiki/Distributed_transaction)
 - [Event-Driven Architecture](https://martinfowler.com/articles/201701-event-driven.html)
 
-### 18.3 Business Resources
+### 19.3 Business Resources
 - [E-commerce Order Processing](https://www.oreilly.com/library/view/building-microservices/9781491950340/)
 - [Inventory Management](https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/)
 - [Payment Processing](https://stripe.com/docs/payments)
@@ -407,21 +439,21 @@ Implement a comprehensive, event-driven order processing and fulfillment archite
 
 ---
 
-## 19. Future Considerations
+## 20. Future Considerations
 
-### 19.1 Scalability Enhancements
+### 20.1 Scalability Enhancements
 - **Global Order Processing**: Multi-region order coordination
 - **Advanced Inventory**: Predictive inventory management
 - **AI-Powered Fulfillment**: Intelligent warehouse selection
 - **Real-time Analytics**: Live order processing insights
 
-### 19.2 Business Enhancements
+### 20.2 Business Enhancements
 - **Subscription Orders**: Recurring order management
 - **Bulk Ordering**: High-volume order processing
 - **International Expansion**: Multi-currency and multi-language support
 - **Marketplace Integration**: Third-party seller order management
 
-### 19.3 Technical Enhancements
+### 20.3 Technical Enhancements
 - **Event Streaming**: Real-time order event streaming
 - **Machine Learning**: Fraud detection and order optimization
 - **Blockchain**: Immutable order records and smart contracts

@@ -307,6 +307,38 @@ func initTracer() {
 
 ---
 
+## Cross-ADR Dependencies
+
+### Direct Dependencies
+- **ADR-008: Monitoring & Observability** - Provides monitoring infrastructure and metrics
+- **ADR-013: Multi-Region Distribution** - Provides multi-region trace correlation
+- **ADR-011: Performance & Caching** - Provides performance optimization insights
+- **ADR-006: API Communication** - Provides API trace patterns and correlation
+- **ADR-003: Container Orchestration** - Provides service mesh tracing integration
+
+### Supporting Dependencies
+- **ADR-001: User Management** - Provides user request tracing and correlation
+- **ADR-002: Order Processing** - Provides order workflow tracing
+- **ADR-004: Data Storage** - Provides database operation tracing
+- **ADR-005: Event Streaming** - Provides event trace correlation
+- **ADR-007: Cloud Infrastructure** - Provides infrastructure trace correlation
+
+### Dependency Matrix
+| ADR | Dependency Type | Impact | Integration Points |
+|-----|----------------|---------|-------------------|
+| ADR-008 | Direct | High | Monitoring integration, metrics correlation |
+| ADR-013 | Direct | High | Multi-region trace correlation, global tracing |
+| ADR-011 | Direct | Medium | Performance tracing, cache operation tracing |
+| ADR-006 | Direct | Medium | API trace patterns, communication tracing |
+| ADR-003 | Direct | Low | Service mesh tracing, Istio integration |
+| ADR-001 | Supporting | Medium | User request tracing, authentication tracing |
+| ADR-002 | Supporting | Medium | Order workflow tracing, saga pattern tracing |
+| ADR-004 | Supporting | Medium | Database tracing, storage operation tracing |
+| ADR-005 | Supporting | Medium | Event tracing, stream processing tracing |
+| ADR-007 | Supporting | Low | Infrastructure tracing, cloud service tracing |
+
+---
+
 ## 14. References
 
 ### 14.1 Related Documents

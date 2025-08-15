@@ -258,6 +258,38 @@
 
 ---
 
+## Cross-ADR Dependencies
+
+### Direct Dependencies
+- **ADR-009: Security & Authentication** - Provides security framework and authentication patterns
+- **ADR-008: Monitoring & Observability** - Provides compliance monitoring and audit logging
+- **ADR-007: Cloud Infrastructure** - Provides compliance infrastructure and data residency
+- **ADR-014: Testing & Quality Assurance** - Provides compliance testing and validation
+- **ADR-016: Documentation & Knowledge Management** - Provides compliance documentation
+
+### Supporting Dependencies
+- **ADR-001: User Management** - Provides user data protection and consent management
+- **ADR-002: Order Processing** - Provides order data compliance and retention
+- **ADR-004: Data Storage** - Provides data encryption and access control
+- **ADR-005: Event Streaming** - Provides audit trail and compliance logging
+- **ADR-020: Payment Processing** - Provides PCI DSS compliance and payment security
+
+### Dependency Matrix
+| ADR | Dependency Type | Impact | Integration Points |
+|-----|----------------|---------|-------------------|
+| ADR-009 | Direct | High | Security framework, authentication, encryption |
+| ADR-008 | Direct | High | Compliance monitoring, audit logging, alerting |
+| ADR-007 | Direct | Medium | Compliance infrastructure, data residency |
+| ADR-014 | Direct | Medium | Compliance testing, validation, quality gates |
+| ADR-016 | Direct | Low | Compliance documentation, procedures |
+| ADR-001 | Supporting | Medium | User data protection, consent management |
+| ADR-002 | Supporting | Medium | Order data compliance, retention policies |
+| ADR-004 | Supporting | Medium | Data encryption, access control, audit trails |
+| ADR-005 | Supporting | Medium | Event logging, compliance trail, monitoring |
+| ADR-020 | Supporting | Medium | Payment security, PCI DSS compliance |
+
+---
+
 ## 10. References
 > Links to standards, APIs, diagrams, or related docs.
 

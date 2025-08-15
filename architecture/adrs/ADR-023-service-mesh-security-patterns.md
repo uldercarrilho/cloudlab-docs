@@ -297,6 +297,38 @@ spec:
 
 ---
 
+## Cross-ADR Dependencies
+
+### Direct Dependencies
+- **ADR-003: Container Orchestration** - Provides Istio service mesh infrastructure
+- **ADR-009: Security & Authentication** - Provides security framework and authentication
+- **ADR-008: Monitoring & Observability** - Provides security monitoring and alerting
+- **ADR-013: Multi-Region Distribution** - Provides multi-region security coordination
+- **ADR-015: Compliance & Regulatory** - Provides security compliance requirements
+
+### Supporting Dependencies
+- **ADR-001: User Management** - Provides user authentication and authorization
+- **ADR-004: Data Storage** - Provides data security and encryption
+- **ADR-005: Event Streaming** - Provides secure event communication
+- **ADR-006: API Communication** - Provides API security patterns
+- **ADR-007: Cloud Infrastructure** - Provides cloud security infrastructure
+
+### Dependency Matrix
+| ADR | Dependency Type | Impact | Integration Points |
+|-----|----------------|---------|-------------------|
+| ADR-003 | Direct | High | Istio service mesh, security policies, mTLS |
+| ADR-009 | Direct | High | Security framework, authentication, encryption |
+| ADR-008 | Direct | Medium | Security monitoring, alerting, incident response |
+| ADR-013 | Direct | Medium | Multi-region security, cross-region policies |
+| ADR-015 | Direct | Low | Security compliance, regulatory requirements |
+| ADR-001 | Supporting | Medium | User authentication, authorization, access control |
+| ADR-004 | Supporting | Medium | Data security, encryption, access control |
+| ADR-005 | Supporting | Medium | Secure event communication, encryption |
+| ADR-006 | Supporting | Medium | API security, authentication, rate limiting |
+| ADR-007 | Supporting | Medium | Cloud security, infrastructure security |
+
+---
+
 ## 15. References
 
 ### 15.1 Related Documents
