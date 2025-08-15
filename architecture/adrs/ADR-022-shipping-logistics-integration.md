@@ -398,6 +398,38 @@ CREATE TABLE warehouse_metrics (
 - **Health Monitoring**: Continuous monitoring of carrier API health
 - **Circuit Breaker**: Automatic failover to backup carriers
 - **Load Balancing**: Distribute requests across multiple carriers
+
+---
+
+## 14. International Shipping Compliance
+
+### 14.1 Customs & Documentation
+- **HS Code Classification**: Automated product classification using machine learning
+- **Customs Declarations**: Electronic customs documentation generation
+- **Import/Export Licenses**: License validation and compliance checking
+- **Restricted Items**: Real-time validation against prohibited goods lists
+- **Documentation Requirements**: Country-specific document generation
+
+### 14.2 Tax & Duty Compliance
+- **VAT/GST Calculation**: Real-time tax calculation based on destination
+- **Duty Assessment**: Automated duty calculation and assessment
+- **Tax Exemptions**: Business vs. consumer tax exemption handling
+- **Tax Reporting**: Automated tax reporting for regulatory compliance
+- **Currency Conversion**: Real-time exchange rates for international pricing
+
+### 14.3 Regulatory Compliance
+- **Country-Specific Rules**: Compliance with local shipping regulations
+- **Product Restrictions**: Validation against destination country restrictions
+- **Labeling Requirements**: Multi-language labeling and compliance
+- **Safety Standards**: Product safety compliance validation
+- **Environmental Regulations**: Sustainability and packaging compliance
+
+### 14.4 International Shipping Optimization
+- **Multi-Modal Transport**: Air, sea, and land transport optimization
+- **Free Trade Agreements**: FTA validation and duty optimization
+- **Bonded Warehouses**: Strategic use of bonded warehouse facilities
+- **Consolidation**: Shipment consolidation for cost optimization
+- **Last-Mile Optimization**: Local delivery partner optimization
 - **Retry Logic**: Exponential backoff with jitter for failed requests
 
 ### 13.3 Compliance & Documentation
