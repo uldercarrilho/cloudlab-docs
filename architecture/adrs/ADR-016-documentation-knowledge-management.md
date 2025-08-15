@@ -428,28 +428,12 @@ OAuth 2.0 enables third-party application integration...
 ```
 
 #### Cross-Reference System
-```markdown
-# Cross-references for AI consumption
-## Related Concepts
-- **Authentication**: See [JWT Implementation](jwt-implementation.md) for detailed JWT setup
-- **Security**: Refer to [Security Best Practices](security-best-practices.md) for comprehensive security guidelines
-- **API Design**: Check [API Design Principles](api-design-principles.md) for API design guidelines
-
-## Implementation Examples
-```go
-// JWT Authentication Middleware
-func JWTAuthMiddleware(next http.Handler) http.Handler {
-    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-        // Implementation details...
-    })
-}
-```
-
-## Next Steps
-1. [Set up OAuth 2.0](oauth-setup.md)
-2. [Configure Rate Limiting](rate-limiting.md)
-3. [Implement Authorization](authorization.md)
-```
+- **Authentication**: See [JWT Implementation](implementations/jwt-implementation.md) for detailed JWT setup
+- **Security**: Refer to [Security Best Practices](implementations/security-best-practices.md) for comprehensive security guidelines
+- **API Design**: Check [API Design Principles](implementations/api-design-principles.md) for API design guidelines
+- **OAuth 2.0 Setup**: [Set up OAuth 2.0](implementations/oauth-setup.md) — Includes step-by-step integration, security considerations, and troubleshooting tips.
+- **Rate Limiting Configuration**: [Configure Rate Limiting](implementations/rate-limiting.md) — Covers algorithm selection, implementation examples, and monitoring strategies.
+- **Authorization Implementation**: [Implement Authorization](implementations/authorization.md) — Details RBAC/ABAC models, policy management, and real-world usage scenarios.
 
 ### API Documentation Integration
 
