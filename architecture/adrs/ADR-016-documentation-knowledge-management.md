@@ -779,6 +779,40 @@ The selected repository-based documentation strategy with GitHub Pages hosting p
 
 This approach establishes a solid foundation for knowledge management across the distributed e-commerce platform, enabling effective collaboration, maintaining system knowledge, and supporting future development and maintenance efforts by both human team members and AI agents.
 
+---
+
+## Cross-ADR Dependencies
+
+### Direct Dependencies
+- **ADR-006: API Communication** - Provides API documentation patterns and specifications
+- **ADR-010: CI/CD & Deployment** - Provides documentation automation and deployment
+- **ADR-014: Testing & Quality Assurance** - Provides testing documentation and procedures
+- **ADR-015: Compliance & Regulatory** - Provides compliance documentation requirements
+- **ADR-019: Content Management** - Provides content documentation and management
+
+### Supporting Dependencies
+- **ADR-001: User Management** - Provides user documentation and onboarding
+- **ADR-002: Order Processing** - Provides order processing documentation
+- **ADR-003: Container Orchestration** - Provides operational documentation
+- **ADR-004: Data Storage** - Provides data documentation and schemas
+- **ADR-008: Monitoring & Observability** - Provides monitoring documentation
+
+### Dependency Matrix
+| ADR | Dependency Type | Impact | Integration Points |
+|-----|----------------|---------|-------------------|
+| ADR-006 | Direct | High | API documentation, specifications, examples |
+| ADR-010 | Direct | Medium | Documentation automation, CI/CD integration |
+| ADR-014 | Direct | Medium | Testing documentation, procedures, runbooks |
+| ADR-015 | Direct | Medium | Compliance documentation, regulatory requirements |
+| ADR-019 | Direct | Low | Content documentation, management procedures |
+| ADR-001 | Supporting | Medium | User documentation, onboarding guides |
+| ADR-002 | Supporting | Medium | Order processing documentation, workflows |
+| ADR-003 | Supporting | Medium | Operational documentation, runbooks |
+| ADR-004 | Supporting | Medium | Data documentation, schemas, models |
+| ADR-008 | Supporting | Medium | Monitoring documentation, dashboards |
+
+---
+
 ## References
 
 - [GitHub Pages Documentation](https://pages.github.com/)

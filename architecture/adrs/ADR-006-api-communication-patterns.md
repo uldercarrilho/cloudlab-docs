@@ -766,6 +766,36 @@ plugins:
 - **IoT Devices**: Edge computing and device communication
 - **Analytics Integration**: Real-time data streaming and analysis
 
+## Cross-ADR Dependencies
+
+### Direct Dependencies
+- **ADR-001: User Management** - Provides authentication and authorization patterns
+- **ADR-009: Security & Authentication** - Provides security framework for API communication
+- **ADR-003: Container Orchestration** - Provides service mesh infrastructure for API routing
+- **ADR-008: Monitoring & Observability** - Provides API monitoring and observability
+
+### Supporting Dependencies
+- **ADR-002: Order Processing** - Defines order processing API patterns
+- **ADR-004: Data Storage** - Provides data access patterns for APIs
+- **ADR-005: Event Streaming** - Enables event-driven API communication
+- **ADR-020: Payment Processing** - Defines payment API integration patterns
+- **ADR-022: Shipping & Logistics** - Defines shipping API integration patterns
+
+### Dependency Matrix
+| ADR | Dependency Type | Impact | Integration Points |
+|-----|----------------|---------|-------------------|
+| ADR-001 | Direct | High | Authentication, authorization, user context |
+| ADR-009 | Direct | High | Security policies, encryption, compliance |
+| ADR-003 | Direct | Medium | Service mesh, traffic management, routing |
+| ADR-008 | Direct | Low | API monitoring, metrics, observability |
+| ADR-002 | Supporting | Medium | Order processing API patterns |
+| ADR-004 | Supporting | Medium | Data access and consistency patterns |
+| ADR-005 | Supporting | Low | Event-driven communication patterns |
+| ADR-020 | Supporting | Medium | Payment API integration patterns |
+| ADR-022 | Supporting | Medium | Shipping API integration patterns |
+
+---
+
 ## References
 
 - [GraphQL Best Practices](https://graphql.org/learn/best-practices/)

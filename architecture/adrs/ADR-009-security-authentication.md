@@ -304,6 +304,38 @@ We will implement a comprehensive security architecture using **OAuth 2.0 + Open
 - **Threat Intelligence**: Enhanced threat intelligence integration
 - **Incident Response**: Advanced incident response and forensics
 
+## Cross-ADR Dependencies
+
+### Direct Dependencies
+- **ADR-001: User Management** - Provides user authentication and authorization patterns
+- **ADR-003: Container Orchestration** - Provides security policies and mTLS infrastructure
+- **ADR-008: Monitoring & Observability** - Provides security monitoring and alerting
+- **ADR-015: Compliance & Regulatory** - Provides compliance requirements and validation
+- **ADR-023: Service Mesh Security** - Provides service-to-service security patterns
+
+### Supporting Dependencies
+- **ADR-004: Data Storage** - Provides data encryption and access control patterns
+- **ADR-006: API Communication** - Provides API security and rate limiting patterns
+- **ADR-007: Cloud Infrastructure** - Provides cloud security and compliance infrastructure
+- **ADR-010: CI/CD & Deployment** - Provides secure deployment and secret management
+- **ADR-020: Payment Processing** - Provides payment security and PCI DSS compliance
+
+### Dependency Matrix
+| ADR | Dependency Type | Impact | Integration Points |
+|-----|----------------|---------|-------------------|
+| ADR-001 | Direct | High | User authentication, authorization, MFA |
+| ADR-003 | Direct | High | Security policies, mTLS, network security |
+| ADR-008 | Direct | Medium | Security monitoring, threat detection |
+| ADR-015 | Direct | Medium | Compliance monitoring, regulatory validation |
+| ADR-023 | Direct | Low | Service mesh security, policy enforcement |
+| ADR-004 | Supporting | Medium | Data encryption, access control, audit logs |
+| ADR-006 | Supporting | Medium | API security, rate limiting, authentication |
+| ADR-007 | Supporting | Medium | Cloud security, compliance infrastructure |
+| ADR-010 | Supporting | Low | Secure deployment, secret management |
+| ADR-020 | Supporting | Medium | Payment security, PCI DSS compliance |
+
+---
+
 ## References
 
 ### Standards & Specifications

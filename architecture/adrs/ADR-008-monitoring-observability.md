@@ -756,6 +756,38 @@ This ADR maintains full consistency with:
 
 The dual logging strategy (Loki for operational, ELK for business analytics) ensures optimal performance while meeting all business intelligence and compliance requirements specified in the business rules.
 
+## Cross-ADR Dependencies
+
+### Direct Dependencies
+- **ADR-003: Container Orchestration** - Provides Kubernetes and Istio observability infrastructure
+- **ADR-007: Cloud Infrastructure** - Provides AWS monitoring and alerting infrastructure
+- **ADR-009: Security & Authentication** - Provides security monitoring and compliance requirements
+- **ADR-013: Multi-Region Distribution** - Provides global monitoring and distributed tracing requirements
+- **ADR-024: Distributed Tracing** - Provides tracing infrastructure and correlation requirements
+
+### Supporting Dependencies
+- **ADR-001: User Management** - Provides user activity monitoring requirements
+- **ADR-002: Order Processing** - Provides order processing monitoring requirements
+- **ADR-004: Data Storage** - Provides data layer monitoring requirements
+- **ADR-005: Event Streaming** - Provides event streaming monitoring requirements
+- **ADR-006: API Communication** - Provides API monitoring requirements
+
+### Dependency Matrix
+| ADR | Dependency Type | Impact | Integration Points |
+|-----|----------------|---------|-------------------|
+| ADR-003 | Direct | High | Kubernetes metrics, Istio observability |
+| ADR-007 | Direct | High | AWS CloudWatch, monitoring infrastructure |
+| ADR-009 | Direct | Medium | Security monitoring, compliance tracking |
+| ADR-013 | Direct | Medium | Multi-region monitoring, global metrics |
+| ADR-024 | Direct | Low | Distributed tracing, correlation IDs |
+| ADR-001 | Supporting | Medium | User activity metrics, authentication logs |
+| ADR-002 | Supporting | Medium | Order processing metrics, saga monitoring |
+| ADR-004 | Supporting | Medium | Database metrics, storage performance |
+| ADR-005 | Supporting | Medium | Kafka metrics, event streaming monitoring |
+| ADR-006 | Supporting | Medium | API metrics, response time monitoring |
+
+---
+
 ## References
 
 ### Related Documents

@@ -383,6 +383,38 @@ CREATE TABLE vendor_payouts (
 
 ---
 
+## Cross-ADR Dependencies
+
+### Direct Dependencies
+- **ADR-001: User Management** - Provides vendor user management and authentication
+- **ADR-004: Data Storage** - Provides multi-tenant data storage patterns
+- **ADR-005: Event Streaming** - Provides vendor event processing and workflows
+- **ADR-009: Security & Authentication** - Provides vendor security and access control
+- **ADR-015: Compliance & Regulatory** - Provides vendor compliance requirements
+
+### Supporting Dependencies
+- **ADR-002: Order Processing** - Provides vendor order management and commission
+- **ADR-003: Container Orchestration** - Provides vendor service deployment
+- **ADR-006: API Communication** - Provides vendor API patterns
+- **ADR-008: Monitoring & Observability** - Provides vendor monitoring
+- **ADR-020: Payment Processing** - Provides vendor payout processing
+
+### Dependency Matrix
+| ADR | Dependency Type | Impact | Integration Points |
+|-----|----------------|---------|-------------------|
+| ADR-001 | Direct | High | Vendor user management, authentication, roles |
+| ADR-004 | Direct | High | Multi-tenant data storage, isolation, security |
+| ADR-005 | Direct | High | Vendor event processing, workflow management |
+| ADR-009 | Direct | Medium | Vendor security, access control, encryption |
+| ADR-015 | Direct | Medium | Vendor compliance, regulatory requirements |
+| ADR-002 | Supporting | Medium | Vendor order management, commission calculation |
+| ADR-003 | Supporting | Medium | Vendor service deployment, orchestration |
+| ADR-006 | Supporting | Medium | Vendor API patterns, communication |
+| ADR-008 | Supporting | Low | Vendor monitoring, observability |
+| ADR-020 | Supporting | Medium | Vendor payout processing, payment security |
+
+---
+
 ## 14. Conclusion
 
 The vendor management architecture provides a comprehensive solution for multi-tenant vendor operations while maintaining strict security, compliance, and performance requirements. The event-driven approach ensures real-time processing and scalability, while the dedicated service architecture provides clear boundaries and learning value for distributed systems concepts.

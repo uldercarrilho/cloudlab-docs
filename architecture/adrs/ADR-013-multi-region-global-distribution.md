@@ -441,6 +441,38 @@ We will implement a **hybrid multi-region architecture** using **active-active d
 - **Free Shipping Thresholds**: Regional thresholds with cross-region aggregation
 - **International Cost Management**: Optimized international shipping with regional compliance
 
+## Cross-ADR Dependencies
+
+### Direct Dependencies
+- **ADR-007: Cloud Infrastructure** - Provides AWS multi-region infrastructure
+- **ADR-003: Container Orchestration** - Provides multi-region Kubernetes deployment
+- **ADR-004: Data Storage** - Provides cross-region data replication patterns
+- **ADR-008: Monitoring & Observability** - Provides global monitoring and alerting
+- **ADR-022: Shipping & Logistics** - Provides multi-region shipping coordination
+
+### Supporting Dependencies
+- **ADR-001: User Management** - Provides multi-region user data management
+- **ADR-002: Order Processing** - Provides cross-region order coordination
+- **ADR-005: Event Streaming** - Provides cross-region event synchronization
+- **ADR-006: API Communication** - Provides global API routing and load balancing
+- **ADR-020: Payment Processing** - Provides multi-region payment processing
+
+### Dependency Matrix
+| ADR | Dependency Type | Impact | Integration Points |
+|-----|----------------|---------|-------------------|
+| ADR-007 | Direct | High | Multi-region infrastructure, global routing |
+| ADR-003 | Direct | High | Multi-region Kubernetes, service mesh |
+| ADR-004 | Direct | High | Cross-region data replication, consistency |
+| ADR-008 | Direct | Medium | Global monitoring, cross-region alerting |
+| ADR-022 | Direct | Medium | Multi-region shipping, warehouse coordination |
+| ADR-001 | Supporting | Medium | Multi-region user data, authentication |
+| ADR-002 | Supporting | Medium | Cross-region orders, saga coordination |
+| ADR-005 | Supporting | Medium | Cross-region events, stream synchronization |
+| ADR-006 | Supporting | Medium | Global API routing, load balancing |
+| ADR-020 | Supporting | Low | Multi-region payments, compliance |
+
+---
+
 ## References
 
 - [Multi-Region Architecture Best Practices](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/design-multi-region-architectures.html)

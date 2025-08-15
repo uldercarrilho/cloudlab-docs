@@ -459,6 +459,38 @@ The hybrid search and analytics architecture using Elasticsearch and ClickHouse 
 
 The phased implementation approach ensures we can deliver value incrementally while managing risks and building team expertise. The comprehensive monitoring and observability strategy will provide visibility into system performance and enable continuous optimization.
 
+## Cross-ADR Dependencies
+
+### Direct Dependencies
+- **ADR-004: Data Storage** - Provides data storage and consistency patterns
+- **ADR-005: Event Streaming** - Provides real-time data streaming for analytics
+- **ADR-008: Monitoring & Observability** - Provides analytics monitoring and metrics
+- **ADR-011: Performance & Caching** - Provides search performance optimization
+- **ADR-013: Multi-Region Distribution** - Provides global search and analytics
+
+### Supporting Dependencies
+- **ADR-001: User Management** - Provides user analytics and personalization data
+- **ADR-002: Order Processing** - Provides order analytics and business metrics
+- **ADR-003: Container Orchestration** - Provides search service deployment
+- **ADR-007: Cloud Infrastructure** - Provides infrastructure for search and analytics
+- **ADR-020: Payment Processing** - Provides payment analytics and fraud detection
+
+### Dependency Matrix
+| ADR | Dependency Type | Impact | Integration Points |
+|-----|----------------|---------|-------------------|
+| ADR-004 | Direct | High | Data storage, consistency, indexing |
+| ADR-005 | Direct | High | Real-time data streaming, event processing |
+| ADR-008 | Direct | Medium | Analytics monitoring, performance metrics |
+| ADR-011 | Direct | Medium | Search performance, caching optimization |
+| ADR-013 | Direct | Low | Global search, multi-region analytics |
+| ADR-001 | Supporting | Medium | User analytics, personalization, search |
+| ADR-002 | Supporting | Medium | Order analytics, business intelligence |
+| ADR-003 | Supporting | Medium | Search service deployment, scaling |
+| ADR-007 | Supporting | Medium | Infrastructure, storage, compute |
+| ADR-020 | Supporting | Low | Payment analytics, fraud detection |
+
+---
+
 ## References
 
 - [Elasticsearch Documentation](https://www.elastic.co/guide/index.html)

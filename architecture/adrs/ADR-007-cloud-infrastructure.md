@@ -958,7 +958,39 @@ The implementation strategy focuses on incremental deployment with comprehensive
 
 ---
 
-## 18. References and Resources
+## 18. Cross-ADR Dependencies
+
+### 18.1 Direct Dependencies
+- **ADR-003: Container Orchestration** - Provides Kubernetes and Istio infrastructure
+- **ADR-004: Data Storage** - Defines data storage requirements and patterns
+- **ADR-008: Monitoring & Observability** - Provides monitoring infrastructure requirements
+- **ADR-013: Multi-Region Distribution** - Defines global distribution requirements
+- **ADR-010: CI/CD & Deployment** - Defines deployment and infrastructure automation
+
+### 18.2 Supporting Dependencies
+- **ADR-001: User Management** - Provides user service infrastructure requirements
+- **ADR-002: Order Processing** - Provides order service infrastructure requirements
+- **ADR-005: Event Streaming** - Provides Kafka infrastructure requirements
+- **ADR-006: API Communication** - Provides API gateway infrastructure requirements
+- **ADR-009: Security & Authentication** - Provides security infrastructure requirements
+
+### 18.3 Dependency Matrix
+| ADR | Dependency Type | Impact | Integration Points |
+|-----|----------------|---------|-------------------|
+| ADR-003 | Direct | High | Kubernetes clusters, Istio service mesh |
+| ADR-004 | Direct | High | Database infrastructure, storage systems |
+| ADR-008 | Direct | Medium | Monitoring infrastructure, observability tools |
+| ADR-013 | Direct | Medium | Multi-region deployment, global routing |
+| ADR-010 | Direct | Low | Infrastructure automation, deployment pipelines |
+| ADR-001 | Supporting | Medium | User service infrastructure, authentication |
+| ADR-002 | Supporting | Medium | Order service infrastructure, processing |
+| ADR-005 | Supporting | Medium | Kafka infrastructure, event streaming |
+| ADR-006 | Supporting | Medium | API gateway, load balancer configuration |
+| ADR-009 | Supporting | Medium | Security infrastructure, compliance tools |
+
+---
+
+## 19. References and Resources
 
 ### AWS Resources
 - [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/)
