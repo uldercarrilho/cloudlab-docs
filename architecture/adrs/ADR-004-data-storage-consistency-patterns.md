@@ -1,4 +1,4 @@
-# 📄 PRD + ADR Hybrid Template
+# 📄 ADR-004: Data Storage & Consistency Patterns
 
 ## 1. Document Info
 - **Document Name:** ADR-004: Data Storage & Consistency Patterns
