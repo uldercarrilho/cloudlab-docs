@@ -1,7 +1,7 @@
 # ADR-016: Documentation & Knowledge Management Architecture
 
 ## Status
-**Status**: Draft  
+**Status**: Approved  
 **Date**: 2025-08-14  
 **Author**: AI Agent (Ulder Carrilho Júnior oversight)  
 **Supersedes**: None

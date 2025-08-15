@@ -1,8 +1,8 @@
 # ADR-012: Search & Analytics Architecture
 
 ## Status
-**Status**: Proposed  
-**Date**: 2025-01-27
+**Status**: Approved  
+**Date**: 2025-08-14
 **Author**: AI Agent (Ulder Carrilho Júnior oversight)  
 **Supersedes**: None  
 

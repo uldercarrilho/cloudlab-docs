@@ -358,7 +358,7 @@ service AnalyticsService {
 // Real-time Communication Message Format
 {
   "type": "order_status_update",
-  "timestamp": "2025-01-27T10:30:00Z",
+  "timestamp": "2025-08-13T10:30:00Z",
   "data": {
     "orderId": "ord_12345",
     "status": "shipped",
@@ -373,7 +373,7 @@ service AnalyticsService {
 // Saga Pattern Event Messages
 {
   "type": "saga_step_completed",
-  "timestamp": "2025-01-27T10:30:00Z",
+  "timestamp": "2025-08-13T10:30:00Z",
   "data": {
     "sagaId": "saga_12345",
     "step": "payment_processed",
@@ -390,7 +390,7 @@ service AnalyticsService {
 // Inventory Update Messages
 {
   "type": "inventory_updated",
-  "timestamp": "2025-01-27T10:30:00Z",
+  "timestamp": "2025-08-13T10:30:00Z",
   "data": {
     "productId": "prod_12345",
     "warehouseId": "wh_001",
