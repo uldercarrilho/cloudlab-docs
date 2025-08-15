@@ -415,6 +415,32 @@ We will implement a **hybrid multi-region architecture** using **active-active d
 - **Compliance Validation**: Business rule changes validated against regional compliance requirements
 - **Documentation Updates**: Synchronized documentation updates across all regions
 
+## Shipping & Fulfillment Logistics
+
+### Multi-Region Shipping Architecture
+- **Regional Warehouses**: Primary and secondary warehouses in each region
+- **Cross-Region Fulfillment**: Intelligent routing for optimal warehouse selection
+- **Shipping Carrier Integration**: Multi-carrier support with regional preferences
+- **Real-time Tracking**: Cross-region order tracking and status updates
+
+### Shipping Business Rules Implementation
+- **Standard Shipping**: 3-5 business days with regional warehouse optimization
+- **Express Shipping**: 1-2 business days with premium carrier selection
+- **Overnight Shipping**: Next business day with regional warehouse coordination
+- **International Shipping**: 7-14 business days with customs and compliance handling
+
+### Fulfillment Coordination
+- **Warehouse Selection**: Nearest warehouse with inventory availability
+- **Split Shipments**: Multi-warehouse fulfillment for complex orders
+- **Cross-Docking**: Express order processing with regional coordination
+- **Returns Processing**: Regional returns with cross-region inventory updates
+
+### Shipping Cost Optimization
+- **Regional Rate Calculation**: Shipping costs based on regional carriers and routes
+- **Bulk Shipping**: Volume discounts with regional warehouse coordination
+- **Free Shipping Thresholds**: Regional thresholds with cross-region aggregation
+- **International Cost Management**: Optimized international shipping with regional compliance
+
 ## References
 
 - [Multi-Region Architecture Best Practices](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/design-multi-region-architectures.html)
