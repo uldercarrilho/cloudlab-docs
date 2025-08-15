@@ -81,20 +81,39 @@ The distributed e-commerce platform requires a robust social features system tha
 **Rationale**: To focus on distributed content management rather than external moderation service integration
 
 **Mocked Services**:
-- Content moderation services (AWS Rekognition, Google Vision API)
-- Copyright detection services
-- Language processing services
+- **AWS Rekognition Mock**: Simulates content analysis with configurable moderation results and processing times
+- **Google Vision API Mock**: Simulates image processing with realistic response times and error scenarios
+- **Copyright Detection Mock**: Simulates copyright violation detection with configurable accuracy rates
+- **Language Processing Mock**: Simulates text analysis with configurable sentiment and content classification
 
-**Mock Implementation**:
-- Simulate content filtering and moderation workflows
-- Generate realistic content analysis results
-- Provide configurable moderation rules and thresholds
+**Mock Implementation Details**:
+- **AWS Rekognition Mock**: 
+  - Configurable content analysis results (safe, unsafe, review required)
+  - Simulated processing delays (500-3000ms)
+  - Content type detection (text, image, video)
+  - Confidence score simulation (0-100%)
+  - Learning Benefits: Practice content moderation workflows and event-driven processing
+
+- **Google Vision API Mock**:
+  - Image processing simulation with realistic response times
+  - Configurable error scenarios (rate limiting, service unavailable)
+  - Content labeling and classification simulation
+  - Safe search filtering simulation
+  - Learning Benefits: Practice content moderation workflows and handling external service failures
+
+- **Copyright Detection Mock**:
+  - Configurable copyright violation detection accuracy
+  - Simulated processing delays (1000-5000ms)
+  - Multiple content source checking simulation
+  - Learning Benefits: Practice content rights management and distributed content validation
 
 **Learning Benefits**:
 - Focus on distributed content management patterns
 - Test content moderation workflows and policies
 - Demonstrate distributed social feature coordination
 - Reduce external service integration complexity
+- Practice content moderation workflows and event-driven processing
+- Learn handling external service failures in content management
 
 ---
 

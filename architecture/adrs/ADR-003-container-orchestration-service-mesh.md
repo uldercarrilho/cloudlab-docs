@@ -97,6 +97,23 @@
 - **Security:** Built-in mTLS, authorization policies, and security best practices
 - **Observability:** Comprehensive metrics, logs, and tracing out of the box
 
+### Service Complexity Assessment
+
+#### **Real Services (Essential for Distributed Systems Learning)**
+- **Kubernetes**: Real container orchestration for learning deployment patterns, scaling, and service discovery
+- **Istio Service Mesh**: Real service mesh for learning traffic management, security policies, and observability
+- **Learning Benefits**: Practice real-world container orchestration, service mesh patterns, and operational procedures
+
+#### **Mocked Services (To Avoid Overengineering)**
+- **External Monitoring Tools**: Mock external monitoring services to focus on Istio observability patterns
+- **External Security Services**: Mock external security services to focus on Istio security patterns
+- **Learning Benefits**: Focus on core distributed systems concepts without external service integration complexity
+
+#### **Complexity Balance**
+- **Real Services**: Used where they directly contribute to distributed systems learning objectives
+- **Mocked Services**: Used for external dependencies that don't contribute to core learning goals
+- **Result**: Optimal balance between learning value and operational complexity
+
 ### Alternatives Considered
 
 #### Container Orchestration Alternatives:

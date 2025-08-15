@@ -80,20 +80,41 @@ The distributed e-commerce platform requires a robust payment processing system 
 **Rationale**: To focus on distributed systems learning rather than external API integration complexity
 
 **Mocked Services**:
-- Payment providers (Stripe, PayPal, etc.)
-- Fraud detection services
-- Payment analytics services
+- **Stripe Mock**: Simulates payment processing with configurable success/failure rates, network latency, and fraud detection
+- **PayPal Mock**: Simulates payment gateway integration with realistic response times and error scenarios
+- **Square Mock**: Simulates point-of-sale payment processing with configurable transaction types
+- **Fraud Detection Mock**: Simulates fraud detection algorithms with configurable risk scores and response times
+- **Banking APIs Mock**: Simulates ACH and wire transfer processing with realistic clearing times
+- **Cryptocurrency Mock**: Simulates crypto payment processing with configurable confirmation times
 
-**Mock Implementation**:
-- Simulate payment responses and failures
-- Generate realistic fraud detection scenarios
-- Provide configurable payment analytics data
+**Mock Implementation Details**:
+- **Stripe Mock**: 
+  - Configurable success/failure rates (0-100%)
+  - Simulated network latency (50-500ms)
+  - Fraud detection with configurable risk scores (0-100)
+  - Realistic error responses (insufficient funds, expired cards, etc.)
+  - Learning Benefits: Practice circuit breaker patterns, retry logic, and compensation actions
+
+- **PayPal Mock**:
+  - Payment gateway integration simulation
+  - Configurable response times (100-1000ms)
+  - Error scenario simulation (network timeouts, service unavailable)
+  - Webhook event simulation for payment status updates
+  - Learning Benefits: Practice asynchronous payment processing and webhook handling
+
+- **Fraud Detection Mock**:
+  - Configurable risk scoring algorithms
+  - Simulated processing delays (200-2000ms)
+  - Risk factor simulation (location, device, behavior patterns)
+  - Learning Benefits: Practice fraud detection workflows and risk assessment patterns
 
 **Learning Benefits**:
 - Focus on distributed payment processing patterns
 - Test failure scenarios and compensation logic
 - Demonstrate saga pattern implementation
 - Reduce external service integration complexity
+- Practice circuit breaker patterns and retry logic
+- Learn webhook handling and asynchronous processing
 
 ---
 

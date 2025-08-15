@@ -53,7 +53,17 @@
 ## 5. Business Rules & Constraints
 > Rules that must always be true, plus any limitations.
 
-**Examples:**
+**Business Rules (from BUSINESS-RULES-001-ecommerce-platform.md):**
+- **Data Propagation Timing Requirements:**
+  - Product catalog price changes: propagate within 5 minutes
+  - Inventory updates: propagate within 1 minute  
+  - Review updates: propagate within 2 minutes
+  - Vendor information updates: propagate within 10 minutes
+  - User data replication: within 1 minute
+  - Order data replication: within 30 seconds
+  - Analytics data replication: within 1 hour
+
+**Technical Constraints:**
 - Order data must maintain ACID consistency (CP from CAP)
 - Product catalog can sacrifice consistency for availability (AP from CAP)
 - User sessions can sacrifice consistency for partition tolerance (P from CAP)
@@ -97,6 +107,24 @@
 **Event Store:** PostgreSQL with event sourcing pattern
 - **Why:** Leverage existing PostgreSQL infrastructure, ACID compliance for event ordering, and familiar tooling
 - **Use Case:** Audit trails, data lineage, CQRS read models
+
+### Service Complexity Assessment
+
+#### **Real Services (Essential for Distributed Systems Learning)**
+- **PostgreSQL**: Real database for learning ACID transactions, data consistency patterns, and distributed data management
+- **Redis**: Real in-memory store for learning caching patterns, session management, and distributed caching
+- **ClickHouse**: Real analytics database for learning data warehousing, query optimization, and analytical processing
+- **Learning Benefits**: Practice real-world database operations, consistency patterns, and performance optimization
+
+#### **Mocked Services (To Avoid Overengineering)**
+- **External Data Services**: Mock external data providers to focus on data consistency patterns
+- **External Analytics Services**: Mock external analytics services to focus on data processing patterns
+- **Learning Benefits**: Focus on core distributed systems data concepts without external service integration complexity
+
+#### **Complexity Balance**
+- **Real Services**: Used where they directly contribute to distributed systems data learning objectives
+- **Mocked Services**: Used for external dependencies that don't contribute to core data learning goals
+- **Result**: Optimal balance between learning value and operational complexity
 
 **Technology Role Clarification:**
 - **PostgreSQL (Primary)**: Product catalog, user accounts, orders, payments - ACID transactions
