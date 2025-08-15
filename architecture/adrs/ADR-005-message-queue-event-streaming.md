@@ -592,7 +592,7 @@ The Saga pattern will be implemented to handle distributed transactions across m
 ### Related ADRs
 - [ADR-003: Container Orchestration & Service Mesh](../adrs/ADR-003-container-orchestration-service-mesh.md)
 - [ADR-004: Data Storage & Consistency Patterns](../adrs/ADR-004-data-storage-consistency-patterns.md)
-- [ADR-006: API & Communication Patterns](../adrs/ADR-006-api-communication-patterns-adr.md) (Next in sequence)
+- [ADR-006: API & Communication Patterns](../adrs/ADR-006-api-communication-patterns.md)
 
 ---
 
