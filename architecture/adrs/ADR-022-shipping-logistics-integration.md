@@ -76,6 +76,26 @@ The distributed e-commerce platform requires a robust shipping and logistics sys
 - Must integrate with inventory management (ADR-004)
 - Must support multi-region deployment (ADR-013)
 
+### 5.1 Mocking Strategy for External Services
+
+**Rationale**: To focus on multi-warehouse optimization rather than carrier API integration
+
+**Mocked Services**:
+- Shipping carriers (FedEx, UPS, DHL)
+- Address validation services
+- Customs documentation services
+
+**Mock Implementation**:
+- Simulate shipping rates and delivery times
+- Generate realistic address validation scenarios
+- Provide configurable customs documentation
+
+**Learning Benefits**:
+- Focus on distributed logistics coordination
+- Test multi-warehouse optimization algorithms
+- Demonstrate distributed workflow patterns
+- Reduce external service integration complexity
+
 ---
 
 ## 6. Acceptance Criteria
