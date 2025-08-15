@@ -31,6 +31,9 @@ ADRs capture the context, options considered, and consequences of important arch
 - **ADR-017**: Business Continuity & Disaster Recovery
 - **ADR-018**: Vendor Management Architecture
 - **ADR-019**: Content Management & Moderation
+- **ADR-020**: Payment Processing Architecture
+- **ADR-021**: Social Features & Content Moderation
+- **ADR-022**: Shipping & Logistics Integration
 
 ## Template
 Use the PRD + ADR hybrid template in `/templates/prd-adr-template.md` for consistency. This template combines product requirements with architectural decisions, making it ideal for solo development and AI collaboration.
