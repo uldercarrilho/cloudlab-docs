@@ -12,6 +12,8 @@ ADRs capture the context, options considered, and consequences of important arch
 - Superseded decisions are marked but not deleted
 
 ## Current ADRs
+- **ADR-001**: User Management & Authentication
+- **ADR-002**: Order Processing & Fulfillment
 - **ADR-003**: Container Orchestration & Service Mesh
 - **ADR-004**: Data Storage & Consistency Patterns
 - **ADR-005**: Message Queue & Event Streaming
