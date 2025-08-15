@@ -34,6 +34,8 @@ ADRs capture the context, options considered, and consequences of important arch
 - **ADR-020**: Payment Processing Architecture
 - **ADR-021**: Social Features & Content Moderation
 - **ADR-022**: Shipping & Logistics Integration
+- **ADR-023**: Service Mesh Security Patterns
+- **ADR-024**: Distributed Tracing Strategy
 
 ## Template
 Use the PRD + ADR hybrid template in `/templates/prd-adr-template.md` for consistency. This template combines product requirements with architectural decisions, making it ideal for solo development and AI collaboration.
