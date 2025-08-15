@@ -1,6 +1,6 @@
 # ADR-017: Business Continuity & Disaster Recovery
 
-**Status**: Draft  
+**Status**: Approved  
 **Date**: 2025-08-14  
 **Author**: AI Agent
 **Supersedes**: None  

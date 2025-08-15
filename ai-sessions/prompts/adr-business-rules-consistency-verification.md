@@ -128,8 +128,3 @@ Analyze all ADR documents and the Business Rules document to identify inconsiste
 
 ## Output Format
 Please structure your response as a comprehensive report with clear sections, tables, and actionable recommendations. Use markdown formatting for readability and include specific file references and line numbers where applicable.
-
----
-
-## Version History
-- **v1.0** (2025-01-27): Initial prompt creation for ADR consistency verification

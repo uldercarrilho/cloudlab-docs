@@ -1,8 +1,8 @@
 # ADR-014: Testing & Quality Assurance Architecture
 
 ## Status
-**Status**: Draft  
-**Date**: 2025-01-27  
+**Status**: Approved  
+**Date**: 2025-08-14
 **Author**: AI Agent (Ulder Carrilho Júnior oversight)  
 **Supersedes**: None
 

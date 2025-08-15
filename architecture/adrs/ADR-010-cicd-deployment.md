@@ -2,7 +2,7 @@
 
 ## Status
 **Status**: Accepted  
-**Date**: 2025-01-27
+**Date**: 2025-08-14
 **Author**: AI Agent (Ulder Carrilho Júnior oversight)  
 **Supersedes**: None  
 
