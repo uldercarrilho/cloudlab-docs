@@ -631,14 +631,39 @@
 
 ---
 
-## 9. References & Resources
+## 9. External Service Integration Strategy
 
-### **9.1 Related Documents**
+### **9.1 Learning-First Approach**
+**Primary Focus**: Distributed systems patterns and concepts rather than comprehensive external service integration
+
+**Strategy**:
+- **Mock External Services**: Use mock implementations for payment providers, shipping carriers, and notification services
+- **Focus on Patterns**: Concentrate on distributed systems patterns like saga, circuit breaker, and event sourcing
+- **Reduce Complexity**: Avoid overengineering external integrations that don't contribute to learning objectives
+- **Real Services Only When Essential**: Implement real external services only when they demonstrate critical distributed systems concepts
+
+### **9.2 Mocked Services**
+- **Payment Providers**: Stripe, PayPal, Square (mocked to focus on payment processing patterns)
+- **Shipping Carriers**: FedEx, UPS, DHL (mocked to focus on multi-warehouse optimization)
+- **Notification Services**: SendGrid, Twilio (mocked to focus on asynchronous notification patterns)
+- **Content Moderation**: AWS Rekognition, Google Vision API (mocked to focus on content management workflows)
+
+### **9.3 Learning Benefits**
+- **Distributed Patterns**: Focus on saga patterns, circuit breakers, and event sourcing, and so on
+- **Failure Scenarios**: Test resilience patterns with configurable mock failures
+- **Performance Testing**: Validate distributed system performance without external dependencies
+- **Architecture Validation**: Ensure distributed system design meets learning objectives
+
+---
+
+## 10. References & Resources
+
+### **10.1 Related Documents**
 - [Development Plan](./DEVELOPMENT-PLAN-001-distributed-ecommerce-platform.md)
 - [System Overview](../architecture/rfcs/system-overview.md)
 - [API Documentation](../api-docs/)
 
-### **9.2 Standards & Guidelines**
+### **10.2 Standards & Guidelines**
 - [GDPR Guidelines](https://gdpr.eu/)
 - [PCI DSS Standards](https://www.pcisecuritystandards.org/)
 - [E-commerce Best Practices](https://www.w3.org/WAI/business-case/)
