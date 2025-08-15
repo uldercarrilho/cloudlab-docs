@@ -138,6 +138,23 @@
 - ❌ **Resource Requirements**: Higher memory and storage requirements
 - ❌ **Learning Curve**: Team needs training on Kafka concepts and operations
 
+### Service Complexity Assessment
+
+#### **Real Services (Essential for Distributed Systems Learning)**
+- **Apache Kafka**: Real message queue for learning event streaming, distributed messaging, and event sourcing patterns
+- **Kafka Streams**: Real stream processing for learning real-time data processing and event transformation
+- **Learning Benefits**: Practice real-world message queuing, event streaming, and distributed messaging patterns
+
+#### **Mocked Services (To Avoid Overengineering)**
+- **External Message Services**: Mock external messaging services to focus on Kafka patterns
+- **External Stream Processing**: Mock external stream processing services to focus on Kafka Streams patterns
+- **Learning Benefits**: Focus on core distributed systems messaging concepts without external service integration complexity
+
+#### **Complexity Balance**
+- **Real Services**: Used where they directly contribute to distributed systems messaging learning objectives
+- **Mocked Services**: Used for external dependencies that don't contribute to core messaging learning goals
+- **Result**: Optimal balance between learning value and operational complexity
+
 ---
 
 ## 8. Implementation Notes

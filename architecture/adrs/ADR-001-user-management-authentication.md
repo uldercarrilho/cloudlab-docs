@@ -361,22 +361,48 @@ Implement a comprehensive user management and authentication architecture for th
 
 ---
 
-## 17. References & Resources
+## 17. Cross-ADR Dependencies
 
-### 17.1 Related Documents
+### 17.1 Direct Dependencies
+- **ADR-009: Security & Authentication** - Provides security framework and authentication patterns
+- **ADR-018: Vendor Management** - Defines vendor-specific user management requirements
+- **ADR-015: Compliance & Regulatory** - Specifies compliance requirements for user data
+
+### 17.2 Supporting Dependencies
+- **ADR-004: Data Storage & Consistency** - Provides data storage patterns for user profiles
+- **ADR-005: Event Streaming** - Enables user activity event streaming
+- **ADR-006: API Communication** - Defines API patterns for user management
+- **ADR-008: Monitoring & Observability** - Provides user activity monitoring capabilities
+
+### 17.3 Dependency Matrix
+| ADR | Dependency Type | Impact | Integration Points |
+|-----|----------------|---------|-------------------|
+| ADR-009 | Direct | High | Authentication mechanisms, security policies |
+| ADR-018 | Direct | High | Vendor user types, multi-tenant isolation |
+| ADR-015 | Direct | Medium | Data retention, privacy compliance |
+| ADR-004 | Supporting | Medium | User profile storage, session management |
+| ADR-005 | Supporting | Low | User activity events, audit trails |
+| ADR-006 | Supporting | Medium | User management APIs, authentication endpoints |
+| ADR-008 | Supporting | Low | User activity metrics, security monitoring |
+
+---
+
+## 18. References & Resources
+
+### 18.1 Related Documents
 - [Business Rules Document](../../business/backlog/BUSINESS-RULES-001-ecommerce-platform.md) - Defines user management business requirements
 - [ADR-009: Security & Authentication](ADR-009-security-authentication.md) - Security architecture decisions
 - [ADR-018: Vendor Management](ADR-018-vendor-management-architecture.md) - Vendor-specific user management
 - [ADR-015: Compliance & Regulatory](ADR-015-compliance-regulatory-requirements.md) - Compliance requirements
 
-### 17.2 Technical Resources
+### 18.2 Technical Resources
 - [OAuth 2.0 Specification](https://oauth.net/2/)
 - [OpenID Connect Core](https://openid.net/specs/openid-connect-core-1_0.html)
 - [JWT RFC 7519](https://tools.ietf.org/html/rfc7519)
 - [Multi-Tenant Architecture](https://martinfowler.com/articles/microservices.html#SharedData)
 - [RBAC Implementation](https://en.wikipedia.org/wiki/Role-based_access_control)
 
-### 17.3 Security Resources
+### 18.3 Security Resources
 - [OWASP Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html)
 - [NIST Digital Identity Guidelines](https://pages.nist.gov/800-63-3/)
 - [GDPR Compliance Guide](https://gdpr.eu/)
@@ -384,21 +410,21 @@ Implement a comprehensive user management and authentication architecture for th
 
 ---
 
-## 18. Future Considerations
+## 19. Future Considerations
 
-### 18.1 Scalability Enhancements
+### 19.1 Scalability Enhancements
 - **Federation**: Support for external identity providers
 - **Social Login**: Integration with social media platforms
 - **Biometric Authentication**: Fingerprint and face recognition
 - **Adaptive Authentication**: Risk-based authentication decisions
 
-### 18.2 Security Enhancements
+### 19.2 Security Enhancements
 - **Zero Trust Architecture**: Continuous verification of users and devices
 - **Behavioral Analytics**: User behavior analysis for fraud detection
 - **Advanced MFA**: Hardware security keys and biometric options
 - **Threat Intelligence**: Integration with security threat feeds
 
-### 18.3 Compliance Enhancements
+### 19.3 Compliance Enhancements
 - **Regional Compliance**: Support for additional privacy regulations
 - **Audit Automation**: Automated compliance reporting and validation
 - **Data Sovereignty**: Enhanced data residency controls

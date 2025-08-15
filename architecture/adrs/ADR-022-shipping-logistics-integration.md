@@ -81,20 +81,45 @@ The distributed e-commerce platform requires a robust shipping and logistics sys
 **Rationale**: To focus on multi-warehouse optimization rather than carrier API integration
 
 **Mocked Services**:
-- Shipping carriers (FedEx, UPS, DHL)
-- Address validation services
-- Customs documentation services
+- **FedEx Mock**: Simulates shipping API with configurable delivery times and tracking updates
+- **UPS Mock**: Simulates logistics integration with realistic response times and warehouse selection
+- **DHL Mock**: Simulates international shipping with customs processing and realistic delays
+- **Address Validation Mock**: Simulates address verification with configurable validation results
+- **Customs Documentation Mock**: Simulates customs processing with configurable clearance times
 
-**Mock Implementation**:
-- Simulate shipping rates and delivery times
-- Generate realistic address validation scenarios
-- Provide configurable customs documentation
+**Mock Implementation Details**:
+- **FedEx Mock**: 
+  - Configurable delivery times (1-7 business days)
+  - Real-time tracking updates simulation
+  - Rate calculation with configurable pricing
+  - Error scenario simulation (service unavailable, invalid addresses)
+  - Learning Benefits: Practice shipping workflow coordination and failure handling
+
+- **UPS Mock**:
+  - Logistics integration simulation with realistic response times
+  - Warehouse selection algorithms with configurable availability
+  - Route optimization simulation
+  - Learning Benefits: Practice multi-warehouse optimization and logistics coordination
+
+- **DHL Mock**:
+  - International shipping simulation with customs processing
+  - Configurable clearance delays (1-14 days)
+  - Multi-currency rate calculation
+  - Learning Benefits: Practice international logistics workflows and customs handling
+
+- **Address Validation Mock**:
+  - Configurable validation results (valid, invalid, requires verification)
+  - Simulated processing delays (100-500ms)
+  - International address format support
+  - Learning Benefits: Practice address validation workflows and error handling
 
 **Learning Benefits**:
 - Focus on distributed logistics coordination
 - Test multi-warehouse optimization algorithms
 - Demonstrate distributed workflow patterns
 - Reduce external service integration complexity
+- Practice shipping workflow coordination and failure handling
+- Learn multi-warehouse optimization and logistics coordination
 
 ---
 
