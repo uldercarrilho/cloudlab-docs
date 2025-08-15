@@ -1,7 +1,7 @@
-# 📄 PRD + ADR Hybrid Template
+# 📄 ADR-003: Container Orchestration & Service Mesh Architecture
 
 ## 1. Document Info
-- **Document Name:** Container Orchestration & Service Mesh Architecture Decision Record
+- **Document Name:** ADR-003: Container Orchestration & Service Mesh Architecture
 - **Version:** 1.0
 - **Date:** 2025-08-12
 - **Author:** AI Agent (TASK-003)
