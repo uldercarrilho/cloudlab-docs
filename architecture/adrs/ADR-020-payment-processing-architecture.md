@@ -75,6 +75,26 @@ The distributed e-commerce platform requires a robust payment processing system 
 - Must support multi-region deployment (ADR-013)
 - Must integrate with compliance requirements (ADR-015)
 
+### 5.1 Mocking Strategy for External Services
+
+**Rationale**: To focus on distributed systems learning rather than external API integration complexity
+
+**Mocked Services**:
+- Payment providers (Stripe, PayPal, etc.)
+- Fraud detection services
+- Payment analytics services
+
+**Mock Implementation**:
+- Simulate payment responses and failures
+- Generate realistic fraud detection scenarios
+- Provide configurable payment analytics data
+
+**Learning Benefits**:
+- Focus on distributed payment processing patterns
+- Test failure scenarios and compensation logic
+- Demonstrate saga pattern implementation
+- Reduce external service integration complexity
+
 ---
 
 ## 6. Acceptance Criteria
