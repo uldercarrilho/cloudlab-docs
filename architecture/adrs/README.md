@@ -37,3 +37,12 @@ ADRs capture the context, options considered, and consequences of important arch
 
 ## Template
 Use the PRD + ADR hybrid template in `/templates/prd-adr-template.md` for consistency. This template combines product requirements with architectural decisions, making it ideal for solo development and AI collaboration.
+
+## Implementation Guides
+- [JWT Implementation](implementations/jwt-implementation.md)
+- [Security Best Practices](implementations/security-best-practices.md)
+- [API Design Principles](implementations/api-design-principles.md)
+- [OAuth 2.0 Setup](implementations/oauth-setup.md)
+- [Rate Limiting](implementations/rate-limiting.md)
+- [Authorization](implementations/authorization.md)
+- [Mocking Strategy](implementations/mocking-strategy.md) - External service mocking approach
