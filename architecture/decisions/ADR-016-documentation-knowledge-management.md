@@ -321,75 +321,74 @@ We will implement a **hybrid documentation strategy** that combines **repository
 
 ### Documentation Structure for AI Consumption
 ```
-docs/
-├── architecture/
-│   ├── overview/
-│   │   ├── system-overview.md          # Clear system description
-│   │   ├── architecture-principles.md  # Design principles
-│   │   └── technology-stack.md         # Technology choices
-│   ├── decisions/
-│   │   ├── README.md                  # ADR navigation
-│   │   └── adr-001-*.md               # Individual ADRs
-│   ├── diagrams/
-│   │   ├── c4-models/                 # Architecture diagrams
-│   │   ├── sequence-diagrams/          # Service interactions
-│   │   └── data-flow/                 # Data flow diagrams
-│   └── patterns/
-│       ├── distributed-patterns.md     # Pattern descriptions
-│       ├── integration-patterns.md     # Integration approaches
-│       └── failure-patterns.md         # Failure handling
-├── api/
-│   ├── specifications/
-│   │   ├── openapi/                    # OpenAPI specs
-│   │   ├── graphql/                    # GraphQL schemas
-│   │   └── examples/                   # API examples
-│   ├── guides/
-│   │   ├── authentication.md           # Auth guide
-│   │   ├── rate-limiting.md            # Rate limiting
-│   │   └── error-handling.md           # Error handling
-│   └── testing/
-│       ├── postman-collections/        # Postman tests
-│       ├── integration-tests/          # Test suites
-│       └── performance-tests/          # Performance tests
-├── development/
-│   ├── setup/
-│   │   ├── local-development.md        # Local setup
-│   │   ├── environment-setup.md        # Environment config
-│   │   └── tooling-setup.md            # Development tools
-│   ├── guidelines/
-│   │   ├── coding-standards.md         # Code standards
-│   │   ├── testing-guidelines.md       # Testing approach
-│   │   └── deployment-guidelines.md    # Deployment process
-│   └── troubleshooting/
-│       ├── common-issues.md            # Common problems
-│       ├── debugging-guides.md         # Debugging help
-│       └── performance-issues.md       # Performance problems
-├── operations/
-│   ├── deployment/
-│   │   ├── deployment-process.md       # Deployment steps
-│   │   ├── rollback-procedures.md      # Rollback process
-│   │   └── environment-management.md   # Environment config
-│   ├── monitoring/
-│   │   ├── metrics-dashboard.md        # Monitoring setup
-│   │   ├── alerting-configuration.md   # Alert setup
-│   │   └── log-analysis.md             # Log analysis
-│   └── runbooks/
-│       ├── incident-response.md        # Incident handling
-│       ├── troubleshooting.md          # Problem solving
-│       └── maintenance.md              # Maintenance tasks
-└── knowledge/
-    ├── concepts/
-    │   ├── distributed-systems.md      # Core concepts
-    │   ├── microservices.md            # Microservice patterns
-    │   └── event-driven.md             # Event patterns
-    ├── tutorials/
-    │   ├── getting-started.md          # Beginner guide
-    │   ├── advanced-topics.md          # Advanced concepts
-    │   └── best-practices.md           # Best practices
-    └── references/
-        ├── glossary.md                 # Terminology
-        ├── cheatsheets.md              # Quick reference
-        └── external-resources.md       # External links
+─ architecture/
+  ├── overview/
+  │   ├── system-overview.md          # Clear system description
+  │   ├── architecture-principles.md  # Design principles
+  │   └── technology-stack.md         # Technology choices
+  ├── decisions/
+  │   ├── README.md                  # ADR navigation
+  │   └── adr-001-*.md               # Individual ADRs
+  ├── diagrams/
+  │   ├── c4-models/                 # Architecture diagrams
+  │   ├── sequence-diagrams/          # Service interactions
+  │   └── data-flow/                 # Data flow diagrams
+  └── patterns/
+      ├── distributed-patterns.md     # Pattern descriptions
+      ├── integration-patterns.md     # Integration approaches
+      └── failure-patterns.md         # Failure handling
+─ api/
+  ├── specifications/
+  │   ├── openapi/                    # OpenAPI specs
+  │   ├── graphql/                    # GraphQL schemas
+  │   └── examples/                   # API examples
+  ├── guides/
+  │   ├── authentication.md           # Auth guide
+  │   ├── rate-limiting.md            # Rate limiting
+  │   └── error-handling.md           # Error handling
+  └── testing/
+      ├── postman-collections/        # Postman tests
+      ├── integration-tests/          # Test suites
+      └── performance-tests/          # Performance tests
+─ development/
+  ├── setup/
+  │   ├── local-development.md        # Local setup
+  │   ├── environment-setup.md        # Environment config
+  │   └── tooling-setup.md            # Development tools
+  ├── guidelines/
+  │   ├── coding-standards.md         # Code standards
+  │   ├── testing-guidelines.md       # Testing approach
+  │   └── deployment-guidelines.md    # Deployment process
+  └── troubleshooting/
+      ├── common-issues.md            # Common problems
+      ├── debugging-guides.md         # Debugging help
+      └── performance-issues.md       # Performance problems
+─ operations/
+  ├── deployment/
+  │   ├── deployment-process.md       # Deployment steps
+  │   ├── rollback-procedures.md      # Rollback process
+  │   └── environment-management.md   # Environment config
+  ├── monitoring/
+  │   ├── metrics-dashboard.md        # Monitoring setup
+  │   ├── alerting-configuration.md   # Alert setup
+  │   └── log-analysis.md             # Log analysis
+  └── runbooks/
+      ├── incident-response.md        # Incident handling
+      ├── troubleshooting.md          # Problem solving
+      └── maintenance.md              # Maintenance tasks
+─ knowledge/
+  ├── concepts/
+  │   ├── distributed-systems.md      # Core concepts
+  │   ├── microservices.md            # Microservice patterns
+  │   └── event-driven.md             # Event patterns
+  ├── tutorials/
+  │   ├── getting-started.md          # Beginner guide
+  │   ├── advanced-topics.md          # Advanced concepts
+  │   └── best-practices.md           # Best practices
+  └── references/
+      ├── glossary.md                 # Terminology
+      ├── cheatsheets.md              # Quick reference
+      └── external-resources.md       # External links
 ```
 
 ### AI Optimization Features
