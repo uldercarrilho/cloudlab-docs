@@ -1,0 +1,110 @@
+@startuml C4_Level2_Container
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Container Diagram - CloudLab E-Commerce Platform
+
+Person(customer, "Customer", "A person who wants to buy products from the platform")
+Person(vendor, "Vendor", "A business that sells products on the platform")
+Person(admin, "Administrator", "A platform administrator managing the system")
+
+System_Boundary(c1, "CloudLab E-Commerce Platform") {
+    Container(web_app, "Web Application", "React/Next.js", "Provides e-commerce functionality to customers and vendors")
+    Container(mobile_app, "Mobile Application", "React Native", "Provides mobile e-commerce functionality")
+    Container(admin_console, "Admin Console", "React/Next.js", "Provides administrative interface for platform management")
+    
+    Container(api_gateway, "API Gateway", "Kong/AWS API Gateway", "Handles routing, rate limiting, and authentication for all API requests")
+    Container(graphql_gateway, "GraphQL Gateway", "Apollo Gateway", "Provides flexible data querying for frontend applications")
+    
+    Container(auth_service, "Authentication Service", "Go", "Handles user authentication, authorization, and session management")
+    Container(user_service, "User Service", "Go", "Manages user profiles, preferences, and account information")
+    Container(product_service, "Product Service", "Go", "Manages product catalog, categories, and inventory")
+    Container(order_service, "Order Service", "Go", "Handles order processing, fulfillment, and tracking")
+    Container(payment_service, "Payment Service", "Go", "Processes payments and manages financial transactions")
+    Container(inventory_service, "Inventory Service", "Go", "Manages real-time inventory across warehouses")
+    Container(notification_service, "Notification Service", "Go", "Sends notifications via email, SMS, and push")
+    Container(analytics_service, "Analytics Service", "Go", "Collects and processes business metrics and user behavior")
+    Container(content_service, "Content Service", "Go", "Manages product images, videos, and documents")
+    Container(search_service, "Search Service", "Go", "Provides product search and recommendation functionality")
+    
+    ContainerDb(postgresql, "PostgreSQL Database", "PostgreSQL 15+", "Stores user data, orders, and product catalog with ACID compliance")
+    ContainerDb(redis, "Redis Cache", "Redis 7+ Cluster", "Provides distributed caching and session storage")
+    ContainerDb(clickhouse, "ClickHouse Analytics", "ClickHouse 23+", "Stores and processes real-time analytics data")
+    ContainerDb(elasticsearch, "Elasticsearch", "Elasticsearch 8+", "Provides product search and analytics capabilities")
+    ContainerDb(kafka, "Apache Kafka", "Kafka MSK", "Handles event streaming and asynchronous communication between services")
+}
+
+System_Ext(payment_gateway, "Payment Gateway", "Stripe, PayPal")
+System_Ext(shipping_api, "Shipping API", "FedEx, UPS")
+System_Ext(email_service, "Email Service", "SendGrid, AWS SES")
+System_Ext(sms_service, "SMS Service", "Twilio, AWS SNS")
+System_Ext(cdn, "CDN", "Cloudflare")
+
+Rel(customer, web_app, "Uses", "HTTPS, WebSocket")
+Rel(customer, mobile_app, "Uses", "HTTPS, WebSocket")
+Rel(vendor, web_app, "Manages products and orders", "HTTPS, WebSocket")
+Rel(admin, admin_console, "Administers platform", "HTTPS")
+
+Rel(web_app, api_gateway, "Makes API calls", "HTTPS")
+Rel(mobile_app, api_gateway, "Makes API calls", "HTTPS")
+Rel(admin_console, api_gateway, "Makes API calls", "HTTPS")
+
+Rel(api_gateway, auth_service, "Routes auth requests", "gRPC")
+Rel(api_gateway, user_service, "Routes user requests", "gRPC")
+Rel(api_gateway, product_service, "Routes product requests", "gRPC")
+Rel(api_gateway, order_service, "Routes order requests", "gRPC")
+Rel(api_gateway, payment_service, "Routes payment requests", "gRPC")
+Rel(api_gateway, inventory_service, "Routes inventory requests", "gRPC")
+Rel(api_gateway, notification_service, "Routes notification requests", "gRPC")
+Rel(api_gateway, analytics_service, "Routes analytics requests", "gRPC")
+Rel(api_gateway, content_service, "Routes content requests", "gRPC")
+Rel(api_gateway, search_service, "Routes search requests", "gRPC")
+
+Rel(web_app, graphql_gateway, "Makes GraphQL queries", "HTTPS")
+Rel(mobile_app, graphql_gateway, "Makes GraphQL queries", "HTTPS")
+Rel(admin_console, graphql_gateway, "Makes GraphQL queries", "HTTPS")
+
+Rel(graphql_gateway, user_service, "Aggregates user data", "gRPC")
+Rel(graphql_gateway, product_service, "Aggregates product data", "gRPC")
+Rel(graphql_gateway, order_service, "Aggregates order data", "gRPC")
+Rel(graphql_gateway, analytics_service, "Aggregates analytics data", "gRPC")
+
+Rel(auth_service, postgresql, "Stores user credentials and sessions", "SQL")
+Rel(user_service, postgresql, "Stores user profiles and preferences", "SQL")
+Rel(product_service, postgresql, "Stores product catalog and inventory", "SQL")
+Rel(order_service, postgresql, "Stores orders and fulfillment data", "SQL")
+Rel(payment_service, postgresql, "Stores payment transactions", "SQL")
+Rel(inventory_service, postgresql, "Stores inventory levels", "SQL")
+
+Rel(auth_service, redis, "Stores session data and tokens", "Redis Protocol")
+Rel(user_service, redis, "Caches user data", "Redis Protocol")
+Rel(product_service, redis, "Caches product data", "Redis Protocol")
+Rel(order_service, redis, "Caches order data", "Redis Protocol")
+
+Rel(analytics_service, clickhouse, "Stores analytics data", "SQL")
+Rel(analytics_service, kafka, "Consumes events for analytics", "Kafka Protocol")
+
+Rel(search_service, elasticsearch, "Indexes and searches products", "HTTP API")
+Rel(content_service, elasticsearch, "Indexes content metadata", "HTTP API")
+
+Rel(product_service, kafka, "Publishes inventory updates", "Kafka Protocol")
+Rel(order_service, kafka, "Publishes order events", "Kafka Protocol")
+Rel(payment_service, kafka, "Publishes payment events", "Kafka Protocol")
+Rel(user_service, kafka, "Publishes user events", "Kafka Protocol")
+
+Rel(notification_service, kafka, "Consumes notification events", "Kafka Protocol")
+Rel(analytics_service, kafka, "Consumes business events", "Kafka Protocol")
+Rel(inventory_service, kafka, "Consumes inventory events", "Kafka Protocol")
+
+Rel(payment_service, payment_gateway, "Processes payments", "HTTPS, Webhook")
+Rel(order_service, shipping_api, "Gets shipping rates and tracking", "HTTPS")
+Rel(notification_service, email_service, "Sends emails", "SMTP, API")
+Rel(notification_service, sms_service, "Sends SMS", "HTTPS API")
+Rel(content_service, cdn, "Delivers static content", "HTTPS")
+
+
+
+
+
+@enduml

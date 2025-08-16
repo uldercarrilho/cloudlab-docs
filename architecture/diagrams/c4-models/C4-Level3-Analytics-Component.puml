@@ -1,0 +1,112 @@
+@startuml C4-Level3-Analytics-Component
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Analytics Service - Component Diagram
+
+Person(analyst, "Business Analyst", "Views reports and dashboards")
+Person(admin, "System Admin", "Monitors system performance")
+
+Container_Boundary(analytics_service, "Analytics Service") {
+    Component(metrics_collector, "Metrics Collector", "Go Service", "Collects business and technical metrics from all services")
+    Component(log_aggregator, "Log Aggregator", "Go Service", "Centralizes logs from distributed services")
+    Component(tracing_engine, "Tracing Engine", "Go Service", "Distributed tracing with Jaeger integration")
+    Component(alert_manager, "Alert Manager", "Go Service", "Manages alerts and notifications based on thresholds")
+    Component(dashboard_renderer, "Dashboard Renderer", "Go Service", "Renders Grafana dashboards and custom reports")
+    Component(stream_processor, "Stream Processor", "Go Service", "Real-time event processing with Kafka streams")
+    Component(batch_processor, "Batch Processor", "Go Service", "Batch processing for historical data analysis")
+    Component(query_engine, "Query Engine", "Go Service", "Executes complex analytical queries")
+}
+
+Container_Boundary(data_layer, "Data Layer") {
+    ComponentDb(clickhouse_analytics, "ClickHouse Analytics", "OLAP Database", "High-performance analytics with columnar storage")
+    ComponentDb(elasticsearch_logs, "Elasticsearch Logs", "Log Index", "Centralized log storage and search")
+    ComponentDb(prometheus_metrics, "Prometheus", "Metrics Database", "Time-series metrics storage")
+    ComponentDb(redis_cache, "Redis Cache", "Cache", "Caching for frequently accessed analytics")
+    ComponentDb(postgres_metadata, "PostgreSQL Metadata", "Database", "Analytics metadata and configuration")
+}
+
+Container_Boundary(external_services, "External Services") {
+    Component(kafka_events, "Kafka Event Stream", "Message Queue", "Event streaming from all services")
+    Component(grafana, "Grafana", "Visualization", "Dashboard and chart rendering")
+    Component(jaeger, "Jaeger", "Tracing", "Distributed tracing visualization")
+    Component(notification_service, "Notification Service", "Service", "Sends alerts via email/SMS")
+    Component(monitoring_services, "Other Services", "Services", "All microservices sending metrics/logs")
+}
+
+' User interactions
+Rel(analyst, dashboard_renderer, "Views analytics dashboards", "HTTP/WebSocket")
+Rel(admin, alert_manager, "Configures alert rules", "HTTP")
+Rel(admin, tracing_engine, "Investigates performance issues", "HTTP")
+
+' Data collection from services
+Rel(monitoring_services, metrics_collector, "Send metrics", "HTTP/Prometheus")
+Rel(monitoring_services, log_aggregator, "Send logs", "HTTP/Fluentd")
+Rel(monitoring_services, tracing_engine, "Send traces", "HTTP/Jaeger")
+
+' Event streaming
+Rel(kafka_events, stream_processor, "Consumes events", "Kafka Consumer")
+Rel(stream_processor, clickhouse_analytics, "Real-time analytics", "SQL")
+Rel(stream_processor, redis_cache, "Caches real-time data", "Redis Protocol")
+
+' Batch processing
+Rel(batch_processor, clickhouse_analytics, "Historical analysis", "SQL")
+Rel(batch_processor, postgres_metadata, "Metadata management", "SQL")
+
+' Metrics and monitoring
+Rel(metrics_collector, prometheus_metrics, "Stores metrics", "Prometheus Protocol")
+Rel(metrics_collector, clickhouse_analytics, "Business metrics", "SQL")
+
+Rel(log_aggregator, elasticsearch_logs, "Indexes logs", "Elasticsearch API")
+Rel(log_aggregator, clickhouse_analytics, "Log analytics", "SQL")
+
+Rel(tracing_engine, jaeger, "Sends traces", "Jaeger Protocol")
+Rel(tracing_engine, clickhouse_analytics, "Performance analytics", "SQL")
+
+' Querying and visualization
+Rel(query_engine, clickhouse_analytics, "Executes queries", "SQL")
+Rel(query_engine, redis_cache, "Checks cache", "Redis Protocol")
+Rel(query_engine, elasticsearch_logs, "Searches logs", "Elasticsearch API")
+
+Rel(dashboard_renderer, query_engine, "Requests data", "Internal Call")
+Rel(dashboard_renderer, grafana, "Renders charts", "Grafana API")
+
+' Alerting
+Rel(alert_manager, prometheus_metrics, "Monitors metrics", "Prometheus Query")
+Rel(alert_manager, clickhouse_analytics, "Business rule evaluation", "SQL")
+Rel(alert_manager, notification_service, "Sends alerts", "HTTP")
+
+' Caching and performance
+Rel_R(redis_cache, clickhouse_analytics, "Cache-Aside Pattern")
+Rel_R(stream_processor, batch_processor, "Lambda Architecture Pattern")
+
+note right of analytics_service
+  **Distributed Systems Concepts:**
+  - **Lambda Architecture**: Real-time (stream) + batch processing
+  - **Event Streaming**: Kafka-based event processing
+  - **Distributed Tracing**: Jaeger integration for request tracking
+  - **Centralized Monitoring**: Prometheus + Grafana stack
+  - **Log Aggregation**: Centralized log collection and analysis
+  - **Real-time Analytics**: ClickHouse for high-performance queries
+  - **Caching Strategy**: Redis for frequently accessed analytics
+end note
+
+note right of data_layer
+  **Data Patterns:**
+  - **OLAP Database**: ClickHouse for analytical workloads
+  - **Time-series Storage**: Prometheus for metrics
+  - **Log Indexing**: Elasticsearch for log search and analysis
+  - **Columnar Storage**: ClickHouse for fast analytical queries
+  - **Distributed Storage**: Horizontal scaling across nodes
+end note
+
+note bottom of external_services
+  **Integration Patterns:**
+  - **Pull-based Metrics**: Prometheus scrapes metrics from services
+  - **Push-based Logs**: Services push logs to aggregator
+  - **Event-driven Processing**: Kafka streams for real-time analytics
+  - **Batch Processing**: Scheduled jobs for historical analysis
+end note
+
+@enduml

@@ -1,0 +1,171 @@
+@startuml C4-Deployment-Architecture
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Deployment Architecture - CloudLab E-Commerce Platform
+
+' External users and systems
+Person(customer, "Customer", "Global end users")
+Person(vendor, "Vendor", "Product sellers")
+Person(admin, "Admin", "System administrators")
+
+' Global infrastructure
+Container_Boundary(global_infrastructure, "Global Infrastructure") {
+    Component(route53, "Route 53", "DNS", "Global DNS with health-based routing")
+    Component(cloudfront, "CloudFront", "CDN", "Global content delivery network")
+    Component(waf, "AWS WAF", "Security", "Web application firewall")
+}
+
+' Primary region (US East)
+Container_Boundary(us_east_region, "US East Region (Primary)") {
+    Container_Boundary(us_east_network, "Network Layer") {
+        Component(alb_primary, "Application Load Balancer", "Load Balancer", "Primary traffic distribution")
+        Component(nat_gateway, "NAT Gateway", "Network", "Outbound internet access")
+        Component(vpc_primary, "VPC Primary", "Network", "Primary virtual private cloud")
+    }
+    
+    Container_Boundary(us_east_clusters, "Kubernetes Clusters") {
+        Container_Boundary(critical_path_cluster, "Critical Path Cluster") {
+            Component(order_pods, "Order Service Pods", "Kubernetes", "Auto-scaling: 5-20 replicas")
+            Component(payment_pods, "Payment Service Pods", "Kubernetes", "Auto-scaling: 3-15 replicas")
+            Component(inventory_pods, "Inventory Service Pods", "Kubernetes", "Auto-scaling: 5-25 replicas")
+            Component(auth_pods, "Auth Service Pods", "Kubernetes", "Auto-scaling: 3-12 replicas")
+        }
+        
+        Container_Boundary(non_critical_cluster, "Non-Critical Cluster") {
+            Component(analytics_pods, "Analytics Service Pods", "Kubernetes", "Auto-scaling: 2-10 replicas")
+            Component(content_pods, "Content Service Pods", "Kubernetes", "Auto-scaling: 3-15 replicas")
+            Component(search_pods, "Search Service Pods", "Kubernetes", "Auto-scaling: 2-8 replicas")
+        }
+        
+        Container_Boundary(shared_cluster, "Shared Infrastructure Cluster") {
+            Component(istio_control, "Istio Control Plane", "Service Mesh", "Traffic management and security")
+            Component(kafka_pods, "Kafka Pods", "Kubernetes", "Event streaming: 3-9 replicas")
+            Component(redis_pods, "Redis Cluster Pods", "Kubernetes", "Distributed caching: 6-18 replicas")
+            Component(postgres_pods, "PostgreSQL Pods", "Kubernetes", "Database: 3-9 replicas")
+        }
+    }
+    
+    Container_Boundary(us_east_data, "Data Layer") {
+        ComponentDb(rds_postgres, "RDS PostgreSQL", "Database", "Multi-AZ deployment with read replicas")
+        ComponentDb(elasticache_redis, "ElastiCache Redis", "Cache", "Redis cluster with auto-failover")
+        ComponentDb(msk_kafka, "MSK Kafka", "Message Queue", "Managed Kafka with 3 brokers")
+        ComponentDb(opensearch, "OpenSearch", "Search", "Managed Elasticsearch cluster")
+        ComponentDb(s3_primary, "S3 Primary", "Storage", "Primary object storage")
+    }
+}
+
+' Secondary region (EU West)
+Container_Boundary(eu_west_region, "EU West Region (Secondary)") {
+    Container_Boundary(eu_west_network, "Network Layer") {
+        Component(alb_secondary, "Application Load Balancer", "Load Balancer", "Secondary traffic distribution")
+        Component(vpc_secondary, "VPC Secondary", "Network", "Secondary virtual private cloud")
+    }
+    
+    Container_Boundary(eu_west_clusters, "Kubernetes Clusters") {
+        Container_Boundary(read_replica_cluster, "Read Replica Cluster") {
+            Component(product_pods_eu, "Product Service Pods", "Kubernetes", "Read-only: 3-12 replicas")
+            Component(user_pods_eu, "User Service Pods", "Kubernetes", "Read-only: 2-8 replicas")
+            Component(search_pods_eu, "Search Service Pods", "Kubernetes", "Read-only: 2-6 replicas")
+        }
+    }
+    
+    Container_Boundary(eu_west_data, "Data Layer") {
+        ComponentDb(rds_postgres_eu, "RDS PostgreSQL", "Database", "Read replica of primary")
+        ComponentDb(elasticache_redis_eu, "ElastiCache Redis", "Cache", "Regional cache cluster")
+        ComponentDb(s3_eu, "S3 EU", "Storage", "Regional object storage")
+    }
+}
+
+' CI/CD and Operations
+Container_Boundary(operations, "Operations & CI/CD") {
+    Component(github_actions, "GitHub Actions", "CI/CD", "Automated testing and deployment")
+    Component(argocd, "ArgoCD", "GitOps", "Kubernetes deployment automation")
+    Component(terraform, "Terraform", "IaC", "Infrastructure as code")
+    Component(launchdarkly, "LaunchDarkly", "Feature Flags", "Runtime feature toggling")
+}
+
+' Monitoring and Observability
+Container_Boundary(monitoring, "Monitoring & Observability") {
+    Component(prometheus, "Prometheus", "Metrics", "Time-series metrics collection")
+    Component(grafana, "Grafana", "Visualization", "Dashboards and alerting")
+    Component(jaeger, "Jaeger", "Tracing", "Distributed tracing")
+    Component(cloudwatch, "CloudWatch", "Monitoring", "AWS native monitoring")
+}
+
+' Traffic flow
+Rel(customer, route53, "DNS resolution", "DNS")
+Rel(route53, alb_primary, "Primary traffic", "HTTP/HTTPS")
+Rel(route53, alb_secondary, "Secondary traffic", "HTTP/HTTPS")
+
+Rel(alb_primary, critical_path_cluster, "Critical requests", "HTTP/HTTPS")
+Rel(alb_primary, non_critical_cluster, "Non-critical requests", "HTTP/HTTPS")
+Rel(alb_secondary, read_replica_cluster, "Read requests", "HTTP/HTTPS")
+
+' Service mesh communication
+Rel(istio_control, critical_path_cluster, "Traffic management", "Istio")
+Rel(istio_control, non_critical_cluster, "Traffic management", "Istio")
+Rel(istio_control, read_replica_cluster, "Traffic management", "Istio")
+
+' Data replication
+Rel(rds_postgres, rds_postgres_eu, "Cross-region replication", "AWS DMS")
+Rel(elasticache_redis, elasticache_redis_eu, "Redis replication", "Redis Protocol")
+Rel(s3_primary, s3_eu, "Cross-region replication", "S3 Replication")
+
+' CI/CD pipeline
+Rel(github_actions, argocd, "Deployment triggers", "Webhook")
+Rel(argocd, critical_path_cluster, "Deploys to critical", "Kubernetes API")
+Rel(argocd, non_critical_cluster, "Deploys to non-critical", "Kubernetes API")
+Rel(argocd, read_replica_cluster, "Deploys to read-replica", "Kubernetes API")
+
+' Monitoring
+Rel(critical_path_cluster, prometheus, "Metrics", "Prometheus Protocol")
+Rel(non_critical_cluster, prometheus, "Metrics", "Prometheus Protocol")
+Rel(read_replica_cluster, prometheus, "Metrics", "Prometheus Protocol")
+
+Rel(prometheus, grafana, "Data source", "Prometheus Protocol")
+Rel(grafana, cloudwatch, "AWS integration", "CloudWatch API")
+
+' Load balancing and auto-scaling
+Rel_R(alb_primary, critical_path_cluster, "Load balancing with health checks")
+Rel_R(alb_primary, non_critical_cluster, "Load balancing with health checks")
+Rel_R(alb_secondary, read_replica_cluster, "Load balancing with health checks")
+
+' Notes explaining patterns
+note right of us_east_clusters
+  **Deployment Patterns:**
+  - **Multi-Cluster**: Critical vs non-critical separation
+  - **Auto-scaling**: HPA based on CPU/memory metrics
+  - **Service Mesh**: Istio for traffic management
+  - **Pod Disruption Budgets**: Zero-downtime deployments
+  - **Resource Quotas**: Proper resource allocation
+end note
+
+note right of eu_west_region
+  **Multi-Region Strategy:**
+  - **Read Replicas**: EU region for read-only operations
+  - **Data Locality**: User data closer to European users
+  - **Disaster Recovery**: Failover capability to EU region
+  - **Global Distribution**: Route53 health-based routing
+end note
+
+note bottom of operations
+  **CI/CD Patterns:**
+  - **GitOps**: ArgoCD for Kubernetes deployments
+  - **Blue-Green**: Zero-downtime deployments
+  - **Canary Releases**: Gradual rollout with monitoring
+  - **Feature Flags**: Runtime feature toggling
+  - **Infrastructure as Code**: Terraform for cloud resources
+end note
+
+note left of monitoring
+  **Observability Stack:**
+  - **Metrics**: Prometheus + Grafana
+  - **Tracing**: Jaeger for distributed tracing
+  - **Logging**: Centralized log aggregation
+  - **Alerting**: Prometheus AlertManager
+  - **Health Checks**: Kubernetes probes
+end note
+
+@enduml
