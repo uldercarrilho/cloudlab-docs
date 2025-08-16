@@ -328,9 +328,8 @@ docs/
 │   │   ├── architecture-principles.md  # Design principles
 │   │   └── technology-stack.md         # Technology choices
 │   ├── decisions/
-│   │   ├── adr-index.md               # ADR navigation
-│   │   ├── adr-001-*.md               # Individual ADRs
-│   │   └── decision-matrix.md         # Decision comparisons
+│   │   ├── README.md                  # ADR navigation
+│   │   └── adr-001-*.md               # Individual ADRs
 │   ├── diagrams/
 │   │   ├── c4-models/                 # Architecture diagrams
 │   │   ├── sequence-diagrams/          # Service interactions
