@@ -5,13 +5,13 @@ category: "architecture"
 subcategory: "overview"
 tags: ["kubernetes", "istio", "aws", "terraform", "postgresql", "redis", "clickhouse", "kafka", "github-actions", "argocd", "launchdarkly", "cloudflare", "openapi", "prometheus", "grafana", "jaeger"]
 related_documents: [
-  "../adrs/ADR-003-container-orchestration-service-mesh.md",
-  "../adrs/ADR-004-data-storage-consistency-patterns.md",
-  "../adrs/ADR-005-message-queue-event-streaming.md",
-  "../adrs/ADR-007-cloud-infrastructure.md",
-  "../adrs/ADR-010-cicd-deployment.md",
-  "../adrs/ADR-011-performance-caching.md",
-  "../adrs/ADR-016-documentation-knowledge-management.md"
+  "../decisions/ADR-003-container-orchestration-service-mesh.md",
+  "../decisions/ADR-004-data-storage-consistency-patterns.md",
+  "../decisions/ADR-005-message-queue-event-streaming.md",
+  "../decisions/ADR-007-cloud-infrastructure.md",
+  "../decisions/ADR-010-cicd-deployment.md",
+  "../decisions/ADR-011-performance-caching.md",
+  "../decisions/ADR-016-documentation-knowledge-management.md"
 ]
 last_updated: "2025-08-16"
 author: "AI Agent"
@@ -60,13 +60,13 @@ These reflect ADR guidance and may evolve. Use managed offerings where appropria
 - Align consistency and performance goals via a polyglot persistence strategy (OLTP + Cache + OLAP).
 
 ## Cross-ADR Links
-- Container & Mesh: `../adrs/ADR-003-container-orchestration-service-mesh.md`
-- Data & Consistency: `../adrs/ADR-004-data-storage-consistency-patterns.md`
-- Messaging & Streaming: `../adrs/ADR-005-message-queue-event-streaming.md`
-- Cloud Infrastructure: `../adrs/ADR-007-cloud-infrastructure.md`
-- CI/CD & GitOps: `../adrs/ADR-010-cicd-deployment.md`
-- Performance & Caching: `../adrs/ADR-011-performance-caching.md`
-- Documentation Strategy: `../adrs/ADR-016-documentation-knowledge-management.md`
+- Container & Mesh: `../decisions/ADR-003-container-orchestration-service-mesh.md`
+- Data & Consistency: `../decisions/ADR-004-data-storage-consistency-patterns.md`
+- Messaging & Streaming: `../decisions/ADR-005-message-queue-event-streaming.md`
+- Cloud Infrastructure: `../decisions/ADR-007-cloud-infrastructure.md`
+- CI/CD & GitOps: `../decisions/ADR-010-cicd-deployment.md`
+- Performance & Caching: `../decisions/ADR-011-performance-caching.md`
+- Documentation Strategy: `../decisions/ADR-016-documentation-knowledge-management.md`
 
 ## Notes for AI Agents
 - Keep this file synchronized with ADR updates; propose ADR edits before changing stack.

@@ -7,7 +7,7 @@ This repository serves as the central knowledge base for distributed system desi
 ## 🔗 Quick Navigation
 
 - **Architecture Overview**: `architecture/overview/`
-- **ADRs (Decision Records)**: `architecture/adrs/`
+- **ADRs (Decision Records)**: `architecture/decisions/`
 - **API Specs (OpenAPI)**: `api/specifications/openapi/`
 - **API Guides**: `api/guides/`
 - **Runbooks**: `operations/runbooks/`
@@ -18,7 +18,7 @@ This repository serves as the central knowledge base for distributed system desi
 ## 🗂️ Repository Structure
 
 ### 🏗️ Architecture
-- **`architecture/adrs/`** – Architecture Decision Records (ADRs) for significant technical decisions
+- **`architecture/decisions/`** – Architecture Decision Records (ADRs) for significant technical decisions
 - **`architecture/rfcs/`** – Request for Comments (RFCs) for proposed changes and new features
 - **`architecture/diagrams/`** – Visual system architecture, service interactions, and data flows
 
@@ -66,7 +66,7 @@ This repository serves as the central knowledge base for distributed system desi
 
 ## 🔍 Finding Information
 
-- **Architecture decisions & features**: See `architecture/adrs/` and `architecture/overview/`
+- **Architecture decisions & features**: See `architecture/decisions/` and `architecture/overview/`
 - **API integration**: Start with `api/specifications/openapi/`
 - **Operational issues**: Look in `operations/runbooks/troubleshooting/`
 - **Development setup**: Begin with `development/setup/`

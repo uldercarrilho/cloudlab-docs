@@ -23,7 +23,7 @@ alwaysApply: false
 ## Technology Decision Process
 - **MANDATORY**: Create an ADR document before implementing any new technology/tool/service
 - **REQUIRED**: Get explicit approval from Ulder before proceeding with implementation
-- **DOCUMENTATION**: All decisions must be documented in the `architecture/adrs/` directory
+- **DOCUMENTATION**: All decisions must be documented in the `architecture/decisions/` directory
 - **REASONING**: ADRs must include clear rationale, alternatives considered, and consequences
 
 ## AI Agent Guidelines

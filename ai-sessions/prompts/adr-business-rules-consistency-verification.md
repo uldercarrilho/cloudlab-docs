@@ -15,7 +15,7 @@ Use this prompt when you need to:
 
 ## Context Requirements
 - Access to AI General Rules document (`.cursor\rules\general-rules.mdc`)
-- Access to all ADR documents in `/architecture/adrs/` folder
+- Access to all ADR documents in `/architecture/decisions/` folder
 - Access to Business Rules document (`/business/backlog/BUSINESS-RULES-001-ecommerce-platform.md`)
 - Understanding of distributed systems architecture principles
 - Familiarity with e-commerce platform business requirements
@@ -47,7 +47,7 @@ Analyze all ADR documents and the Business Rules document to identify inconsiste
 ## Required Analysis
 
 ### 1. Document Structure Analysis
-- Review all ADRs in the `/architecture/adrs/` folder
+- Review all ADRs in the `/architecture/decisions/` folder
 - Analyze the Business Rules document (`/business/backlog/BUSINESS-RULES-001-ecommerce-platform.md`)
 - Identify the format and structure of each document type
 

@@ -102,7 +102,7 @@ The system tracks key metrics for solo development:
 ## 🔗 Integration Points
 
 ### With Architecture Documentation
-- **Technical requirements** link to `../architecture/adrs/`
+- **Technical requirements** link to `../architecture/decisions/`
 - **System design** references `../architecture/diagrams/`
 - **Technical debt** connects to architecture decisions
 
