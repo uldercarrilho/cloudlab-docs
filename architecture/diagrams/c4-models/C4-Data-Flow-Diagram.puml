@@ -1,0 +1,141 @@
+@startuml C4-Data-Flow-Diagram
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Data Flow Diagram - CloudLab E-Commerce Platform
+
+' Actors
+Person(customer, "Customer", "End user")
+Person(vendor, "Vendor", "Product seller")
+Person(admin, "Admin", "System administrator")
+
+' Core Services
+Container_Boundary(web_layer, "Web Layer") {
+    Component(web_app, "Web Application", "React/Next.js", "Customer and vendor portals")
+    Component(api_gateway, "API Gateway", "Kong", "Single entry point for all requests")
+    Component(graphql_gateway, "GraphQL Gateway", "Apollo", "Flexible data querying")
+}
+
+Container_Boundary(business_services, "Business Services") {
+    Component(auth_service, "Auth Service", "Go", "Authentication and authorization")
+    Component(user_service, "User Service", "Go", "User management")
+    Component(product_service, "Product Service", "Go", "Product catalog management")
+    Component(order_service, "Order Service", "Go", "Order processing")
+    Component(payment_service, "Payment Service", "Go", "Payment processing")
+    Component(inventory_service, "Inventory Service", "Go", "Stock management")
+    Component(notification_service, "Notification Service", "Go", "User notifications")
+    Component(analytics_service, "Analytics Service", "Go", "Data analysis and reporting")
+}
+
+Container_Boundary(data_services, "Data Services") {
+    ComponentDb(postgres_oltp, "PostgreSQL OLTP", "Database", "Transactional data")
+    ComponentDb(redis_cache, "Redis Cache", "Cache", "Distributed caching")
+    ComponentDb(clickhouse_olap, "ClickHouse OLAP", "Database", "Analytical data")
+    ComponentDb(elasticsearch, "Elasticsearch", "Search", "Full-text search")
+    ComponentDb(s3_storage, "S3 Storage", "Storage", "Object storage")
+}
+
+Container_Boundary(infrastructure, "Infrastructure") {
+    Component(kafka, "Apache Kafka", "Message Queue", "Event streaming and messaging")
+    Component(cdn, "Cloudflare CDN", "CDN", "Content delivery")
+    Component(load_balancer, "Load Balancer", "HAProxy", "Traffic distribution")
+}
+
+' Data Flow Paths
+
+' 1. User Registration Flow
+Rel(customer, web_app, "Registers account", "HTTPS")
+Rel(web_app, api_gateway, "Registration request", "HTTP")
+Rel(api_gateway, auth_service, "Authentication request", "gRPC")
+Rel(auth_service, user_service, "User creation", "gRPC")
+Rel(user_service, postgres_oltp, "Stores user data", "SQL")
+Rel(user_service, kafka, "Publishes user.created event", "Kafka Producer")
+Rel(kafka, analytics_service, "Consumes user event", "Kafka Consumer")
+Rel(analytics_service, clickhouse_olap, "Stores analytics data", "SQL")
+
+' 2. Product Browsing Flow
+Rel(customer, web_app, "Browses products", "HTTPS")
+Rel(web_app, graphql_gateway, "Product query", "GraphQL")
+Rel(graphql_gateway, product_service, "Product request", "gRPC")
+Rel(product_service, redis_cache, "Checks cache", "Redis Protocol")
+Rel_R(product_service, postgres_oltp, "Cache miss - fetches from DB", "SQL")
+Rel(product_service, elasticsearch, "Search request", "HTTP")
+Rel(product_service, s3_storage, "Product images", "S3 API")
+Rel(product_service, cdn, "Content delivery", "CDN API")
+Rel(product_service, analytics_service, "Product view event", "Kafka")
+
+' 3. Order Processing Flow
+Rel(customer, web_app, "Places order", "HTTPS")
+Rel(web_app, api_gateway, "Order request", "HTTP")
+Rel(api_gateway, order_service, "Order creation", "gRPC")
+Rel(order_service, inventory_service, "Inventory check", "gRPC")
+Rel(order_service, payment_service, "Payment processing", "gRPC")
+Rel(order_service, postgres_oltp, "Stores order", "SQL")
+Rel(order_service, kafka, "Publishes order.created event", "Kafka Producer")
+
+' Event Processing
+Rel(kafka, inventory_service, "Inventory update event", "Kafka Consumer")
+Rel(kafka, notification_service, "Order confirmation event", "Kafka Consumer")
+Rel(kafka, analytics_service, "Order analytics event", "Kafka Consumer")
+Rel(kafka, user_service, "User activity event", "Kafka Consumer")
+
+' 4. Vendor Management Flow
+Rel(vendor, web_app, "Manages products", "HTTPS")
+Rel(web_app, api_gateway, "Product management", "HTTP")
+Rel(api_gateway, product_service, "Product operations", "gRPC")
+Rel(product_service, postgres_oltp, "Product CRUD", "SQL")
+Rel(product_service, elasticsearch, "Search index update", "HTTP")
+Rel(product_service, s3_storage, "Media upload", "S3 API")
+Rel(product_service, kafka, "Product change events", "Kafka Producer")
+
+' 5. Analytics and Monitoring Flow
+Rel(analytics_service, clickhouse_olap, "Stores business metrics", "SQL")
+Rel(analytics_service, redis_cache, "Caches analytics", "Redis Protocol")
+Rel(analytics_service, postgres_oltp, "Metadata queries", "SQL")
+
+' 6. Caching and Performance Flow
+Rel_R(redis_cache, postgres_oltp, "Cache-Aside Pattern")
+Rel_R(elasticsearch, postgres_oltp, "CQRS Pattern")
+Rel_R(kafka, postgres_oltp, "Event Sourcing Pattern")
+
+' 7. Load Balancing and Scaling
+Rel(load_balancer, web_app, "Distributes traffic", "HTTP")
+Rel(load_balancer, api_gateway, "API traffic", "HTTP")
+Rel(load_balancer, graphql_gateway, "GraphQL traffic", "HTTP")
+
+' Notes explaining patterns
+note right of kafka
+  **Event Streaming Patterns:**
+  - **Event Sourcing**: All state changes as events
+  - **CQRS**: Separate read/write models
+  - **Saga Pattern**: Distributed transactions
+  - **Eventual Consistency**: Asynchronous updates
+end note
+
+note right of data_services
+  **Data Storage Patterns:**
+  - **OLTP**: PostgreSQL for transactions
+  - **OLAP**: ClickHouse for analytics
+  - **Cache**: Redis for performance
+  - **Search**: Elasticsearch for queries
+  - **Object Storage**: S3 for media
+end note
+
+note bottom of business_services
+  **Service Communication:**
+  - **Synchronous**: gRPC for internal calls
+  - **Asynchronous**: Kafka for events
+  - **REST/GraphQL**: For external APIs
+  - **Circuit Breakers**: For fault tolerance
+end note
+
+note left of infrastructure
+  **Infrastructure Patterns:**
+  - **Load Balancing**: Traffic distribution
+  - **CDN**: Global content delivery
+  - **Message Queues**: Event streaming
+  - **Auto-scaling**: Dynamic resource allocation
+end note
+
+@enduml

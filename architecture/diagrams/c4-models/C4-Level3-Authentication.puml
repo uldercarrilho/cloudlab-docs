@@ -1,0 +1,110 @@
+@startuml C4_Level3_Authentication
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Component Diagram - Authentication Service
+
+Container_Boundary(auth_service, "Authentication Service") {
+    Component(jwt_token_manager, "JWT Token Manager", "Go", "Creates, validates, and manages JWT tokens")
+    Component(oauth2_handler, "OAuth2 Handler", "Go", "Handles OAuth2 authentication flows")
+    Component(rbac_engine, "RBAC Engine", "Go", "Manages role-based access control and permissions")
+    Component(session_manager, "Session Manager", "Go", "Manages distributed user sessions")
+    Component(rate_limiter, "Rate Limiter", "Go", "Controls authentication request rates")
+    Component(password_manager, "Password Manager", "Go", "Handles password hashing, validation, and reset")
+    Component(mfa_handler, "MFA Handler", "Go", "Manages multi-factor authentication")
+    Component(audit_logger, "Audit Logger", "Go", "Logs authentication events for security monitoring")
+    Component(secret_manager, "Secret Manager", "Go", "Manages encryption keys and secrets")
+    Component(health_checker, "Health Checker", "Go", "Monitors service health and dependencies")
+}
+
+ContainerDb(postgresql, "PostgreSQL Database", "PostgreSQL 15+", "Stores user credentials, roles, and permissions")
+ContainerDb(redis, "Redis Cache", "Redis 7+", "Stores session data and rate limiting counters")
+ContainerDb(kafka, "Apache Kafka", "Kafka MSK", "Publishes authentication events")
+
+System_Ext(user_service, "User Service", "Manages user profiles and account information")
+System_Ext(notification_service, "Notification Service", "Sends authentication-related notifications")
+System_Ext(analytics_service, "Analytics Service", "Collects authentication analytics data")
+System_Ext(external_oauth, "External OAuth Providers", "Google, Facebook, GitHub OAuth services")
+System_Ext(vault, "HashiCorp Vault", "Centralized secret management")
+
+Rel(jwt_token_manager, secret_manager, "Gets encryption keys", "Internal calls")
+Rel(jwt_token_manager, redis, "Stores token blacklist", "Redis Protocol")
+Rel(jwt_token_manager, postgresql, "Validates token against user data", "SQL")
+
+Rel(oauth2_handler, external_oauth, "Handles OAuth flows", "HTTPS, OAuth2")
+Rel(oauth2_handler, user_service, "Creates/updates user accounts", "gRPC")
+Rel(oauth2_handler, jwt_token_manager, "Requests JWT tokens", "Internal calls")
+
+Rel(rbac_engine, postgresql, "Retrieves roles and permissions", "SQL")
+Rel(rbac_engine, redis, "Caches role data", "Redis Protocol")
+Rel(rbac_engine, user_service, "Gets user role information", "gRPC")
+
+Rel(session_manager, redis, "Stores session data", "Redis Protocol")
+Rel(session_manager, postgresql, "Persists session metadata", "SQL")
+Rel(session_manager, user_service, "Validates user status", "gRPC")
+
+Rel(rate_limiter, redis, "Tracks request counts", "Redis Protocol")
+Rel(rate_limiter, postgresql, "Stores rate limit rules", "SQL")
+
+Rel(password_manager, secret_manager, "Gets hashing salt", "Internal calls")
+Rel(password_manager, postgresql, "Stores password hashes", "SQL")
+Rel(password_manager, notification_service, "Sends password reset emails", "gRPC")
+
+Rel(mfa_handler, postgresql, "Stores MFA configuration", "SQL")
+Rel(mfa_handler, notification_service, "Sends MFA codes", "gRPC")
+Rel(mfa_handler, secret_manager, "Gets MFA secrets", "Internal calls")
+
+Rel(audit_logger, postgresql, "Stores audit logs", "SQL")
+Rel(audit_logger, kafka, "Publishes security events", "Kafka Protocol")
+
+Rel(secret_manager, vault, "Retrieves secrets", "HTTPS API")
+Rel(secret_manager, redis, "Caches frequently used secrets", "Redis Protocol")
+
+Rel(health_checker, postgresql, "Checks database connectivity", "SQL")
+Rel(health_checker, redis, "Checks cache connectivity", "Redis Protocol")
+Rel(health_checker, vault, "Checks secret service connectivity", "HTTPS")
+
+Rel(analytics_service, kafka, "Consumes authentication events", "Kafka Protocol")
+
+note right of jwt_token_manager
+**JWT Token Management:**
+- Creates signed tokens with user claims
+- Validates token signatures and expiration
+- Manages token refresh and revocation
+- Implements sliding session windows
+end note
+
+note right of rbac_engine
+**Role-Based Access Control:**
+- Hierarchical role inheritance
+- Fine-grained permission system
+- Dynamic permission evaluation
+- Cached role data for performance
+end note
+
+note right of session_manager
+**Distributed Session Management:**
+- Redis-based session storage
+- Automatic session expiration
+- Cross-service session validation
+- Graceful session cleanup
+end note
+
+note right of rate_limiter
+**Rate Limiting Strategy:**
+- Per-user rate limiting
+- IP-based rate limiting
+- Adaptive rate limiting based on user behavior
+- Rate limit data persistence
+end note
+
+note right of mfa_handler
+**Multi-Factor Authentication:**
+- TOTP (Time-based One-Time Password)
+- SMS-based verification
+- Email-based verification
+- Backup codes for account recovery
+end note
+
+@enduml

@@ -1,0 +1,81 @@
+@startuml C4_Level3_Order_Processing
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Component Diagram - Order Processing Service
+
+Container_Boundary(order_service, "Order Service") {
+    Component(order_orchestrator, "Order Orchestrator", "Go", "Coordinates the entire order processing workflow using Saga pattern")
+    Component(inventory_manager, "Inventory Manager", "Go", "Manages inventory checks and reservations")
+    Component(payment_processor, "Payment Processor", "Go", "Handles payment processing and validation")
+    Component(shipping_coordinator, "Shipping Coordinator", "Go", "Manages shipping calculations and coordination")
+    Component(notification_dispatcher, "Notification Dispatcher", "Go", "Sends order status notifications")
+    Component(order_repository, "Order Repository", "Go", "Manages order data persistence and retrieval")
+    Component(saga_state_manager, "Saga State Manager", "Go", "Manages distributed transaction state and compensation")
+    Component(event_publisher, "Event Publisher", "Go", "Publishes order events to Kafka for other services")
+    Component(circuit_breaker, "Circuit Breaker", "Go", "Prevents cascade failures from external service calls")
+    Component(rate_limiter, "Rate Limiter", "Go", "Controls request rate to prevent overload")
+}
+
+ContainerDb(postgresql, "PostgreSQL Database", "PostgreSQL 15+", "Stores order data with ACID compliance")
+ContainerDb(redis, "Redis Cache", "Redis 7+", "Caches order data and session information")
+ContainerDb(kafka, "Apache Kafka", "Kafka MSK", "Event streaming for order events")
+
+System_Ext(inventory_service, "Inventory Service", "Manages product inventory levels")
+System_Ext(payment_service, "Payment Service", "Processes financial transactions")
+System_Ext(shipping_api, "Shipping API", "External shipping provider APIs")
+System_Ext(notification_service, "Notification Service", "Sends notifications via multiple channels")
+System_Ext(analytics_service, "Analytics Service", "Collects order analytics data")
+
+Rel(order_orchestrator, saga_state_manager, "Manages transaction state", "Internal calls")
+Rel(order_orchestrator, inventory_manager, "Initiates inventory check", "Internal calls")
+Rel(order_orchestrator, payment_processor, "Initiates payment processing", "Internal calls")
+Rel(order_orchestrator, shipping_coordinator, "Initiates shipping calculation", "Internal calls")
+Rel(order_orchestrator, notification_dispatcher, "Triggers notifications", "Internal calls")
+
+Rel(inventory_manager, circuit_breaker, "Uses for external calls", "Internal calls")
+Rel(payment_processor, circuit_breaker, "Uses for external calls", "Internal calls")
+Rel(shipping_coordinator, circuit_breaker, "Uses for external calls", "Internal calls")
+
+Rel(inventory_manager, inventory_service, "Checks inventory availability", "gRPC")
+Rel(payment_processor, payment_service, "Processes payment", "gRPC")
+Rel(shipping_coordinator, shipping_api, "Gets shipping rates and tracking", "HTTPS")
+Rel(notification_dispatcher, notification_service, "Sends order notifications", "gRPC")
+
+Rel(order_orchestrator, order_repository, "Persists order data", "Internal calls")
+Rel(order_repository, postgresql, "Stores order data", "SQL")
+Rel(order_repository, redis, "Caches order data", "Redis Protocol")
+
+Rel(saga_state_manager, postgresql, "Stores saga state", "SQL")
+Rel(saga_state_manager, redis, "Caches saga state", "Redis Protocol")
+
+Rel(event_publisher, kafka, "Publishes order events", "Kafka Protocol")
+Rel(analytics_service, kafka, "Consumes order events", "Kafka Protocol")
+
+Rel(order_orchestrator, event_publisher, "Publishes order events", "Internal calls")
+
+Rel(rate_limiter, order_orchestrator, "Controls request rate", "Internal calls")
+
+note right of order_orchestrator
+**Saga Pattern Implementation:**
+- Order Creation → Inventory Check → Payment → Shipping → Notification
+- Each step can trigger compensation if it fails
+- State is persisted for recovery and monitoring
+end note
+
+note right of circuit_breaker
+**Circuit Breaker States:**
+- Closed: Normal operation
+- Open: Failing, reject requests
+- Half-Open: Testing recovery
+end note
+
+note right of saga_state_manager
+**Distributed Transaction Management:**
+- Tracks saga execution state
+- Manages compensation logic
+- Ensures eventual consistency
+end note
+
+@enduml

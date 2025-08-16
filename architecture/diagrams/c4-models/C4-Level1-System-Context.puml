@@ -1,0 +1,34 @@
+@startuml C4_Level1_System_Context
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+title System Context Diagram - CloudLab E-Commerce Platform
+
+Person(customer, "Customer", "A person who wants to buy products from the platform")
+Person(vendor, "Vendor", "A business that sells products on the platform")
+Person(admin, "Administrator", "A platform administrator managing the system")
+
+System(cloudlab, "CloudLab E-Commerce Platform", "Provides a multi-tenant e-commerce platform with social features, real-time analytics, and content delivery capabilities")
+
+System_Ext(payment_gateway, "Payment Gateway", "Processes payment transactions (Stripe, PayPal)")
+System_Ext(shipping_api, "Shipping API", "Provides shipping rates and tracking (FedEx, UPS)")
+System_Ext(social_api, "Social Media API", "Integrates with social platforms for sharing and authentication")
+System_Ext(email_service, "Email Service", "Sends transactional emails and notifications")
+System_Ext(sms_service, "SMS Service", "Sends SMS notifications and alerts")
+System_Ext(cdn, "CDN", "Delivers static content globally (Cloudflare)")
+System_Ext(analytics_external, "External Analytics", "Third-party analytics and tracking services")
+
+Rel(customer, cloudlab, "Uses", "HTTPS, WebSocket")
+Rel(vendor, cloudlab, "Manages products and orders", "HTTPS, WebSocket")
+Rel(admin, cloudlab, "Administers platform", "HTTPS")
+
+Rel(cloudlab, payment_gateway, "Processes payments", "HTTPS, Webhook")
+Rel(cloudlab, shipping_api, "Gets shipping rates and tracking", "HTTPS")
+Rel(cloudlab, social_api, "Shares content and authenticates users", "HTTPS, OAuth")
+Rel(cloudlab, email_service, "Sends emails", "SMTP, API")
+Rel(cloudlab, sms_service, "Sends SMS", "HTTPS API")
+Rel(cloudlab, cdn, "Delivers static content", "HTTPS")
+Rel(cloudlab, analytics_external, "Shares analytics data", "HTTPS, Webhook")
+
+@enduml

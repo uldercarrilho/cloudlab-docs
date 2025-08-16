@@ -1,0 +1,94 @@
+@startuml C4-Level3-Product-Catalog-Component
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Product Catalog Service - Component Diagram
+
+Person(customer, "Customer", "End user browsing products")
+Person(vendor, "Vendor", "Product seller managing catalog")
+
+Container_Boundary(catalog_service, "Product Catalog Service") {
+    Component(product_manager, "Product Manager", "Go Service", "Manages product CRUD operations, validation, and business rules")
+    Component(category_manager, "Category Manager", "Go Service", "Handles product categorization, hierarchy, and taxonomy")
+    Component(search_engine, "Search Engine", "Go Service", "Full-text search with filters, sorting, and relevance scoring")
+    Component(cache_manager, "Cache Manager", "Go Service", "Multi-level caching strategy (Redis, application-level)")
+    Component(content_delivery, "Content Delivery", "Go Service", "Manages product images, videos, and documents")
+    Component(event_publisher, "Event Publisher", "Go Service", "Publishes catalog changes to Kafka for other services")
+    Component(consistency_handler, "Consistency Handler", "Go Service", "Manages eventual consistency and conflict resolution")
+}
+
+Container_Boundary(data_layer, "Data Layer") {
+    ComponentDb(postgres_products, "PostgreSQL Products", "Database", "Primary product data with sharding by category")
+    ComponentDb(redis_cache, "Redis Cache", "Cache", "Distributed caching for frequently accessed products")
+    ComponentDb(elasticsearch, "Elasticsearch", "Search Index", "Full-text search index with auto-scaling")
+    ComponentDb(s3_storage, "S3 Storage", "Object Storage", "Product images, videos, and documents")
+}
+
+Container_Boundary(external_services, "External Services") {
+    Component(cdn, "Cloudflare CDN", "CDN", "Global content delivery for static assets")
+    Component(analytics, "Analytics Service", "Service", "Product view and interaction tracking")
+    Component(inventory, "Inventory Service", "Service", "Real-time stock availability")
+}
+
+' Customer interactions
+Rel(customer, search_engine, "Searches products", "HTTP/GraphQL")
+Rel(customer, content_delivery, "Views product images/videos", "HTTP")
+Rel(customer, cache_manager, "Gets cached product data", "HTTP")
+
+' Vendor interactions
+Rel(vendor, product_manager, "Manages products", "HTTP/GraphQL")
+Rel(vendor, category_manager, "Manages categories", "HTTP/GraphQL")
+Rel(vendor, content_delivery, "Uploads product media", "HTTP")
+
+' Internal service communication
+Rel(product_manager, postgres_products, "CRUD operations", "SQL")
+Rel(product_manager, event_publisher, "Publishes changes", "Internal Event")
+Rel(product_manager, cache_manager, "Updates cache", "Internal Call")
+
+Rel(category_manager, postgres_products, "Manages categories", "SQL")
+Rel(category_manager, event_publisher, "Publishes category changes", "Internal Event")
+
+Rel(search_engine, elasticsearch, "Performs searches", "HTTP")
+Rel(search_engine, cache_manager, "Checks cache first", "Internal Call")
+Rel(search_engine, postgres_products, "Fallback to database", "SQL")
+
+Rel(cache_manager, redis_cache, "Distributed caching", "Redis Protocol")
+Rel(cache_manager, postgres_products, "Cache miss fallback", "SQL")
+
+Rel(content_delivery, s3_storage, "Stores/retrieves media", "S3 API")
+Rel(content_delivery, cdn, "Distributes content", "CDN API")
+
+Rel(consistency_handler, postgres_products, "Monitors consistency", "SQL")
+Rel(consistency_handler, event_publisher, "Publishes consistency events", "Internal Event")
+
+' External service communication
+Rel(event_publisher, analytics, "Product change events", "Kafka")
+Rel(event_publisher, inventory, "Product updates", "Kafka")
+
+Rel(search_engine, analytics, "Search analytics", "HTTP")
+
+' Data flow patterns
+Rel_R(cache_manager, postgres_products, "Cache-Aside Pattern")
+Rel_R(elasticsearch, postgres_products, "CQRS Pattern (Read/Write separation)")
+Rel_R(event_publisher, postgres_products, "Event Sourcing Pattern")
+
+note right of catalog_service
+  **Distributed Systems Concepts:**
+  - **CQRS**: Separate read (Elasticsearch) and write (PostgreSQL) models
+  - **Event Sourcing**: All changes published as events
+  - **Eventual Consistency**: Cache and search index updated asynchronously
+  - **Sharding**: Products sharded by category across database instances
+  - **Multi-level Caching**: Redis + application-level caching
+  - **Asynchronous Processing**: Event-driven updates to other services
+end note
+
+note right of data_layer
+  **Data Patterns:**
+  - **Sharding Strategy**: By product category for horizontal scaling
+  - **Cache-Aside**: Application-managed caching with fallback
+  - **Eventual Consistency**: Search index updated via events
+  - **Object Storage**: S3 for media files with CDN distribution
+end note
+
+@enduml
