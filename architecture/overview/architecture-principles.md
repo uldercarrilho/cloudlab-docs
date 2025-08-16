@@ -16,7 +16,7 @@ These principles guide architecture, design, and operational decisions across th
 
 - **Primary goals**: Security, reliability, and clarity for learning and maintainability.
 - **Priority order for trade-offs**: Security → Availability → Correctness/Consistency (per domain) → Latency → Throughput → Cost → Developer Velocity.
-- **Documentation-first**: Every significant decision requires an ADR before implementation. See `../adrs/ADR-016-documentation-knowledge-management.md`.
+- **Documentation-first**: Every significant decision requires an ADR before implementation. See `../decisions/ADR-016-documentation-knowledge-management.md`.
 
 ## Principles at a Glance
 
@@ -81,7 +81,7 @@ These principles guide architecture, design, and operational decisions across th
 
 ## Decision Guardrails
 
-- **ADR requirement**: New technology/tool/service, data model that affects interoperability, or cross-cutting change requires an ADR under `../adrs/` before implementation.
+- **ADR requirement**: New technology/tool/service, data model that affects interoperability, or cross-cutting change requires an ADR under `../decisions/` before implementation.
 - **API contracts**: OpenAPI/GraphQL specs must accompany API changes; run contract tests in CI.
 - **Data enums**: Database ENUMs must be mirrored by strongly-typed application enums; validate at boundaries.
 - **SLIs/SLOs**: Define SLIs and SLOs per service (latency, error rate, saturation). Changes must include dashboards/alerts.
@@ -108,13 +108,13 @@ These principles guide architecture, design, and operational decisions across th
 
 ## Related Documents
 
-- Documentation & Knowledge Management — `../adrs/ADR-016-documentation-knowledge-management.md`
-- API Communication Patterns — `../adrs/ADR-006-api-communication-patterns.md`
-- CI/CD & Deployment — `../adrs/ADR-010-cicd-deployment.md`
-- Testing & Quality Assurance — `../adrs/ADR-014-testing-quality-assurance.md`
-- Security & Authentication — `../adrs/ADR-009-security-authentication.md`
-- Performance & Caching — `../adrs/ADR-011-performance-caching.md`
-- Multi-Region & Global Distribution — `../adrs/ADR-013-multi-region-global-distribution.md`
+- Documentation & Knowledge Management — `../decisions/ADR-016-documentation-knowledge-management.md`
+- API Communication Patterns — `../decisions/ADR-006-api-communication-patterns.md`
+- CI/CD & Deployment — `../decisions/ADR-010-cicd-deployment.md`
+- Testing & Quality Assurance — `../decisions/ADR-014-testing-quality-assurance.md`
+- Security & Authentication — `../decisions/ADR-009-security-authentication.md`
+- Performance & Caching — `../decisions/ADR-011-performance-caching.md`
+- Multi-Region & Global Distribution — `../decisions/ADR-013-multi-region-global-distribution.md`
 
 ## Change Log
 

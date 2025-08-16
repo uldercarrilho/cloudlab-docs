@@ -245,7 +245,7 @@
 - [CQRS Pattern](https://martinfowler.com/bliki/CQRS.html)
 - [Saga Pattern](https://microservices.io/patterns/data/saga.html)
 - [CAP Theorem](https://en.wikipedia.org/wiki/CAP_theorem)
-- [ADR-003: Container Orchestration & Service Mesh](../adrs/ADR-003-container-orchestration-service-mesh.md)
+- [ADR-003: Container Orchestration & Service Mesh](../decisions/ADR-003-container-orchestration-service-mesh.md)
 
 ---
 

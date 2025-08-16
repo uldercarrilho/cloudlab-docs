@@ -607,9 +607,9 @@ The Saga pattern will be implemented to handle distributed transactions across m
 - [Kafka Performance Tuning](https://www.confluent.io/blog/optimizing-kafka-performance/)
 
 ### Related ADRs
-- [ADR-003: Container Orchestration & Service Mesh](../adrs/ADR-003-container-orchestration-service-mesh.md)
-- [ADR-004: Data Storage & Consistency Patterns](../adrs/ADR-004-data-storage-consistency-patterns.md)
-- [ADR-006: API & Communication Patterns](../adrs/ADR-006-api-communication-patterns.md)
+- [ADR-003: Container Orchestration & Service Mesh](../decisions/ADR-003-container-orchestration-service-mesh.md)
+- [ADR-004: Data Storage & Consistency Patterns](../decisions/ADR-004-data-storage-consistency-patterns.md)
+- [ADR-006: API & Communication Patterns](../decisions/ADR-006-api-communication-patterns.md)
 
 ---
 
