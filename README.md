@@ -4,6 +4,17 @@
 
 This repository serves as the central knowledge base for distributed system design patterns and operational procedures.
 
+## 🔗 Quick Navigation
+
+- **Architecture Overview**: `architecture/overview/`
+- **ADRs (Decision Records)**: `architecture/adrs/`
+- **API Specs (OpenAPI)**: `api/specifications/openapi/`
+- **API Guides**: `api/guides/`
+- **Runbooks**: `operations/runbooks/`
+- **Development Setup**: `development/setup/`
+- **Development Guidelines**: `development/guidelines/`
+- **Knowledge Base**: `knowledge/`
+
 ## 🗂️ Repository Structure
 
 ### 🏗️ Architecture
@@ -55,10 +66,10 @@ This repository serves as the central knowledge base for distributed system desi
 
 ## 🔍 Finding Information
 
-- **Architecture decisions & features**: See `architecture/adrs/` and `architecture/rfcs/` (using unified PRD + ADR template)
+- **Architecture decisions & features**: See `architecture/adrs/` and `architecture/overview/`
 - **API integration**: Start with `api/specifications/openapi/`
-- **Operational issues**: Look in `runbooks/troubleshooting/`
-- **Development setup**: Begin with `development/environments/`
+- **Operational issues**: Look in `operations/runbooks/troubleshooting/`
+- **Development setup**: Begin with `development/setup/`
 - **Business context**: Explore `business/requirements/`
 - **Task management**: Use `business/backlog/` for project planning and AI-assisted execution
 
