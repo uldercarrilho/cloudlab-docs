@@ -1,3 +1,12 @@
+---
+title: "System Overview"
+description: "High-level architecture and distributed systems concepts for the CloudLab platform"
+category: "architecture"
+subcategory: "overview"
+tags: ["overview", "architecture", "distributed-systems"]
+ai_consumption_optimized: true
+---
+
 # System Overview
 
 ## Distributed E-Commerce & Content Platform System

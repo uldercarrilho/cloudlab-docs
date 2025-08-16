@@ -793,7 +793,7 @@ The dual logging strategy (Loki for operational, ELK for business analytics) ens
 ### Related Documents
 - [Business Rules Document](../../business/backlog/BUSINESS-RULES-001-ecommerce-platform.md) - Defines business requirements and compliance needs
 - [Development Plan](../../business/backlog/DEVELOPMENT-PLAN-001-distributed-ecommerce-platform.md) - Outlines implementation phases and technology stack
-- [System Overview](../../rfcs/system-overview.md) - Provides high-level system architecture context
+- [System Overview](../../overview/system-overview.md) - Provides high-level system architecture context
 
 ### Business Rules Sections Referenced
 #### **Core Business Operations**

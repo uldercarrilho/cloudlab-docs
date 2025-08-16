@@ -778,7 +778,7 @@ The testing strategy supports the development plan's success criteria:
 - [OWASP ZAP User Guide](https://www.zaproxy.org/docs/desktop/)
 - [SonarQube Documentation](https://docs.sonarqube.org/)
 - [GitHub Actions](https://docs.github.com/en/actions)
-- [External Service Mocking Strategy](./implementations/mocking-strategy.md)
+- [External Service Mocking Strategy](../../development/guidelines/mocking-strategy.md)
 
 ## Go-Specific Testing Patterns & Best Practices
 
