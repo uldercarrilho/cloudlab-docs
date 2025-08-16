@@ -1,3 +1,12 @@
+---
+title: "Authorization Implementation Guide"
+description: "RBAC/ABAC authorization patterns and implementation details"
+category: "api"
+subcategory: "security"
+tags: ["authorization", "rbac", "abac", "security"]
+ai_consumption_optimized: true
+---
+
 # Authorization Implementation Guide
 
 ## Overview

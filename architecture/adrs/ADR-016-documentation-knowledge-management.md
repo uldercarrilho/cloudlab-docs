@@ -428,12 +428,12 @@ OAuth 2.0 enables third-party application integration...
 ```
 
 #### Cross-Reference System
-- **Authentication**: See [JWT Implementation](implementations/jwt-implementation.md) for detailed JWT setup
-- **Security**: Refer to [Security Best Practices](implementations/security-best-practices.md) for comprehensive security guidelines
-- **API Design**: Check [API Design Principles](implementations/api-design-principles.md) for API design guidelines
-- **OAuth 2.0 Setup**: [Set up OAuth 2.0](implementations/oauth-setup.md) — Includes step-by-step integration, security considerations, and troubleshooting tips.
-- **Rate Limiting Configuration**: [Configure Rate Limiting](implementations/rate-limiting.md) — Covers algorithm selection, implementation examples, and monitoring strategies.
-- **Authorization Implementation**: [Implement Authorization](implementations/authorization.md) — Details RBAC/ABAC models, policy management, and real-world usage scenarios.
+- **Authentication**: See [JWT Implementation](../../api/guides/jwt-implementation.md) for detailed JWT setup
+- **Security**: Refer to [Security Best Practices](../../development/guidelines/security-best-practices.md) for comprehensive security guidelines
+- **API Design**: Check [API Design Principles](../../api/guides/api-design-principles.md) for API design guidelines
+- **OAuth 2.0 Setup**: [Set up OAuth 2.0](../../api/guides/oauth-setup.md) — Includes step-by-step integration, security considerations, and troubleshooting tips.
+- **Rate Limiting Configuration**: [Configure Rate Limiting](../../api/guides/rate-limiting.md) — Covers algorithm selection, implementation examples, and monitoring strategies.
+- **Authorization Implementation**: [Implement Authorization](../../api/guides/authorization.md) — Details RBAC/ABAC models, policy management, and real-world usage scenarios.
 
 ### API Documentation Integration
 

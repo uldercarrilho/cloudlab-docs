@@ -1,3 +1,12 @@
+---
+title: "OAuth 2.0 Setup Guide"
+description: "Implementing OAuth 2.0 and OpenID Connect for API authentication"
+category: "api"
+subcategory: "security"
+tags: ["oauth", "openid-connect", "security"]
+ai_consumption_optimized: true
+---
+
 # OAuth 2.0 Setup Guide
 
 ## Overview

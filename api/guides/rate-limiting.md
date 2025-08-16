@@ -1,3 +1,12 @@
+---
+title: "Rate Limiting Implementation Guide"
+description: "Token bucket, sliding window, fixed window strategies and distributed implementations"
+category: "api"
+subcategory: "performance"
+tags: ["rate-limiting", "throttling", "redis", "performance"]
+ai_consumption_optimized: true
+---
+
 # Rate Limiting Implementation Guide
 
 ## Overview

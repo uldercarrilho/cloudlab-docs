@@ -660,8 +660,8 @@
 
 ### **10.1 Related Documents**
 - [Development Plan](./DEVELOPMENT-PLAN-001-distributed-ecommerce-platform.md)
-- [System Overview](../architecture/rfcs/system-overview.md)
-- [API Documentation](../api-docs/)
+- [System Overview](../architecture/overview/system-overview.md)
+- [API Documentation](../api/)
 
 ### **10.2 Standards & Guidelines**
 - [GDPR Guidelines](https://gdpr.eu/)

@@ -1,3 +1,12 @@
+---
+title: "JWT Implementation Guide"
+description: "Comprehensive guide for implementing JWT with security best practices"
+category: "api"
+subcategory: "security"
+tags: ["authentication", "jwt", "security"]
+ai_consumption_optimized: true
+---
+
 # JWT Implementation Guide
 
 ## Overview

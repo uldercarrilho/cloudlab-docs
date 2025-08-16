@@ -14,14 +14,14 @@ This repository serves as the central knowledge base for distributed system desi
 > **Note:** ADRs and RFCs now use the unified PRD + ADR hybrid template for better consistency and AI collaboration.
 
 ### 🔌 API Documentation
-- **`api-docs/openapi/`** – OpenAPI/Swagger specifications for all services
-- **`api-docs/postman/`** – Postman collections and environments
+- **`api/specifications/openapi/`** – OpenAPI/Swagger specifications for all services
+- **`api/testing/postman-collections/`** – Postman collections and environments
 
 ### 📖 Runbooks
-- **`runbooks/deployment/`** – Production deployment and rollback procedures
-- **`runbooks/troubleshooting/`** – Common issues, debugging, and performance tuning
-- **`runbooks/operations/`** – Backup, scaling, security, and maintenance procedures
-- **`runbooks/incidents/`** – Post-mortem reports and incident analysis
+- **`operations/runbooks/deployment/`** – Production deployment and rollback procedures
+- **`operations/runbooks/troubleshooting/`** – Common issues, debugging, and performance tuning
+- **`operations/runbooks/operations/`** – Backup, scaling, security, and maintenance procedures
+- **`operations/runbooks/incidents/`** – Post-mortem reports and incident analysis
 
 ### 💻 Development
 - **`development/`** – Getting started guides, coding standards, and contribution guidelines
@@ -56,7 +56,7 @@ This repository serves as the central knowledge base for distributed system desi
 ## 🔍 Finding Information
 
 - **Architecture decisions & features**: See `architecture/adrs/` and `architecture/rfcs/` (using unified PRD + ADR template)
-- **API integration**: Start with `api-docs/openapi/`
+- **API integration**: Start with `api/specifications/openapi/`
 - **Operational issues**: Look in `runbooks/troubleshooting/`
 - **Development setup**: Begin with `development/environments/`
 - **Business context**: Explore `business/requirements/`

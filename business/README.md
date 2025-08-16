@@ -107,7 +107,7 @@ The system tracks key metrics for solo development:
 - **Technical debt** connects to architecture decisions
 
 ### With API Documentation
-- **Integration requirements** reference `../api-docs/openapi/`
+- **Integration requirements** reference `../api/specifications/openapi/`
 - **API changes** tracked through backlog items
 
 ### With Development Process
@@ -153,6 +153,6 @@ The system tracks key metrics for solo development:
 ## 📚 Related Documentation
 
 - **Architecture**: `../architecture/` for technical context
-- **API Documentation**: `../api-docs/` for integration details
+- **API Documentation**: `../api/` for integration details
 - **Development**: `../development/` for implementation guidance
 - **Runbooks**: `../runbooks/` for operational procedures

@@ -526,11 +526,11 @@
 ## 11. References & Resources
 
 ### **11.1 Technical References**
-- [System Overview Document](../architecture/rfcs/system-overview.md)
+- [System Overview Document](../architecture/overview/system-overview.md)
 - [Business Rules Document](./BUSINESS-RULES-001-ecommerce-platform.md)
 - [Architecture Decision Records](../architecture/adrs/)
-- [API Documentation](../api-docs/)
-- [Runbooks](../runbooks/)
+- [API Documentation](../api/)
+- [Runbooks](../operations/runbooks/)
 
 ### **11.2 Standards & Guidelines**
 - [Conventional Commits](https://conventionalcommits.org/)

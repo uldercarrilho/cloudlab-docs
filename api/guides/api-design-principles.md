@@ -1,3 +1,12 @@
+---
+title: "API Design Principles"
+description: "Standards and patterns for REST, GraphQL, and gRPC APIs"
+category: "api"
+subcategory: "design"
+tags: ["api", "rest", "graphql", "grpc", "design"]
+ai_consumption_optimized: true
+---
+
 # API Design Principles Guide
 
 ## Overview
