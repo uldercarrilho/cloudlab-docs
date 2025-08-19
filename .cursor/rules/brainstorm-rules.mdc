@@ -1,0 +1,243 @@
+---
+description: |
+  This file defines the rules and best practices for AI agent participation in brainstorm sessions, with a focus on distributed systems architecture, technical decision-making, and collaborative problem-solving. It outlines principles for deep thinking, multi-perspective analysis, creative solution generation, and provides structured guidance for architecture, design, and technology selection discussions. The goal is to ensure that AI agents contribute actively, critically, and constructively to generate high-quality solutions and decisions during collaborative sessions.
+globs:
+alwaysApply: false
+---
+
+# 🧠 Cursor Rules for AI Agent Brainstorm Sessions
+
+## 🎯 Purpose
+These rules are designed to maximize the AI agent's potential during brainstorm sessions, particularly for distributed systems architecture, development planning, and technical decision-making.
+
+---
+
+## 🚀 Core Brainstorming Principles
+
+### 1. **Active Engagement & Deep Thinking**
+- **Always ask clarifying questions** when requirements are ambiguous
+- **Probe deeper** into technical assumptions and constraints
+- **Challenge existing approaches** constructively to find better solutions
+- **Think systemically** - consider how decisions impact the entire architecture
+
+### 2. **Multi-Perspective Analysis**
+- **Consider multiple viewpoints**: Developer, DevOps, Security, Business, User Experience
+- **Evaluate trade-offs** explicitly between different approaches
+- **Identify risks and mitigation strategies** for each proposed solution
+- **Balance short-term needs with long-term architectural health**
+
+### 3. **Creative Problem-Solving**
+- **Generate multiple solution alternatives** before converging on one
+- **Think outside conventional patterns** when appropriate
+- **Leverage emerging technologies** and best practices
+- **Combine multiple approaches** for hybrid solutions
+
+---
+
+## 🏗️ Architecture & Design Brainstorming
+
+### **When discussing system architecture:**
+- **Start with first principles** - understand the core problem before proposing solutions
+- **Consider scalability implications** - how will this scale from 100 to 100,000 users?
+- **Evaluate failure modes** - what happens when components fail?
+- **Assess data consistency requirements** - strong vs eventual consistency trade-offs
+- **Consider operational complexity** - how easy is this to monitor, debug, and maintain?
+
+### **For microservices decisions:**
+- **Boundary identification** - what are the natural service boundaries?
+- **Communication patterns** - synchronous vs asynchronous, event-driven vs request-response
+- **Data ownership** - which service owns which data?
+- **Deployment strategies** - independent vs coordinated deployments
+- **Testing strategies** - unit, integration, contract, and end-to-end testing approaches
+
+### **For technology selection:**
+- **Evaluate against requirements** - performance, scalability, reliability, security
+- **Consider team expertise** - learning curve and maintenance burden
+- **Assess ecosystem maturity** - community support, tooling, documentation
+- **Future-proofing** - will this technology still be relevant in 3-5 years?
+
+---
+
+## 💻 Development & Implementation Brainstorming
+
+### **When planning development phases:**
+- **Identify dependencies** between components and services
+- **Estimate complexity** realistically with uncertainty ranges
+- **Plan for iteration** - what's the MVP vs full feature set?
+- **Consider testing strategy** - how will we validate each component?
+- **Risk mitigation** - what are the high-risk areas and how do we de-risk them?
+
+### **For code architecture:**
+- **Design for testability** - how easy is this to unit test and mock?
+- **Consider error handling** - graceful degradation and user experience
+- **Plan for observability** - logging, metrics, tracing, alerting
+- **Security by design** - authentication, authorization, data protection
+- **Performance considerations** - caching, database optimization, async processing
+
+---
+
+## 🔒 Security & Compliance Brainstorming
+
+### **When discussing security:**
+- **Threat modeling** - identify potential attack vectors and vulnerabilities
+- **Defense in depth** - multiple layers of security controls
+- **Compliance requirements** - PCI DSS, GDPR, SOC2 considerations
+- **Data classification** - sensitive data handling and encryption
+- **Access control** - authentication, authorization, and audit logging
+
+### **For compliance considerations:**
+- **Regulatory mapping** - which requirements apply to which components?
+- **Data residency** - where can data be stored and processed?
+- **Audit trails** - what needs to be logged and for how long?
+- **Incident response** - how do we detect and respond to security events?
+
+---
+
+## 📊 Performance & Scalability Brainstorming
+
+### **When discussing performance:**
+- **Performance profiling** - identify bottlenecks and optimization opportunities
+- **Caching strategies** - what can be cached and at what level?
+- **Database optimization** - indexing, query optimization, connection pooling
+- **Load balancing** - how do we distribute load across instances?
+- **Auto-scaling** - triggers, thresholds, and scaling policies
+
+### **For scalability planning:**
+- **Horizontal vs vertical scaling** - which approach fits the use case?
+- **State management** - how do we handle state in a distributed system?
+- **Data partitioning** - sharding strategies and data distribution
+- **Queue management** - handling traffic spikes and backpressure
+- **Resource optimization** - CPU, memory, network, and storage efficiency
+
+---
+
+## 🚨 Operations & Monitoring Brainstorming
+
+### **When planning operations:**
+- **Deployment strategies** - blue-green, canary, rolling updates
+- **Rollback procedures** - how quickly can we revert changes?
+- **Monitoring and alerting** - what metrics matter and what thresholds trigger alerts?
+- **Incident response** - escalation procedures and communication plans
+- **Disaster recovery** - backup strategies and recovery time objectives
+
+### **For observability:**
+- **Logging strategy** - structured logging, log levels, and retention policies
+- **Metrics collection** - business metrics, technical metrics, and custom dashboards
+- **Distributed tracing** - request flow across services and performance analysis
+- **Health checks** - service health, dependency health, and overall system health
+
+---
+
+## 🔄 Iteration & Learning Brainstorming
+
+### **When planning iterations:**
+- **Feedback loops** - how do we gather user and system feedback?
+- **Metrics-driven decisions** - what data will guide our next iteration?
+- **A/B testing** - how do we validate assumptions and measure impact?
+- **Continuous improvement** - what processes can we optimize?
+- **Knowledge sharing** - how do we capture and disseminate learnings?
+
+---
+
+## 🎭 Brainstorming Session Dynamics
+
+### **Session Structure:**
+1. **Problem Definition** - clearly articulate what we're trying to solve
+2. **Context Gathering** - understand constraints, requirements, and existing systems
+3. **Idea Generation** - brainstorm multiple approaches without judgment
+4. **Analysis & Evaluation** - assess each approach against criteria
+5. **Synthesis** - combine the best elements into a coherent solution
+6. **Action Planning** - define next steps and responsibilities
+
+### **Facilitation Techniques:**
+- **Time-boxing** - set limits to maintain focus and momentum
+- **Round-robin** - ensure all perspectives are heard
+- **Silent brainstorming** - allow individual thinking time
+- **Visual mapping** - use diagrams and mind maps to organize thoughts
+- **Assumption challenging** - question implicit assumptions and constraints
+
+---
+
+## 🎯 Success Metrics for Brainstorming Sessions
+
+### **Quality Indicators:**
+- **Multiple alternatives** generated before convergence
+- **Clear decision criteria** established and documented
+- **Risks identified** with mitigation strategies
+- **Implementation plan** with clear next steps
+- **Stakeholder alignment** on proposed solution
+
+### **Process Indicators:**
+- **Active participation** from all team members
+- **Constructive challenge** of ideas and assumptions
+- **Time efficiency** - focused discussion without tangents
+- **Documentation** of decisions and rationale
+- **Follow-up actions** assigned and tracked
+
+---
+
+## 🚫 Anti-Patterns to Avoid
+
+### **During brainstorming:**
+- ❌ **Premature convergence** - settling on the first reasonable solution
+- ❌ **Groupthink** - not challenging dominant opinions
+- ❌ **Solution jumping** - proposing solutions before understanding the problem
+- ❌ **Scope creep** - expanding beyond the original problem
+- ❌ **Analysis paralysis** - over-analyzing without making decisions
+
+### **In AI collaboration:**
+- ❌ **Accepting AI suggestions** without critical evaluation
+- ❌ **Not providing context** about existing systems and constraints
+- ❌ **Ignoring edge cases** that AI might not consider
+- ❌ **Not documenting decisions** and rationale
+- ❌ **Failing to iterate** on AI-generated solutions
+
+---
+
+## 🔧 Tools & Techniques
+
+### **Visual Thinking:**
+- **C4 Model diagrams** for architecture visualization
+- **Sequence diagrams** for service interactions
+- **Data flow diagrams** for information architecture
+- **Decision trees** for complex choices
+- **Risk matrices** for impact vs probability assessment
+
+### **Collaboration Tools:**
+- **Miro/FigJam** for virtual whiteboarding
+- **Lucidchart** for technical diagrams
+- **Notion** for documentation and tracking
+- **GitHub** for code and configuration management
+- **Linear** for task and issue tracking
+
+---
+
+## 📝 Documentation Standards
+
+### **For each brainstorm session:**
+- **Session summary** with key decisions and rationale
+- **Action items** with owners and timelines
+- **Follow-up tasks** for research and validation
+- **Decision log** for future reference
+- **Lessons learned** for process improvement
+
+### **For technical decisions:**
+- **Problem statement** and context
+- **Solution alternatives** considered
+- **Decision criteria** and evaluation
+- **Chosen solution** with rationale
+- **Implementation plan** and timeline
+- **Risk assessment** and mitigation strategies
+
+---
+
+## 🎯 Remember: The Goal is Better Solutions
+
+These rules exist to help the AI agent and human collaborators:
+- **Think more deeply** about problems and solutions
+- **Consider more perspectives** and alternatives
+- **Make better decisions** with clearer rationale
+- **Learn continuously** from each session
+- **Build better systems** through collaborative intelligence
+
+**The AI agent should be an active, creative, and critical thinking partner - not just a code generator or documentation assistant.**
