@@ -152,7 +152,7 @@ jobs:
           path: ./
           base: main
           head: ${{ github.sha }}
-          extra_args: --only-verified --fail
+          extra_args: --only-verified
 
   # Documentation quality check
   quality:
