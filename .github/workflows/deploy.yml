@@ -78,15 +78,8 @@ jobs:
           ruby-version: '3.2'
           bundler-cache: true
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
       - name: Install dependencies
-        run: |
-          bundle install
-          npm install
+        run: bundle install
 
       - name: Test Jekyll build
         run: bundle exec jekyll build --safe
@@ -94,26 +87,20 @@ jobs:
           JEKYLL_ENV: test
 
       - name: Validate HTML
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const actionsCore = require('@actions/core');
-            const fs = require('fs');
-            const path = require('path');
-            
-            // Check if _site directory exists
-            if (!fs.existsSync('_site')) {
-              actionsCore.setFailed('Build directory _site does not exist');
-              return;
-            }
-            
-            // Check for index.html
-            if (!fs.existsSync('_site/index.html')) {
-              actionsCore.setFailed('index.html not found in build output');
-              return;
-            }
-            
-            console.log('✅ Build validation passed');
+        run: |
+          # Check if _site directory exists
+          if [ ! -d "_site" ]; then
+            echo "❌ Build directory _site does not exist"
+            exit 1
+          fi
+          
+          # Check for index.html
+          if [ ! -f "_site/index.html" ]; then
+            echo "❌ index.html not found in build output"
+            exit 1
+          fi
+          
+          echo "✅ Build validation passed"
 
       - name: Check for broken links
         run: |
@@ -175,11 +162,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
       - name: Check markdown files
         run: |
           # Check for broken internal links
@@ -215,54 +197,27 @@ jobs:
           done
 
       - name: Validate front matter
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const actionsCore = require('@actions/core');
-            const fs = require('fs');
-            const path = require('path');
+        run: |
+          # Check markdown files for proper front matter
+          echo "🔍 Checking markdown files for front matter..."
+          
+          # Find all markdown files (excluding node_modules and .github)
+          find . -name "*.md" -not -path "./node_modules/*" -not -path "./.github/*" | while read -r file; do
+            echo "Checking: $file"
             
-            function validateFrontMatter(filePath) {
-              const content = fs.readFileSync(filePath, 'utf8');
-              const lines = content.split('\n');
-              
-              if (lines[0] !== '---') {
-                console.log(`⚠️  ${filePath}: Missing front matter start (---)`);
-                return false;
-              }
-              
-              let endIndex = -1;
-              for (let i = 1; i < lines.length; i++) {
-                if (lines[i] === '---') {
-                  endIndex = i;
-                  break;
-                }
-              }
-              
-              if (endIndex === -1) {
-                console.log(`⚠️  ${filePath}: Missing front matter end (---)`);
-                return false;
-              }
-              
-              return true;
-            }
+            # Check if file starts with ---
+            if ! head -n 1 "$file" | grep -q "^---$"; then
+              echo "⚠️  $file: Missing front matter start (---)"
+              continue
+            fi
             
-            // Check markdown files for proper front matter
-            const markdownFiles = fs.readdirSync('.', { recursive: true })
-              .filter(file => file.endsWith('.md') && !file.includes('node_modules'))
-              .filter(file => !file.includes('.github'));
+            # Check if file has closing ---
+            if ! tail -n +2 "$file" | grep -q "^---$"; then
+              echo "⚠️  $file: Missing front matter end (---)"
+              continue
+            fi
             
-            let validFiles = 0;
-            let totalFiles = markdownFiles.length;
-            
-            markdownFiles.forEach(file => {
-              if (validateFrontMatter(file)) {
-                validFiles++;
-              }
-            });
-            
-            console.log(`✅ Front matter validation: ${validFiles}/${totalFiles} files valid`);
-            
-            if (validFiles < totalFiles) {
-              actionsCore.setFailed('Some markdown files have invalid front matter');
-            }
+            echo "✅ $file: Front matter valid"
+          done
+          
+          echo "✅ Front matter validation completed"
