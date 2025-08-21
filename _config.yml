@@ -1,0 +1,314 @@
+# Jekyll Configuration for CloudLab Documentation
+# This file configures GitHub Pages to provide a better documentation experience
+
+# Site Configuration
+title: "CloudLab - Distributed Systems Documentation"
+description: "Comprehensive documentation for practicing distributed systems concepts, microservices architecture, and cloud-native patterns"
+url: "https://uldercarrilho.github.io/cloudlab-docs" # Update with your actual GitHub Pages URL
+baseurl: "" # Leave empty if using custom domain
+
+# Author Information
+author:
+  name: "AI Agent"
+  email: "ai@cloudlab.com"
+
+# Build Settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+relative_links:
+  enabled: true
+  collections: true
+
+# Collections
+collections:
+  architecture:
+    output: true
+    permalink: /:collection/:name/
+  api:
+    output: true
+    permalink: /:collection/:name/
+  development:
+    output: true
+    permalink: /:collection/:name/
+  knowledge:
+    output: true
+    permalink: /:collection/:name/
+  operations:
+    output: true
+    permalink: /:collection/:name/
+  business:
+    output: true
+    permalink: /:collection/:name/
+
+# Defaults for collections
+defaults:
+  - scope:
+      path: ""
+      type: "architecture"
+    values:
+      layout: "default"
+      category: "architecture"
+  - scope:
+      path: ""
+      type: "api"
+    values:
+      layout: "default"
+      category: "api"
+  - scope:
+      path: ""
+      type: "development"
+    values:
+      layout: "default"
+      category: "development"
+  - scope:
+      path: ""
+      type: "knowledge"
+    values:
+      layout: "default"
+      category: "knowledge"
+  - scope:
+      path: ""
+      type: "operations"
+    values:
+      layout: "default"
+      category: "operations"
+  - scope:
+      path: ""
+      type: "business"
+    values:
+      layout: "default"
+      category: "business"
+
+# Plugins (GitHub Pages compatible)
+plugins:
+  - jekyll-relative-links
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Exclude files from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .git
+  - .github
+  - README.md
+  - LICENSE
+  - .gitignore
+
+# Include files in processing
+include:
+  - _pages
+  - _layouts
+  - _includes
+  - assets
+  - images
+
+# Kramdown Configuration
+kramdown:
+  input: GFM
+  hard_wrap: false
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+  enable_coderay: false
+
+# Rouge Configuration
+rouge:
+  line_numbers: false
+  start_line: 1
+  line_number_start: 1
+  anchor_line_numbers: false
+  inline_theme: github
+  css: class
+  css_class: 'highlight'
+  tab_size: 2
+
+# SEO Configuration
+seo:
+  title: "CloudLab - Distributed Systems Documentation"
+  description: "Comprehensive documentation for practicing distributed systems concepts, microservices architecture, and cloud-native patterns"
+  author: "AI Agent"
+  image: "/assets/images/cloudlab-logo.png"
+  type: "website"
+  twitter:
+    creator: "@cloudlab"
+    site: "@cloudlab"
+
+# Sitemap Configuration
+sitemap:
+  filename: sitemap.xml
+  include:
+    - architecture
+    - api
+    - development
+    - knowledge
+    - operations
+    - business
+  exclude:
+    - assets
+    - images
+    - _layouts
+    - _includes
+    - _pages
+
+# Navigation Configuration
+nav:
+  - title: "🏗️ Architecture"
+    url: /architecture/
+    children:
+      - title: "System Overview"
+        url: /architecture/overview/system-overview
+      - title: "Architecture Decisions"
+        url: /architecture/decisions/
+      - title: "C4 Models"
+        url: /architecture/diagrams/c4-models/
+      - title: "Patterns"
+        url: /architecture/patterns/
+  
+  - title: "🔌 API & Integration"
+    url: /api/
+    children:
+      - title: "API Design"
+        url: /api/guides/
+      - title: "Specifications"
+        url: /api/specifications/
+      - title: "Testing"
+        url: /api/testing/
+  
+  - title: "💻 Development"
+    url: /development/
+    children:
+      - title: "Guidelines"
+        url: /development/guidelines/
+      - title: "Setup"
+        url: /development/setup/
+      - title: "Tools"
+        url: /development/tools/
+  
+  - title: "🧠 Knowledge"
+    url: /knowledge/
+    children:
+      - title: "Concepts"
+        url: /knowledge/concepts/
+      - title: "Tutorials"
+        url: /knowledge/tutorials/
+      - title: "References"
+        url: /knowledge/references/
+  
+  - title: "🔧 Operations"
+    url: /operations/
+    children:
+      - title: "Runbooks"
+        url: /operations/runbooks/
+      - title: "Monitoring"
+        url: /operations/monitoring/
+  
+  - title: "📚 Business"
+    url: /business/
+    children:
+      - title: "Requirements"
+        url: /business/requirements/
+      - title: "User Stories"
+        url: /business/user-stories/
+      - title: "Workflows"
+        url: /business/workflows/
+
+# Search Configuration
+search:
+  enabled: true
+  type: "simple"
+  placeholder: "Search documentation..."
+  button_text: "Search"
+
+# Theme Configuration
+theme: jekyll-theme-minimal
+remote_theme: pages-themes/minimal@v0.2.0
+
+# Custom CSS and JS
+assets:
+  css:
+    - /assets/css/style.css
+  js:
+    - /assets/js/search.js
+    - /assets/js/navigation.js
+
+# Pagination
+paginate: 20
+paginate_path: "/page/:num/"
+
+# Feed Configuration
+feed:
+  path: feed.xml
+  limit: 20
+
+# Time Zone
+timezone: UTC
+
+# Encoding
+encoding: utf-8
+
+# Safe Mode
+safe: true
+
+# Future Posts
+future: false
+
+# Show Drafts
+show_drafts: false
+
+# Limit Posts
+limit_posts: 0
+
+# Keep Files
+keep_files: [".git", "_config.yml", "README.md"]
+
+# Ignore Files
+ignore_files: [".gitignore", "Gemfile", "Gemfile.lock"]
+
+# Markdown Extensions
+markdown_ext: "md,markdown"
+
+# Liquid Processing
+liquid:
+  error_mode: warn
+  strict_filters: false
+  strict_variables: false
+
+# Sass Configuration
+sass:
+  style: compressed
+  load_paths:
+    - _sass
+    - node_modules
+
+# Compress HTML
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  profile: false
+  startings: [html, head, body]
+
+# Jekyll SEO Tag
+google_analytics: "" # Add your GA tracking ID if needed
+google_analytics_anonymize_ip: true
+
+# Social Media
+social:
+  name: "CloudLab"
+  links:
+    - "https://github.com/uldercarrilho/cloudlab-docs"
+
+# Footer Links
+footer_links:
+  - title: "GitHub"
+    url: "https://github.com/uldercarrilho/cloudlab-docs"
+  - title: "Issues"
+    url: "https://github.com/uldercarrilho/cloudlab-docs/issues"
+  - title: "Pull Requests"
+    url: "https://github.com/uldercarrilho/cloudlab-docs/pulls"

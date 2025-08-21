@@ -1,0 +1,218 @@
+name: Deploy Documentation to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          bundle exec bundle install
+          npm install
+
+      - name: Build with Jekyll
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: ${{ secrets.JEKYLL_ENV || 'production' }}
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  # Deployment job
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  # Test job
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - name: Install dependencies
+        run: bundle exec bundle install
+
+      - name: Test Jekyll build
+        run: bundle exec jekyll build --safe
+        env:
+          JEKYLL_ENV: test
+
+      - name: Validate HTML
+        run: |
+          # Check if _site directory exists
+          if [ ! -d "_site" ]; then
+            echo "❌ Build directory _site does not exist"
+            exit 1
+          fi
+          
+          # Check for index.html
+          if [ ! -f "_site/index.html" ]; then
+            echo "❌ index.html not found in build output"
+            exit 1
+          fi
+          
+          echo "✅ Build validation passed"
+
+      - name: Check for broken links
+        run: |
+          # Install linkchecker if available
+          if command -v linkchecker &> /dev/null; then
+            linkchecker --check-extern --no-robots --ignore-url="^#" _site/index.html
+          else
+            echo "Linkchecker not available, skipping link validation"
+          fi
+
+  # Security scan
+  security:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          bundle exec bundle install
+          npm install
+
+      - name: Run security audit
+        run: |
+          # Ruby security audit
+          bundle exec bundle-audit check --update
+          
+          # Node.js security audit
+          npm audit --audit-level moderate
+
+      - name: Check for secrets
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: main
+          head: ${{ github.sha }}
+          extra_args: --only-verified
+
+  # Documentation quality check
+  quality:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check markdown files
+        run: |
+          # Check for broken internal links
+          find . -name "*.md" -exec grep -l "\[.*\](" {} \; | while read file; do
+            echo "Checking links in $file"
+            grep -o "\[.*\]([^)]*)" "$file" | while read link; do
+              url=$(echo "$link" | sed 's/.*(\([^)]*\)).*/\1/')
+              if [[ "$url" == http* ]]; then
+                echo "External link: $url"
+              else
+                if [[ ! -f "$url" ]] && [[ ! -d "$url" ]]; then
+                  echo "⚠️  Broken internal link in $file: $url"
+                fi
+              fi
+            done
+          done
+
+      - name: Check file structure
+        run: |
+          # Ensure required directories exist
+          required_dirs=("architecture" "api" "development" "knowledge" "operations" "business")
+          for dir in "${required_dirs[@]}"; do
+            if [ ! -d "$dir" ]; then
+              echo "⚠️  Required directory missing: $dir"
+            fi
+          done
+          
+          # Check for README files in main directories
+          for dir in "${required_dirs[@]}"; do
+            if [ -d "$dir" ] && [ ! -f "$dir/README.md" ]; then
+              echo "⚠️  README.md missing in $dir/"
+            fi
+          done
+
+      - name: Validate front matter
+        run: |
+          # Check markdown files for proper front matter
+          echo "🔍 Checking markdown files for front matter..."
+          
+          # Find all markdown files (excluding node_modules and .github)
+          find . -name "*.md" -not -path "./node_modules/*" -not -path "./.github/*" | while read -r file; do
+            echo "Checking: $file"
+            
+            # Check if file starts with ---
+            if ! head -n 1 "$file" | grep -q "^---$"; then
+              echo "⚠️  $file: Missing front matter start (---)"
+              continue
+            fi
+            
+            # Check if file has closing ---
+            if ! tail -n +2 "$file" | grep -q "^---$"; then
+              echo "⚠️  $file: Missing front matter end (---)"
+              continue
+            fi
+            
+            echo "✅ $file: Front matter valid"
+          done
+          
+          echo "✅ Front matter validation completed"
