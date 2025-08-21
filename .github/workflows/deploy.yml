@@ -38,12 +38,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
 
       - name: Install dependencies
         run: |
           bundle install
-          npm ci
+          npm install
 
       - name: Build with Jekyll
         run: bundle exec jekyll build
@@ -132,9 +131,7 @@ jobs:
           bundle audit check --update
           
           # Node.js security audit
-          if [ -f "package-lock.json" ]; then
-            npm audit --audit-level moderate
-          fi
+          npm audit --audit-level moderate
 
       - name: Check for secrets
         uses: trufflesecurity/trufflehog@main
