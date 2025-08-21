@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+    
+    <!-- SEO Tags -->
+    {% seo %}
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+    <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ page.url | absolute_url }}">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+    <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="nav-container">
+        <div class="content-wrapper">
+            <nav class="nav-menu">
+                <div class="nav-brand">
+                    <a href="{{ '/' | relative_url }}" class="nav-logo">
+                        🌐 CloudLab
+                    </a>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li class="nav-dropdown">
+                        <a href="{{ '/architecture/' | relative_url }}">🏗️ Architecture</a>
+                        <div class="nav-dropdown-content">
+                            <a href="{{ '/architecture/overview/' | relative_url }}">System Overview</a>
+                            <a href="{{ '/architecture/decisions/' | relative_url }}">Architecture Decisions</a>
+                            <a href="{{ '/architecture/diagrams/' | relative_url }}">C4 Models</a>
+                            <a href="{{ '/architecture/patterns/' | relative_url }}">Patterns</a>
+                        </div>
+                    </li>
+                    
+                    <li class="nav-dropdown">
+                        <a href="{{ '/api/' | relative_url }}">🔌 API & Integration</a>
+                        <div class="nav-dropdown-content">
+                            <a href="{{ '/api/guides/' | relative_url }}">API Design</a>
+                            <a href="{{ '/api/specifications/' | relative_url }}">Specifications</a>
+                            <a href="{{ '/api/testing/' | relative_url }}">Testing</a>
+                        </div>
+                    </li>
+                    
+                    <li class="nav-dropdown">
+                        <a href="{{ '/development/' | relative_url }}">💻 Development</a>
+                        <div class="nav-dropdown-content">
+                            <a href="{{ '/development/guidelines/' | relative_url }}">Guidelines</a>
+                            <a href="{{ '/development/setup/' | relative_url }}">Setup</a>
+                            <a href="{{ '/development/tools/' | relative_url }}">Tools</a>
+                        </div>
+                    </li>
+                    
+                    <li class="nav-dropdown">
+                        <a href="{{ '/knowledge/' | relative_url }}">🧠 Knowledge</a>
+                        <div class="nav-dropdown-content">
+                            <a href="{{ '/knowledge/concepts/' | relative_url }}">Concepts</a>
+                            <a href="{{ '/knowledge/tutorials/' | relative_url }}">Tutorials</a>
+                            <a href="{{ '/knowledge/references/' | relative_url }}">References</a>
+                        </div>
+                    </li>
+                    
+                    <li class="nav-dropdown">
+                        <a href="{{ '/operations/' | relative_url }}">🔧 Operations</a>
+                        <div class="nav-dropdown-content">
+                            <a href="{{ '/operations/runbooks/' | relative_url }}">Runbooks</a>
+                            <a href="{{ '/operations/monitoring/' | relative_url }}">Monitoring</a>
+                            <a href="{{ '/operations/troubleshooting/' | relative_url }}">Troubleshooting</a>
+                        </div>
+                    </li>
+                    
+                    <li class="nav-dropdown">
+                        <a href="{{ '/business/' | relative_url }}">📚 Business</a>
+                        <div class="nav-dropdown-content">
+                            <a href="{{ '/business/requirements/' | relative_url }}">Requirements</a>
+                            <a href="{{ '/business/user-stories/' | relative_url }}">User Stories</a>
+                            <a href="{{ '/business/workflows/' | relative_url }}">Workflows</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content-wrapper">
+        <!-- Breadcrumbs -->
+        <nav class="breadcrumb">
+            <li><a href="{{ '/' | relative_url }}">Home</a></li>
+            {% if page.category %}
+                <li><a href="{{ '/' | append: page.category | relative_url }}">{{ page.category | capitalize }}</a></li>
+            {% endif %}
+            {% if page.title %}
+                <li>{{ page.title }}</li>
+            {% endif %}
+        </nav>
+
+        <!-- Page Content -->
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- Dynamic sidebar content will be generated by JavaScript -->
+            </aside>
+
+            <!-- Content Area -->
+            <article class="content">
+                <!-- Page Header -->
+                {% if page.title %}
+                <header class="page-header">
+                    <h1>{{ page.title }}</h1>
+                    {% if page.description %}
+                    <p class="page-description">{{ page.description }}</p>
+                    {% endif %}
+                    
+                    <!-- Page Metadata -->
+                    {% if page.category or page.tags or page.last_updated %}
+                    <div class="page-metadata">
+                        {% if page.category %}
+                        <span class="tag tag-category">{{ page.category }}</span>
+                        {% endif %}
+                        
+                        {% if page.tags %}
+                            {% for tag in page.tags %}
+                            <span class="tag">{{ tag }}</span>
+                            {% endfor %}
+                        {% endif %}
+                        
+                        {% if page.last_updated %}
+                        <span class="page-updated">Updated: {{ page.last_updated }}</span>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </header>
+                {% endif %}
+
+                <!-- Page Content -->
+                <div class="page-content">
+                    {{ content }}
+                </div>
+
+                <!-- Page Footer -->
+                <footer class="page-footer">
+                    <div class="page-navigation">
+                        {% if page.previous.url %}
+                        <a href="{{ page.previous.url }}" class="page-nav-prev">
+                            ← {{ page.previous.title }}
+                        </a>
+                        {% endif %}
+                        
+                        {% if page.next.url %}
+                        <a href="{{ page.next.url }}" class="page-nav-next">
+                            {{ page.next.title }} →
+                        </a>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="page-actions">
+                        <a href="https://github.com/ulder/cloudlab-docs/edit/main/{{ page.path }}" 
+                           class="page-edit" target="_blank">
+                            ✏️ Edit this page
+                        </a>
+                        <a href="https://github.com/ulder/cloudlab-docs/issues/new" 
+                           class="page-issue" target="_blank">
+                            🐛 Report an issue
+                        </a>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="content-wrapper">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>CloudLab Documentation</h4>
+                    <p>Comprehensive documentation for practicing distributed systems concepts, microservices architecture, and cloud-native patterns.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="{{ '/architecture/overview/system-overview' | relative_url }}">System Overview</a></li>
+                        <li><a href="{{ '/api/' | relative_url }}">API Reference</a></li>
+                        <li><a href="{{ '/development/guidelines/' | relative_url }}">Development Guide</a></li>
+                        <li><a href="{{ '/knowledge/tutorials/' | relative_url }}">Tutorials</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://github.com/ulder/cloudlab-docs">GitHub Repository</a></li>
+                        <li><a href="https://github.com/ulder/cloudlab-docs/issues">Issue Tracker</a></li>
+                        <li><a href="https://github.com/ulder/cloudlab-docs/pulls">Pull Requests</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 CloudLab. Maintained by AI Agent with human oversight.</p>
+                <p>Built with ❤️ for distributed systems learning and practice.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{{ '/assets/js/navigation.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/search.js' | relative_url }}"></script>
+    
+    <!-- Additional page-specific scripts -->
+    {% if page.scripts %}
+        {% for script in page.scripts %}
+        <script src="{{ script | relative_url }}"></script>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

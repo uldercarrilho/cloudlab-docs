@@ -1,0 +1,68 @@
+{
+  "name": "cloudlab-docs",
+  "version": "1.0.0",
+  "description": "Comprehensive documentation for practicing distributed systems concepts, microservices architecture, and cloud-native patterns",
+  "main": "index.js",
+  "scripts": {
+    "build": "jekyll build",
+    "serve": "jekyll serve",
+    "test": "jekyll build --safe",
+    "validate": "npm run validate:links && npm run validate:structure",
+    "validate:links": "node scripts/validate-links.js",
+    "validate:structure": "node scripts/validate-structure.js",
+    "lint:markdown": "markdownlint '**/*.md' --ignore node_modules",
+    "lint:css": "stylelint 'assets/css/**/*.css'",
+    "lint:js": "eslint 'assets/js/**/*.js'",
+    "lint": "npm run lint:markdown && npm run lint:css && npm run lint:js",
+    "format": "prettier --write '**/*.{md,js,css,yml,yaml}'",
+    "check": "npm run lint && npm run validate",
+    "clean": "rm -rf _site .jekyll-cache .jekyll-metadata",
+    "deploy": "npm run build && npm run validate"
+  },
+  "keywords": [
+    "documentation",
+    "distributed-systems",
+    "microservices",
+    "cloud-native",
+    "architecture",
+    "jekyll",
+    "github-pages"
+  ],
+  "author": "AI Agent with human oversight",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ulder/cloudlab-docs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ulder/cloudlab-docs/issues"
+  },
+  "homepage": "https://ulder.github.io/cloudlab-docs",
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1",
+    "eslint": "^8.57.0",
+    "markdownlint-cli": "^0.37.0",
+    "prettier": "^3.2.5",
+    "stylelint": "^16.2.1",
+    "stylelint-config-standard": "^36.0.0"
+  },
+  "dependencies": {
+    "lunr": "^2.3.9"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "jekyll": {
+    "plugins": [
+      "jekyll-relative-links",
+      "jekyll-seo-tag",
+      "jekyll-sitemap"
+    ]
+  }
+}
