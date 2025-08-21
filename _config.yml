@@ -4,7 +4,7 @@
 # Site Configuration
 title: "CloudLab - Distributed Systems Documentation"
 description: "Comprehensive documentation for practicing distributed systems concepts, microservices architecture, and cloud-native patterns"
-url: "https://ulder.github.io/cloudlab-docs" # Update with your actual GitHub Pages URL
+url: "https://uldercarrilho.github.io/cloudlab-docs" # Update with your actual GitHub Pages URL
 baseurl: "" # Leave empty if using custom domain
 
 # Author Information

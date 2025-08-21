@@ -32,12 +32,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ulder/cloudlab-docs.git"
+    "url": "https://github.com/uldercarrilho/cloudlab-docs.git"
   },
   "bugs": {
-    "url": "https://github.com/ulder/cloudlab-docs/issues"
+    "url": "https://github.com/uldercarrilho/cloudlab-docs/issues"
   },
-  "homepage": "https://ulder.github.io/cloudlab-docs",
+  "homepage": "https://uldercarrilho.github.io/cloudlab-docs",
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1",
     "eslint": "^8.57.0",
