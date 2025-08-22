@@ -395,7 +395,7 @@ func TestOAuth2Client(t *testing.T) {
 ```
 
 ## References
-- [ADR-009: Security & Authentication Architecture](../ADR-009-security-authentication.md)
+- [ADR-009: Security & Authentication Architecture](../../architecture/decisions/ADR-009-security-authentication.md)
 - [OAuth 2.0 Specification](https://oauth.net/2/)
 - [OpenID Connect Core](https://openid.net/specs/openid-connect-core-1_0.html)
 - [OAuth 2.0 Security Best Practices](https://tools.ietf.org/html/draft-ietf-oauth-security-topics)

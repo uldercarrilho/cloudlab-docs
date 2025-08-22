@@ -808,5 +808,5 @@ plugins:
 - [Rate Limiting Strategies](https://cloud.google.com/architecture/rate-limiting-strategies-techniques)
 - [Saga Pattern Implementation](https://microservices.io/patterns/data/saga.html)
 - [Istio Service Mesh Documentation](https://istio.io/docs/)
-- [Business Rules Document](../business/backlog/BUSINESS-RULES-001-ecommerce-platform.md)
-- [Development Plan Document](../business/backlog/DEVELOPMENT-PLAN-001-distributed-ecommerce-platform.md)
+- [Business Rules Document](../../product/PRD-001-business-rules.md)
+- [Development Plan Document](../../product/PRD-002-development-plan.md)

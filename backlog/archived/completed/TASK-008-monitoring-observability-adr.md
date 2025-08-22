@@ -59,7 +59,7 @@ Create an Architecture Decision Record (ADR) for monitoring and observability te
 - Performance monitoring and alerting design
 
 ## Resources
-- [ADR Template](architecture/adrs/)
+- [ADR Template](../../architecture/decisions/)
 - [Prometheus Documentation](https://prometheus.io/docs/)
 - [Grafana Documentation](https://grafana.com/docs/)
 - [ELK Stack Documentation](https://www.elastic.co/guide/index.html)

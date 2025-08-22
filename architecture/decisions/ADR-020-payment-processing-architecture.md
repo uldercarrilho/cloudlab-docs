@@ -60,7 +60,7 @@ The distributed e-commerce platform requires a robust payment processing system 
 
 ## 5. Business Rules & Constraints
 
-**Business Rules (from BUSINESS-RULES-001-ecommerce-platform.md):**
+**Business Rules (from PRD-001-business-rules.md):**
 - **Payment Methods**: Credit/debit cards, digital wallets, bank transfers, cryptocurrency
 - **Security Requirements**: PCI DSS compliance, encrypted data, tokenization
 - **Payment Processing**: Pre-authorization, 7-day hold maximum, automatic capture

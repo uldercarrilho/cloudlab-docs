@@ -277,8 +277,8 @@ func TestXSSPrevention(t *testing.T) {
 - Infrastructure security audits
 
 ## References
-- [ADR-009: Security & Authentication Architecture](../ADR-009-security-authentication.md)
-- [ADR-015: Compliance & Regulatory Requirements](../ADR-015-compliance-regulatory-requirements.md)
+- [ADR-009: Security & Authentication Architecture](../../architecture/decisions/ADR-009-security-authentication.md)
+- [ADR-015: Compliance & Regulatory Requirements](../../architecture/decisions/ADR-015-compliance-regulatory-requirements.md)
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 - [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework)
 - [PCI DSS Requirements](https://www.pcisecuritystandards.org/)

@@ -38,7 +38,7 @@ ADRs capture the context, options considered, and consequences of important arch
 - [ADR-024: Distributed Tracing Strategy](ADR-024-distributed-tracing-strategy.md)
 
 ## Template
-Use the PRD + ADR hybrid template in `/templates/prd-adr-template.md` for consistency. This template combines product requirements with architectural decisions, making it ideal for solo development and AI collaboration.
+Use the PRD + ADR hybrid template in [../../templates/prd-adr-template.md](../../templates/prd-adr-template.md) for consistency. This template combines product requirements with architectural decisions, making it ideal for solo development and AI collaboration.
 
 ## Implementation Guides
 - [API Design Principles](../../api/guides/api-design-principles.md)

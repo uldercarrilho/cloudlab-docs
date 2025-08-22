@@ -59,7 +59,7 @@ Create an Architecture Decision Record (ADR) for API design and communication pa
 - Real-time communication in distributed systems
 
 ## Resources
-- [ADR Template](architecture/adrs/)
+- [ADR Template](../../architecture/decisions/)
 - [GraphQL Documentation](https://graphql.org/learn/)
 - [gRPC Documentation](https://grpc.io/docs/)
 - [REST API Design](https://restfulapi.net/)

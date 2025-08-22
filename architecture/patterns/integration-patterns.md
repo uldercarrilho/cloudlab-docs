@@ -936,11 +936,11 @@ By implementing these patterns thoughtfully and consistently, the distributed e-
 
 ## Related Documents
 
-- [Distributed Patterns](distributed-patterns.md) - Core distributed systems patterns
-- [ADR-005: Message Queue & Event Streaming](ADR-005-message-queue-event-streaming.md) - Message queue architecture decisions
-- [ADR-006: API Communication Patterns](ADR-006-api-communication-patterns.md) - API design and communication decisions
-- [ADR-003: Container Orchestration & Service Mesh](ADR-003-container-orchestration-service-mesh.md) - Service mesh implementation decisions
-- [ADR-004: Data Storage & Consistency Patterns](ADR-004-data-storage-consistency-patterns.md) - Data integration and consistency decisions
+- [Distributed Patterns](./distributed-patterns.md) - Core distributed systems patterns
+- [ADR-005: Message Queue & Event Streaming](../decisions/ADR-005-message-queue-event-streaming.md) - Message queue architecture decisions
+- [ADR-006: API Communication Patterns](../decisions/ADR-006-api-communication-patterns.md) - API design and communication decisions
+- [ADR-003: Container Orchestration & Service Mesh](../decisions/ADR-003-container-orchestration-service-mesh.md) - Service mesh implementation decisions
+- [ADR-004: Data Storage & Consistency Patterns](../decisions/ADR-004-data-storage-consistency-patterns.md) - Data integration and consistency decisions
 
 ## References
 

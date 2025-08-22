@@ -60,7 +60,7 @@ The distributed e-commerce platform requires a robust content management system 
 ## 5. Business Rules & Constraints
 > Rules that must always be true, plus any limitations.
 
-**Business Rules (from BUSINESS-RULES-001-ecommerce-platform.md):**
+**Business Rules (from PRD-001-business-rules.md):**
 - **Content Requirements**: At least 3 product images required, maximum 10MB for images, 100MB for videos
 - **Content Moderation**: Automatic filtering for inappropriate content, manual review for flagged content
 - **Review System**: Only verified purchasers can leave reviews, reviews within 90 days of delivery

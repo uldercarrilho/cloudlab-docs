@@ -22,14 +22,15 @@ tasks/
 
 ### Task States
 Tasks move through directories based on status:
-- **`../TODO.md`** → Raw ideas and notes
-- **`tasks/`** → Refined, ready for work (this directory)
-- **`../active/in-progress.md`** → Reference to current task
-- **`../archived/completed/`** → Completed task files
+- **[../TODO.md](../TODO.md)** → Raw ideas and notes
+- **[tasks/](tasks/)** → Refined, ready for work (this directory)
+- **[../active/ready.md](../active/ready.md)** → References to available tasks
+- **[../active/in-progress.md](../active/in-progress.md)** → Reference to current task
+- **[../archived/completed/](../archived/completed/)** → Completed task files
 
 ## 📋 Task File Template
 
-Each task file should follow this structure (use `../templates/task-template-simplified.md` for new tasks):
+Each task file should follow this structure (use [../templates/task-template-simplified.md](../templates/task-template-simplified.md) for new tasks):
 
 ```markdown
 # [TASK-XXX] Task Title
@@ -67,16 +68,16 @@ Final notes on implementation and lessons learned.
 
 ## 🔄 Workflow for Solo Development
 
-1. **Capture Ideas**: Add to `../TODO.md`
-2. **Refine Task**: Create detailed file in `tasks/`
-3. **Start Work**: Update `../active/in-progress.md` with reference
+1. **Capture Ideas**: Add to [../TODO.md](../TODO.md)
+2. **Refine Task**: Create detailed file in [tasks/](tasks/)
+3. **Start Work**: Update [../active/in-progress.md](../active/in-progress.md) with reference
 4. **Track Progress**: Update task file with progress log
-5. **Complete**: Move file to `../archived/completed/`
+5. **Complete**: Move file to [../archived/completed/](../archived/completed/)
 
 ## 📊 Task Tracking
 
 ### Current Tasks Overview
-Use `../active/ready.md` to maintain a simple list of available tasks:
+Use [../active/ready.md](../active/ready.md) to maintain a simple list of available tasks:
 
 ```markdown
 ### Available Tasks
@@ -85,11 +86,11 @@ Use `../active/ready.md` to maintain a simple list of available tasks:
 ```
 
 ### In-Progress Tracking
-Use `../active/in-progress.md` to track your current work:
+Use [../active/in-progress.md](../active/in-progress.md) to track your current work:
 
 ```markdown
 ### Currently Working On
-- [TASK-001](../tasks/TASK-001-example-microservice-setup.md) - Started 2024-01-15, 60% complete
+- [TASK-001](../archived/completed/TASK-003-container-orchestration-adr.md) - Started 2024-01-15, 60% complete
 ```
 
 ## 💡 Solo Development Tips

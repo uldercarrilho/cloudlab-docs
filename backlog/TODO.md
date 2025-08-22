@@ -55,8 +55,8 @@ When ready to refine items from this TODO:
 3. **Define** acceptance criteria
 4. **Prioritize** based on business value and urgency
 5. **Create detailed task file**:
-   - Create `tasks/TASK-XXX-brief-description.md` using the task template
-   - Add reference to `active/ready.md` in appropriate priority section
+   - Create [tasks/TASK-XXX-brief-description.md](tasks/) using the task template
+- Add reference to [active/ready.md](active/ready.md) in appropriate priority section
    - Update the task overview table
 
 ## 🤖 AI Agent Instructions

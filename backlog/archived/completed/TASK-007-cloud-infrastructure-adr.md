@@ -59,7 +59,7 @@ Create an Architecture Decision Record (ADR) for cloud provider and infrastructu
 - Cloud-native application design principles
 
 ## Resources
-- [ADR Template](architecture/adrs/)
+- [ADR Template](../../architecture/decisions/)
 - [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/)
 - [Terraform Documentation](https://www.terraform.io/docs)
 - [Cloud-Native Architecture](https://www.cncf.io/blog/2019/12/11/cloud-native-architecture/)

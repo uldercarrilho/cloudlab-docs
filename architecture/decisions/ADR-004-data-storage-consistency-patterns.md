@@ -53,7 +53,7 @@
 ## 5. Business Rules & Constraints
 > Rules that must always be true, plus any limitations.
 
-**Business Rules (from BUSINESS-RULES-001-ecommerce-platform.md):**
+**Business Rules (from PRD-001-business-rules.md):**
 - **Data Propagation Timing Requirements:**
   - Product catalog price changes: propagate within 5 minutes
   - Inventory updates: propagate within 1 minute  
@@ -245,7 +245,7 @@
 - [CQRS Pattern](https://martinfowler.com/bliki/CQRS.html)
 - [Saga Pattern](https://microservices.io/patterns/data/saga.html)
 - [CAP Theorem](https://en.wikipedia.org/wiki/CAP_theorem)
-- [ADR-003: Container Orchestration & Service Mesh](../decisions/ADR-003-container-orchestration-service-mesh.md)
+- [ADR-003: Container Orchestration & Service Mesh](ADR-003-container-orchestration-service-mesh.md)
 
 ---
 

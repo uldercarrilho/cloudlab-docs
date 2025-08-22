@@ -493,8 +493,7 @@ The key to success is starting simple and evolving the architecture based on act
 
 ## Related Concepts
 
-- [Distributed Systems Patterns](./distributed-patterns.md)
-- [Service Mesh Architecture](./service-mesh.md)
-- [Event-Driven Architecture](./event-driven-architecture.md)
-- [API Design Principles](../api/guides/api-design-principles.md)
-- [Database Consistency Patterns](../architecture/decisions/ADR-004-data-storage-consistency-patterns.md)
+- [Distributed Systems Patterns](../../architecture/patterns/distributed-patterns.md)
+- [Event-Driven Architecture](./event-driven.md)
+- [API Design Principles](../../api/guides/api-design-principles.md)
+- [Database Consistency Patterns](../../architecture/decisions/ADR-004-data-storage-consistency-patterns.md)

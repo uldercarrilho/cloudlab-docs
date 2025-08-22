@@ -6,7 +6,7 @@
 - **Date:** 2025-08-11
 - **Author:** Ulder Carrilho Júnior + AI Assistant
 - **Status:** [Approved]
-- **Related Documents:** [Development Plan](./DEVELOPMENT-PLAN-001-distributed-ecommerce-platform.md)
+- **Related Documents:** [Development Plan](./PRD-002-development-plan.md)
 
 ---
 
@@ -659,7 +659,7 @@
 ## 10. References & Resources
 
 ### **10.1 Related Documents**
-- [Development Plan](./DEVELOPMENT-PLAN-001-distributed-ecommerce-platform.md)
+- [Development Plan](./PRD-002-development-plan.md)
 - [System Overview](../architecture/overview/system-overview.md)
 - [API Documentation](../api/)
 

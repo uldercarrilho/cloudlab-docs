@@ -641,8 +641,8 @@ func TestRateLimitMiddleware(t *testing.T) {
 ```
 
 ## References
-- [ADR-006: API Communication Patterns](../ADR-006-api-communication-patterns.md)
-- [ADR-009: Security & Authentication Architecture](../ADR-009-security-authentication.md)
+- [ADR-006: API Communication Patterns](../../architecture/decisions/ADR-006-api-communication-patterns.md)
+- [ADR-009: Security & Authentication Architecture](../../architecture/decisions/ADR-009-security-authentication.md)
 - [Rate Limiting Best Practices](https://cloud.google.com/architecture/rate-limiting-strategies-techniques)
 - [Redis Rate Limiting](https://redis.io/commands/incr/)
 - [HTTP Rate Limiting Headers](https://tools.ietf.org/html/draft-polli-ratelimit-headers-03)

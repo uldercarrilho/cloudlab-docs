@@ -62,7 +62,7 @@ We will implement a comprehensive observability stack using **Prometheus + Grafa
 
 **Dual Logging Strategy**: This ADR implements a dual logging approach to optimize for different use cases:
 - **Loki + Grafana**: Handles operational logging for system monitoring, debugging, and incident response
-- **ELK Stack**: Used for business analytics and long-term data retention as specified in business rules (see Section 6.1 Data Protection in BUSINESS-RULES-001-ecommerce-platform.md)
+- **ELK Stack**: Used for business analytics and long-term data retention as specified in business rules (see Section 6.1 Data Protection in PRD-001-business-rules.md)
 
 This separation ensures operational efficiency while meeting business intelligence and compliance requirements.
 
@@ -148,7 +148,7 @@ This separation ensures operational efficiency while meeting business intelligen
 
 ## Implementation Strategy
 
-**Note**: This implementation strategy aligns with Phase 6 (Weeks 33-36) of the development plan (see DEVELOPMENT-PLAN-001-distributed-ecommerce-platform.md Section 5.6). The 4-week implementation timeline ensures completion within the planned phase while maintaining quality and comprehensive coverage.
+**Note**: This implementation strategy aligns with Phase 6 (Weeks 33-36) of the development plan (see PRD-002-development-plan.md Section 5.6). The 4-week implementation timeline ensures completion within the planned phase while maintaining quality and comprehensive coverage.
 
 ### Phase 1: Foundation (Week 1-2)
 1. **Prometheus Setup**
@@ -575,7 +575,7 @@ spec:
 - **Compliance Metrics**: GDPR consent rates, PCI DSS compliance (Business Rules Section 6.1-6.2)
 
 ### Business Metrics Alignment with Business Rules
-Our monitoring dashboards ensure comprehensive coverage of all business metrics specified in the business rules (see BUSINESS-RULES-001-ecommerce-platform.md). Each metric is directly traceable to specific business rule sections for complete compliance monitoring.
+Our monitoring dashboards ensure comprehensive coverage of all business metrics specified in the business rules (see PRD-001-business-rules.md). Each metric is directly traceable to specific business rule sections for complete compliance monitoring.
 
 #### **Core Business Operations Monitoring**
 - **User Management** (Section 3.1): Customer registration rates, authentication success/failure rates, MFA adoption, session management metrics, account lockout monitoring, password policy compliance, GDPR consent tracking
@@ -613,7 +613,7 @@ This alignment ensures that all business rules are properly monitored and measur
 - **Audit Logging**: All access attempts logged
 
 ### Compliance Monitoring Capabilities
-Our monitoring and observability stack provides comprehensive coverage for all compliance requirements specified in the business rules (see BUSINESS-RULES-001-ecommerce-platform.md Section 6):
+Our monitoring and observability stack provides comprehensive coverage for all compliance requirements specified in the business rules (see PRD-001-business-rules.md Section 6):
 
 #### **GDPR Compliance Monitoring** (Section 6.1)
 - **Data Access Tracking**: Monitor all data access patterns and user consent status
@@ -653,7 +653,7 @@ This comprehensive compliance monitoring ensures we can demonstrate adherence to
 - **Jaeger**: Trace data retention (7 days)
 
 ### Data Retention Strategy Alignment
-Our monitoring data retention policies are designed to align with business requirements while optimizing operational efficiency (see BUSINESS-RULES-001-ecommerce-platform.md Section 6.1):
+Our monitoring data retention policies are designed to align with business requirements while optimizing operational efficiency (see PRD-001-business-rules.md Section 6.1):
 
 #### **Operational Monitoring (Short-term)**
 - **Operational Logs (Loki)**: 30 days hot, 90 days warm - Sufficient for incident investigation and debugging
@@ -730,8 +730,8 @@ The phased implementation approach ensures we can start with basic monitoring an
 ## Cross-Document Traceability
 
 This ADR maintains full consistency with:
-- **Business Rules** (BUSINESS-RULES-001-ecommerce-platform.md): All monitoring requirements and compliance needs are addressed
-- **Development Plan** (DEVELOPMENT-PLAN-001-distributed-ecommerce-platform.md): Technology stack and implementation phases are aligned
+- **Business Rules** (PRD-001-business-rules.md): All monitoring requirements and compliance needs are addressed
+- **Development Plan** (PRD-002-development-plan.md): Technology stack and implementation phases are aligned
 - **System Architecture**: Supports all planned distributed patterns and microservices architecture
 
 ### **Business Rules Traceability Matrix**
@@ -791,9 +791,9 @@ The dual logging strategy (Loki for operational, ELK for business analytics) ens
 ## References
 
 ### Related Documents
-- [Business Rules Document](../../business/backlog/BUSINESS-RULES-001-ecommerce-platform.md) - Defines business requirements and compliance needs
-- [Development Plan](../../business/backlog/DEVELOPMENT-PLAN-001-distributed-ecommerce-platform.md) - Outlines implementation phases and technology stack
-- [System Overview](../../overview/system-overview.md) - Provides high-level system architecture context
+- [Business Rules Document](../../product/PRD-001-business-rules.md) - Defines business requirements and compliance needs
+- [Development Plan](../../product/PRD-002-development-plan.md) - Outlines implementation phases and technology stack
+- [System Overview](../overview/system-overview.md) - Provides high-level system architecture context
 
 ### Business Rules Sections Referenced
 #### **Core Business Operations**

@@ -1036,7 +1036,7 @@ Remember to:
 - Monitor test quality and performance
 
 For additional guidance, refer to:
-- [ADR-014: Testing & Quality Assurance](../architecture/decisions/ADR-014-testing-quality-assurance.md)
+- [ADR-014: Testing & Quality Assurance](../../architecture/decisions/ADR-014-testing-quality-assurance.md)
 - [Go Testing Package Documentation](https://golang.org/pkg/testing/)
 - [Testify Framework Documentation](https://github.com/stretchr/testify)
 - [GoMock Documentation](https://github.com/uber-go/mock)

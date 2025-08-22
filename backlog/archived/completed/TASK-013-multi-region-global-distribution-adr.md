@@ -59,7 +59,7 @@ Create an Architecture Decision Record (ADR) for multi-region deployment and glo
 - Cost optimization in multi-region architectures
 
 ## Resources
-- [ADR Template](architecture/adrs/)
+- [ADR Template](../../architecture/decisions/)
 - [Multi-Region Deployment](https://aws.amazon.com/solutions/case-studies/netflix/)
 - [Data Locality Patterns](https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/)
 - [Global Compliance](https://gdpr.eu/)

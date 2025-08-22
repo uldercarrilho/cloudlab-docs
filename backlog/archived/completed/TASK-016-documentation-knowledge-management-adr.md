@@ -59,7 +59,7 @@ Create an Architecture Decision Record (ADR) for documentation and knowledge man
 - Documentation automation and quality processes
 
 ## Resources
-- [ADR Template](architecture/adrs/)
+- [ADR Template](../../architecture/decisions/)
 - [GitBook Documentation](https://docs.gitbook.com/)
 - [Notion Documentation](https://developers.notion.com/)
 - [Confluence Documentation](https://developer.atlassian.com/cloud/confluence/)

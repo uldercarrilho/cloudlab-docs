@@ -595,8 +595,8 @@ func (mpp *MockPaymentProvider) HealthCheck() *HealthStatus {
 4. **Monitoring**: Monitor real service performance and reliability
 
 ## References
-- [ADR-005: Message Queue & Event Streaming](./ADR-005-message-queue-event-streaming.md)
-- [ADR-006: API Communication Patterns](./ADR-006-api-communication-patterns.md)
-- [ADR-009: Security & Authentication Architecture](./ADR-009-security-authentication.md)
+- [ADR-005: Message Queue & Event Streaming](../../architecture/decisions/ADR-005-message-queue-event-streaming.md)
+- [ADR-006: API Communication Patterns](../../architecture/decisions/ADR-006-api-communication-patterns.md)
+- [ADR-009: Security & Authentication Architecture](../../architecture/decisions/ADR-009-security-authentication.md)
 - [Mocking Best Practices](https://martinfowler.com/articles/mocksArentStubs.html)
 - [Service Virtualization](https://en.wikipedia.org/wiki/Service_virtualization)

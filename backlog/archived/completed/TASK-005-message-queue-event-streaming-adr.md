@@ -59,7 +59,7 @@ Create an Architecture Decision Record (ADR) for message queue and event streami
 - Asynchronous communication in distributed systems
 
 ## Resources
-- [ADR Template](architecture/adrs/)
+- [ADR Template](../../architecture/decisions/)
 - [Apache Kafka Documentation](https://kafka.apache.org/documentation/)
 - [RabbitMQ Documentation](https://www.rabbitmq.com/documentation.html)
 - [Event-Driven Architecture](https://martinfowler.com/articles/201701-event-driven.html)

@@ -59,7 +59,7 @@ Create an Architecture Decision Record (ADR) for security and authentication str
 - ✅ Multi-tenant security architecture
 
 ## Resources
-- [ADR Template](architecture/adrs/)
+- [ADR Template](../../architecture/decisions/)
 - [OAuth 2.0 Specification](https://oauth.net/2/)
 - [JWT Documentation](https://jwt.io/introduction/)
 - [HashiCorp Vault Documentation](https://www.vaultproject.io/docs)
