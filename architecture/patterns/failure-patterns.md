@@ -711,11 +711,11 @@ By implementing these patterns systematically and monitoring their effectiveness
 
 ## Related Documents
 
-- [Architecture Overview](../../overview/system-overview.md) - System architecture and design principles
-- [API Communication Patterns](../integration-patterns.md) - Service communication and integration patterns
-- [Monitoring and Observability](../../decisions/ADR-008-monitoring-observability.md) - Monitoring strategies and observability patterns
-- [Testing and Quality Assurance](../../decisions/ADR-014-testing-quality-assurance.md) - Testing strategies for distributed systems
-- [Security Best Practices](../../../development/guidelines/security-best-practices.md) - Security considerations for failure handling
+- [Architecture Overview](../overview/system-overview.md) - System architecture and design principles
+- [API Communication Patterns](./integration-patterns.md) - Service communication and integration patterns
+- [Monitoring and Observability](../decisions/ADR-008-monitoring-observability.md) - Monitoring strategies and observability patterns
+- [Testing and Quality Assurance](../decisions/ADR-014-testing-quality-assurance.md) - Testing strategies for distributed systems
+- [Security Best Practices](../../development/guidelines/security-best-practices.md) - Security considerations for failure handling
 
 ## References
 

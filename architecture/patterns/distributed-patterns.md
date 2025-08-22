@@ -453,9 +453,9 @@ For more information on specific patterns and their implementation, refer to the
 
 ## Related Documents
 
-- [System Overview](../../overview/system-overview.md) - High-level system architecture and design
-- [Architecture Principles](../../overview/architecture-principles.md) - Core architectural principles and guidelines
-- [Technology Stack](../../overview/technology-stack.md) - Technology choices and rationale
+- [System Overview](../overview/system-overview.md) - High-level system architecture and design
+- [Architecture Principles](../overview/architecture-principles.md) - Core architectural principles and guidelines
+- [Technology Stack](../overview/technology-stack.md) - Technology choices and rationale
 - [ADR-001: User Management & Authentication](../decisions/ADR-001-user-management-authentication.md) - User management patterns
 - [ADR-002: Order Processing & Fulfillment](../decisions/ADR-002-order-processing-fulfillment.md) - Order processing patterns
 - [ADR-004: Data Storage & Consistency Patterns](../decisions/ADR-004-data-storage-consistency-patterns.md) - Data consistency patterns

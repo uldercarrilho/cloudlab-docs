@@ -59,7 +59,7 @@ Create an Architecture Decision Record (ADR) for compliance and regulatory requi
 - Compliance automation and audit strategies
 
 ## Resources
-- [ADR Template](architecture/adrs/)
+- [ADR Template](../../architecture/decisions/)
 - [PCI DSS Requirements](https://www.pcisecuritystandards.org/document_library)
 - [GDPR Guidelines](https://gdpr.eu/)
 - [CCPA Requirements](https://oag.ca.gov/privacy/ccpa)

@@ -59,7 +59,7 @@ Create an Architecture Decision Record (ADR) for data storage technologies and c
 - Database performance optimization for distributed systems
 
 ## Resources
-- [ADR Template](architecture/adrs/)
+- [ADR Template](../../architecture/decisions/)
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
 - [Redis Documentation](https://redis.io/documentation)
 - [ClickHouse Documentation](https://clickhouse.com/docs/)

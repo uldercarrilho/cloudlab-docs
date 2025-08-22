@@ -11,22 +11,22 @@ backlog/
 ├── README.md                    # This file - backlog management guide
 ├── TODO.md                      # Raw notes and ideas for refinement
 ├── tasks/                       # Individual task files (refined tasks)
-│   ├── README.md               # Task file management guide
+│   ├── README.md                # Task file management guide
 │   ├── TASK-001-example-microservice-setup.md
 │   ├── TASK-002-example-distributed-database.md
-│   └── ...                     # Additional task files
+│   └── ...                      # Additional task files
 ├── active/                      # Current work tracking
-│   ├── ready.md                # References to available tasks
-│   ├── in-progress.md          # Current work (solo development)
-│   └── blocked.md              # Blocked tasks (if any)
-├── archived/                   # Completed and cancelled items
-│   ├── README.md               # Archive management
-│   ├── completed/              # Successfully completed task files
-│   └── cancelled/              # Cancelled or obsolete task files
-└── templates/                  # Task templates for consistency
-    ├── task-template.md        # Comprehensive task template
+│   ├── ready.md                 # References to available tasks
+│   ├── in-progress.md           # Current work (solo development)
+│   └── blocked.md               # Blocked tasks (if any)
+├── archived/                    # Completed and cancelled items
+│   ├── README.md                # Archive management
+│   ├── completed/               # Successfully completed task files
+│   └── cancelled/               # Cancelled or obsolete task files
+└── templates/                   # Task templates for consistency
+    ├── task-template.md         # Comprehensive task template
     ├── task-template-simplified.md # Simplified template (recommended)
-    └── bug-template.md         # Bug report template
+    └── bug-template.md          # Bug report template
 ```
 
 ## 🤖 AI Agent Integration
@@ -41,9 +41,9 @@ This backlog structure is designed for AI agents to:
 
 ### AI Agent Usage Patterns
 
-- **Task Pickup**: AI agents scan `active/ready.md` for available tasks by priority
-- **Status Updates**: Update task files and move references between `ready.md` → `in-progress.md` → `archived/completed/`
-- **Dependency Management**: Check `blocked.md` and task file dependencies
+- **Task Pickup**: AI agents scan [active/ready.md](active/ready.md) for available tasks by priority
+- **Status Updates**: Update task files and move references between [ready.md](active/ready.md) → [in-progress.md](active/in-progress.md) → [archived/completed/](archived/completed/)
+- **Dependency Management**: Check [blocked.md](active/blocked.md) and task file dependencies
 - **Progress Tracking**: Update individual task files with daily progress logs
 
 ## 📝 Task Lifecycle (Solo Development)
@@ -64,13 +64,13 @@ graph TD
 
 | State | Location | Description |
 |-------|----------|-------------|
-| **Raw** | `TODO.md` | Unrefined ideas and notes |
-| **Refined** | `tasks/TASK-XXX-*.md` | Detailed task files ready for work |
-| **Ready** | `active/ready.md` | References to available tasks |
-| **In Progress** | `active/in-progress.md` | Current work (solo development) |
-| **Blocked** | `active/blocked.md` | Waiting on dependencies |
-| **Completed** | `archived/completed/` | Successfully finished task files |
-| **Cancelled** | `archived/cancelled/` | No longer needed task files |
+| **Raw** | [TODO.md](TODO.md) | Unrefined ideas and notes |
+| **Refined** | [tasks/TASK-XXX-*.md](tasks/) | Detailed task files ready for work |
+| **Ready** | [active/ready.md](active/ready.md) | References to available tasks |
+| **In Progress** | [active/in-progress.md](active/in-progress.md) | Current work (solo development) |
+| **Blocked** | [active/blocked.md](active/blocked.md) | Waiting on dependencies |
+| **Completed** | [archived/completed/](archived/completed/) | Successfully finished task files |
+| **Cancelled** | [archived/cancelled/](archived/cancelled/) | No longer needed task files |
 
 ## 🎯 Best Practices
 
@@ -93,7 +93,7 @@ graph TD
 ### When to Use Each Template
 
 #### Simplified Template (Recommended for Solo Development)
-**Use `templates/task-template-simplified.md` for:**
+**Use [templates/task-template-simplified.md](../templates/task-template-simplified.md) for:**
 - Solo development and learning projects
 - Distributed systems experiments
 - Tasks under 3 days effort
@@ -101,7 +101,7 @@ graph TD
 - AI-assisted development workflows
 
 #### Comprehensive Template  
-**Use `templates/task-template.md` for:**
+**Use [templates/task-template.md](../templates/task-template.md) for:**
 - Complex enterprise projects
 - Tasks requiring extensive stakeholder coordination
 - High-risk or high-impact initiatives
@@ -109,7 +109,7 @@ graph TD
 - Multi-team coordination required
 
 #### Bug Template
-**Use `templates/bug-template.md` for:**
+**Use [templates/bug-template.md](../templates/bug-template.md) for:**
 - Defect reporting and tracking
 - Issues requiring detailed reproduction steps
 - Problems affecting multiple users or systems
@@ -124,10 +124,9 @@ When in doubt → Use Simplified Template
 
 ## 🔗 Integration Points
 
-- **User Stories**: Links to `../user-stories/` for context
-- **Requirements**: References `../requirements/` for specifications
-- **Workflows**: Connects to `../workflows/` for process alignment
-- **Architecture**: May reference `../../architecture/` for technical context
+- **Product Requirements**: Links to [../product/](../product/) for business requirements and development plans
+- **Architecture**: May reference [../architecture/](../architecture/) for technical context
+- **Templates**: Uses [../templates/](../templates/) for document consistency
 
 ## 📊 Metrics and Reporting
 
@@ -140,17 +139,17 @@ Track backlog health with these metrics:
 
 ## 🚀 Getting Started (Solo Development)
 
-1. **Capture ideas** in `TODO.md`
-2. **Create detailed task file** in `tasks/` using simplified template (see Template Selection above)
-3. **Add reference** to `active/ready.md`
-4. **Start work** and update `active/in-progress.md`
+1. **Capture ideas** in [TODO.md](TODO.md)
+2. **Create detailed task file** in [tasks/](tasks/) using simplified template (see Template Selection above)
+3. **Add reference** to [active/ready.md](active/ready.md)
+4. **Start work** and update [active/in-progress.md](active/in-progress.md)
 5. **Track progress** in individual task file
 6. **Archive completed** task file when done
 
 ### Example Workflow for Distributed Systems Learning
-1. Add "implement load balancer" to `TODO.md`
-2. Create `tasks/TASK-003-nginx-load-balancer.md` with detailed requirements
-3. Reference it in `active/ready.md`
-4. Move reference to `active/in-progress.md` when starting
+1. Add "implement load balancer" to [TODO.md](TODO.md)
+2. Create [tasks/TASK-003-nginx-load-balancer.md](tasks/) with detailed requirements
+3. Reference it in [active/ready.md](active/ready.md)
+4. Move reference to [active/in-progress.md](active/in-progress.md) when starting
 5. Update task file daily with progress and learnings
-6. Move completed file to `archived/completed/` when done
+6. Move completed file to [archived/completed/](archived/completed/) when done

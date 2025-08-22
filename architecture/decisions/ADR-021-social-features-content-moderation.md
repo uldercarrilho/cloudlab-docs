@@ -60,7 +60,7 @@ The distributed e-commerce platform requires a robust social features system tha
 
 ## 5. Business Rules & Constraints
 
-**Business Rules (from BUSINESS-RULES-001-ecommerce-platform.md):**
+**Business Rules (from PRD-001-business-rules.md):**
 - **Review System**: Only verified purchasers can leave reviews, reviews within 90 days of delivery
 - **Review Rules**: Minimum 10 characters, maximum 1000 characters, 1-5 star rating scale
 - **Review Moderation**: Automatic filtering for inappropriate content, manual review for flagged content

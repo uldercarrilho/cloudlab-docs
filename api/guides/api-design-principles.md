@@ -1339,8 +1339,8 @@ func CacheControlMiddleware(next http.Handler) http.Handler {
 ```
 
 ## References
-- [ADR-006: API Communication Patterns](../ADR-006-api-communication-patterns.md)
-- [ADR-009: Security & Authentication Architecture](../ADR-009-security-authentication.md)
+- [ADR-006: API Communication Patterns](../../architecture/decisions/ADR-006-api-communication-patterns.md)
+- [ADR-009: Security & Authentication Architecture](../../architecture/decisions/ADR-009-security-authentication.md)
 - [REST API Design Best Practices](https://restfulapi.net/)
 - [GraphQL Best Practices](https://graphql.org/learn/best-practices/)
 - [gRPC Documentation](https://grpc.io/docs/)

@@ -365,9 +365,5 @@ The key is to start simple and gradually add complexity as needed, always keepin
 
 ## Related Concepts
 
-- [Message Queues](./message-queues.md)
-- [Event Sourcing](./event-sourcing.md)
-- [CQRS Pattern](./cqrs-pattern.md)
-- [Saga Pattern](./saga-pattern.md)
-- [Distributed Transactions](./distributed-transactions.md)
-- [Consistency Models](./consistency-models.md)
+- [Distributed Systems](./distributed-systems.md)
+- [Microservices](./microservices.md)

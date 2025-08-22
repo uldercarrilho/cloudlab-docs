@@ -59,7 +59,7 @@ Create an Architecture Decision Record (ADR) for business continuity and disaste
 - Incident response and business continuity testing
 
 ## Resources
-- [ADR Template](architecture/adrs/)
+- [ADR Template](../../architecture/decisions/)
 - [Business Continuity Planning](https://www.iso.org/standard/75106.html)
 - [Disaster Recovery Best Practices](https://aws.amazon.com/solutions/case-studies/disaster-recovery/)
 - [Multi-Region Failover](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/design-multi-region-architectures.html)

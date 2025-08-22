@@ -59,7 +59,7 @@ Create an Architecture Decision Record (ADR) for search engine and analytics tec
 - Analytics performance optimization and monitoring
 
 ## Resources
-- [ADR Template](architecture/adrs/)
+- [ADR Template](../../architecture/decisions/)
 - [Elasticsearch Documentation](https://www.elastic.co/guide/index.html)
 - [ClickHouse Documentation](https://clickhouse.com/docs/)
 - [Search Engine Optimization](https://www.elastic.co/guide/en/elasticsearch/guide/current/relevance-intro.html)

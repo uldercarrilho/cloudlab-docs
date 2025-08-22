@@ -59,7 +59,7 @@ Create an Architecture Decision Record (ADR) for CI/CD platforms and deployment 
 - DevOps practices and operational excellence
 
 ## Resources
-- [ADR Template](architecture/adrs/)
+- [ADR Template](../../architecture/decisions/)
 - [GitLab CI Documentation](https://docs.gitlab.com/ee/ci/)
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
 - [Blue-Green Deployment](https://martinfowler.com/bliki/BlueGreenDeployment.html)

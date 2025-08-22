@@ -56,7 +56,7 @@ Implement a comprehensive, event-driven order processing and fulfillment archite
 ## 5. Business Rules & Constraints
 > Rules that must always be true, plus any limitations.
 
-**Business Rules (from BUSINESS-RULES-001-ecommerce-platform.md):**
+**Business Rules (from PRD-001-business-rules.md):**
 - **Order Creation**: Minimum order value $5.00, maximum $10,000.00, maximum 50 items per order
 - **Customer Requirements**: Verified email, valid shipping address, payment method on file
 - **Inventory Rules**: Real-time updates, low stock alerts (< 10), out-of-stock products hidden
@@ -419,7 +419,7 @@ Implement a comprehensive, event-driven order processing and fulfillment archite
 ## 19. References & Resources
 
 ### 19.1 Related Documents
-- [Business Rules Document](../../business/backlog/BUSINESS-RULES-001-ecommerce-platform.md) - Defines order processing business requirements
+- [Business Rules Document](../../product/PRD-001-business-rules.md) - Defines order processing business requirements
 - [ADR-004: Data Storage & Consistency](ADR-004-data-storage-consistency-patterns.md) - Data consistency patterns
 - [ADR-005: Event Streaming](ADR-005-message-queue-event-streaming.md) - Event-driven architecture
 - [ADR-015: Compliance & Regulatory](ADR-015-compliance-regulatory-requirements.md) - Compliance requirements

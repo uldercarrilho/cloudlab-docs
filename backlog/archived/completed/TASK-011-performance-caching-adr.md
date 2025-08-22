@@ -59,7 +59,7 @@ Create an Architecture Decision Record (ADR) for performance optimization and ca
 - Performance monitoring and benchmarking
 
 ## Resources
-- [ADR Template](architecture/adrs/)
+- [ADR Template](../../architecture/decisions/)
 - [Redis Documentation](https://redis.io/documentation)
 - [CloudFlare Documentation](https://developers.cloudflare.com/)
 - [AWS CloudFront Documentation](https://docs.aws.amazon.com/cloudfront/)

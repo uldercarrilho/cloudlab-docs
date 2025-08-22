@@ -60,7 +60,7 @@ The distributed e-commerce platform requires a robust shipping and logistics sys
 
 ## 5. Business Rules & Constraints
 
-**Business Rules (from BUSINESS-RULES-001-ecommerce-platform.md):**
+**Business Rules (from PRD-001-business-rules.md):**
 - **Shipping Methods**: Standard (3-5 business days), Express (1-2 business days), Overnight (next business day)
 - **Shipping Costs**: Free shipping for orders over $50, flat rate for orders under $50
 - **International Shipping**: 7-14 business days with weight and destination-based pricing

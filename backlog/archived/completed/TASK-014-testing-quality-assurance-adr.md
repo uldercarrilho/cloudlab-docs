@@ -75,15 +75,15 @@ Create an Architecture Decision Record (ADR) for testing and quality assurance s
 - Go-specific testing patterns and best practices
 
 ## Resources
-- [ADR Template](architecture/adrs/)
+- [ADR Template](../../architecture/decisions/)
 - [Go Testing Package](https://golang.org/pkg/testing/)
 - [Testify Framework](https://github.com/stretchr/testify)
 - [GoMock Framework](https://github.com/golang/mock)
 - [Testing Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html)
 - [Performance Testing](https://www.oreilly.com/library/view/performance-testing-with/9781492053454/)
 - [Security Testing](https://owasp.org/www-project-web-security-testing-guide/)
-- [Business Rules Document](./BUSINESS-RULES-001-ecommerce-platform.md)
-- [Development Plan](./DEVELOPMENT-PLAN-001-distributed-ecommerce-platform.md)
+- [Business Rules Document](../../product/PRD-001-business-rules.md)
+- [Development Plan](../../product/PRD-002-development-plan.md)
 
 ## Dependencies
 - Understanding of Go testing concepts and methodologies

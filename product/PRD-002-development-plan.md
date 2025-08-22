@@ -527,7 +527,7 @@
 
 ### **11.1 Technical References**
 - [System Overview Document](../architecture/overview/system-overview.md)
-- [Business Rules Document](./BUSINESS-RULES-001-ecommerce-platform.md)
+- [Business Rules Document](./PRD-001-business-rules.md)
 - [Architecture Decision Records](../architecture/decisions/)
 - [API Documentation](../api/)
 - [Runbooks](../operations/runbooks/)

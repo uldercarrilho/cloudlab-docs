@@ -60,7 +60,7 @@ The distributed e-commerce platform requires a robust vendor management system t
 ## 5. Business Rules & Constraints
 > Rules that must always be true, plus any limitations.
 
-**Business Rules (from BUSINESS-RULES-001-ecommerce-platform.md):**
+**Business Rules (from PRD-001-business-rules.md):**
 - **Vendor Registration**: Business verification required (tax ID, business license, bank account)
 - **Commission Structure**: Electronics (8%), Clothing (12%), Books (15%), Digital (20%)
 - **Payout Schedule**: Weekly for >$1000 monthly sales, monthly for <$1000

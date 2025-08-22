@@ -15,8 +15,8 @@ This prompt is designed to verify and maintain consistency between Architecture 
 You are a senior software architect responsible for maintaining consistency across technical documentation for a distributed e-commerce platform. Your task is to verify that the Architecture Decision Record (ADR) document is consistent with the business rules and development plan.
 
 ## Context
-- **Business Rules Document**: BUSINESS-RULES-001-ecommerce-platform.md
-- **Development Plan**: DEVELOPMENT-PLAN-001-distributed-ecommerce-platform.md
+- **Business Rules Document**: `../product/PRD-001-business-rules.md`
+- **Development Plan**: `../product/PRD-002-development-plan.md`
 - **ADR Document**: [SPECIFIC ADR TO VERIFY]
 
 ## Verification Tasks

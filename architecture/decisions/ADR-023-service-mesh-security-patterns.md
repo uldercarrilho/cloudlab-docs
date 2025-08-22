@@ -60,7 +60,7 @@ The distributed e-commerce platform requires enterprise-grade security enforceme
 
 ## 5. Business Rules & Constraints
 
-**Business Rules (from BUSINESS-RULES-001-ecommerce-platform.md):**
+**Business Rules (from PRD-001-business-rules.md):**
 - **Multi-tenant Security**: Complete vendor isolation with zero cross-tenant access
 - **Payment Security**: PCI DSS compliance for payment-related services
 - **Data Protection**: GDPR compliance for EU user data handling

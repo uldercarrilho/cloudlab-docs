@@ -57,7 +57,7 @@ Create an Architecture Decision Record (ADR) for the container orchestration pla
 - ADR documentation best practices
 
 ## Resources
-- [ADR Template](architecture/adrs/)
+- [ADR Template](../../../architecture/decisions/)
 - [Kubernetes Documentation](https://kubernetes.io/docs/)
 - [Istio Service Mesh](https://istio.io/docs/)
 - [Container Orchestration Comparison](https://www.g2.com/categories/container-orchestration)
@@ -84,7 +84,7 @@ Create an Architecture Decision Record (ADR) for the container orchestration pla
 - 🔄 Next: Review and refine ADR content, add implementation details
 
 ### 2025-08-12 - Task Completed
-- ✅ ADR document finalized and saved to architecture/adrs/ADR-003-container-orchestration-service-mesh.md
+- ✅ ADR document finalized and saved to ../architecture/decisions/ADR-003-container-orchestration-service-mesh.md
 - ✅ All acceptance criteria met
 - ✅ Decision matrix with weighted criteria completed
 - ✅ Implementation roadmap and risk assessment documented

@@ -60,7 +60,7 @@ The distributed e-commerce platform requires comprehensive distributed tracing t
 
 ## 5. Business Rules & Constraints
 
-**Business Rules (from BUSINESS-RULES-001-ecommerce-platform.md):**
+**Business Rules (from PRD-001-business-rules.md):**
 - **Performance Requirements**: Sub-200ms response times for critical operations
 - **Availability Requirements**: 99.9% system uptime
 - **Compliance Requirements**: Audit trail for all business operations

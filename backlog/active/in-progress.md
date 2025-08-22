@@ -19,7 +19,7 @@ When you start a task:
 ### Example Format
 ```markdown
 ## Currently Working On
-- **[TASK-001](../tasks/TASK-001-example-microservice-setup.md)** 
+- **[TASK-003](../tasks/TASK-003-container-orchestration-adr.md)** 
   - Started: 2024-01-15
   - Progress: 60% complete
   - Next: Configure API Gateway routing

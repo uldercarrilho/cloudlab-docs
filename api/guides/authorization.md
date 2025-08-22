@@ -629,7 +629,7 @@ func TestAuthorizationMiddleware(t *testing.T) {
 ```
 
 ## References
-- [ADR-009: Security & Authentication Architecture](../ADR-009-security-authentication.md)
+- [ADR-009: Security & Authentication Architecture](../../architecture/decisions/ADR-009-security-authentication.md)
 - [RBAC Implementation Guide](https://en.wikipedia.org/wiki/Role-based_access_control)
 - [ABAC Implementation Guide](https://en.wikipedia.org/wiki/Attribute-based_access_control)
 - [OAuth 2.0 Authorization](https://oauth.net/2/)

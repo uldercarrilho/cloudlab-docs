@@ -55,7 +55,7 @@ Implement a comprehensive user management and authentication architecture for th
 ## 5. Business Rules & Constraints
 > Rules that must always be true, plus any limitations.
 
-**Business Rules (from BUSINESS-RULES-001-ecommerce-platform.md):**
+**Business Rules (from PRD-001-business-rules.md):**
 - **Customer Registration**: Email must be unique, password complexity requirements, email verification required
 - **Vendor Registration**: Business verification required (tax ID, business license, bank account), vendor agreement acceptance
 - **Authentication**: JWT tokens expire after 24 hours, refresh tokens valid for 30 days, maximum 5 concurrent sessions
@@ -390,7 +390,7 @@ Implement a comprehensive user management and authentication architecture for th
 ## 18. References & Resources
 
 ### 18.1 Related Documents
-- [Business Rules Document](../../business/backlog/BUSINESS-RULES-001-ecommerce-platform.md) - Defines user management business requirements
+- [Business Rules Document](../../product/PRD-001-business-rules.md) - Defines user management business requirements
 - [ADR-009: Security & Authentication](ADR-009-security-authentication.md) - Security architecture decisions
 - [ADR-018: Vendor Management](ADR-018-vendor-management-architecture.md) - Vendor-specific user management
 - [ADR-015: Compliance & Regulatory](ADR-015-compliance-regulatory-requirements.md) - Compliance requirements

@@ -135,6 +135,6 @@ func TestJWTGeneration(t *testing.T) {
 ```
 
 ## References
-- [ADR-009: Security & Authentication Architecture](../ADR-009-security-authentication.md)
+- [ADR-009: Security & Authentication Architecture](../../architecture/decisions/ADR-009-security-authentication.md)
 - [JWT RFC 7519](https://tools.ietf.org/html/rfc7519)
 - [OAuth 2.0 Specification](https://oauth.net/2/)
