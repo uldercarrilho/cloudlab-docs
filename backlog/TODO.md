@@ -21,6 +21,16 @@
 
 ### 🔧 Technical Debt
 <!-- Add technical improvements here -->
+- [ ] [INFRASTRUCTURE] Kafka Production Readiness Enhancements
+  - Context: Current Kafka setup is optimized for development but needs production-ready configurations
+  - Impact: Improves system reliability, fault tolerance, and scalability for distributed messaging
+  - Notes: Based on log analysis - need to implement clustering, replication, monitoring, and performance optimizations
+- [ ] [INFRASTRUCTURE] Review docker-compose.yml
+  - Context: Current docker-compose setup is `restart: no`, but it's better to setup as `restart: unless-stopped`
+  - Notes: I changed it because I was testing the deployment
+- [ ] [INFRASTRUCTURE] Review security on docker-compose services
+  - Context: As a workaround to fix some issues on login of ElasticSearch, Kibana, and Portainer, I changed the settings
+  - Notes: It's important to review the settings for development and production environment
 
 ### 📚 Documentation
 <!-- Add documentation tasks here -->
