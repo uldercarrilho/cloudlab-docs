@@ -14,7 +14,19 @@
 **Dependencies**: None (foundation task)  
 **Ready**: ✅ All requirements defined, architecture planned, implementation steps clear
 
+#### ⚡ [TASK-019: Kafka Production Readiness Enhancements](../tasks/TASK-019-kafka-production-readiness.md)
+**Priority**: High | **Effort**: 2-3 days | **Phase**: Infrastructure  
+**Description**: Enhance Kafka setup for production with clustering, monitoring, and performance optimizations  
+**Dependencies**: Current Kafka development setup (running and healthy)  
+**Ready**: ✅ Based on log analysis, requirements defined, implementation steps clear
+
 ### Medium Priority
+
+#### 🐘 [TASK-020: PostgreSQL Configuration Improvements for Production Readiness](../tasks/TASK-020-postgresql-configuration-improvements.md)
+**Priority**: Medium | **Effort**: 1-2 days | **Phase**: Infrastructure  
+**Description**: Improve PostgreSQL configuration based on log analysis to address minor issues and enhance production readiness  
+**Dependencies**: Current PostgreSQL setup (running and healthy)  
+**Ready**: ✅ Based on log analysis, configuration issues identified, implementation approach defined
 
 ### Low Priority  
 
@@ -25,6 +37,8 @@
 | Task ID | Title | Priority | Effort | Type | Status |
 |---------|-------|----------|--------|------|--------|
 | TASK-018 | Docker Compose Development Environment | Critical | 3 days | Infrastructure | Ready |
+| TASK-019 | Kafka Production Readiness Enhancements | High | 2-3 days | Infrastructure | Ready |
+| TASK-020 | PostgreSQL Configuration Improvements for Production Readiness | Medium | 1-2 days | Infrastructure | Ready |
 
 ---
 
@@ -38,14 +52,14 @@
 
 ## 📊 Ready Queue Health
 
-- **Total Ready Tasks**: 1
-- **High Priority**: 1
-- **Medium Priority**: 0
+- **Total Ready Tasks**: 3
+- **High Priority**: 2
+- **Medium Priority**: 1
 - **Low Priority**: 0
 - **Average Age**: 0 days (recently created)
-- **Total Effort**: 3 days
-- **High Priority Effort**: 3 days
-- **Medium Priority Effort**: 0 days
+- **Total Effort**: 6-8 days
+- **High Priority Effort**: 5-6 days
+- **Medium Priority Effort**: 1-2 days
 - **Low Priority Effort**: 0 days
 
 ## 🤖 AI Agent Instructions
