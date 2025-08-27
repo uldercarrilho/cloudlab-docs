@@ -1,155 +1,238 @@
 # Backlog Management
 
-📋 **Structured backlog management system for AI-assisted task execution and project planning.**
+📋 **Simplified backlog management system for AI-assisted task execution.**
 
-This directory contains the backlog management structure designed to work seamlessly with AI agents for automated task execution and project coordination.
+This directory contains a streamlined backlog structure designed for efficient AI agent task management and execution.
 
 ## 📁 Structure
 
 ```
 backlog/
-├── README.md                    # This file - backlog management guide
-├── TODO.md                      # Raw notes and ideas for refinement
-├── tasks/                       # Individual task files (refined tasks)
-│   ├── README.md                # Task file management guide
-│   ├── TASK-001-example-microservice-setup.md
-│   ├── TASK-002-example-distributed-database.md
+├── README.md                    # This file - AI agent instructions
+├── TODO.md                      # Raw ideas and notes (HUMAN ONLY - DO NOT TOUCH)
+├── tasks/                       # Tasks waiting for review and refinement
+│   ├── TASK-001-example.md
+│   ├── TASK-002-example.md
 │   └── ...                      # Additional task files
-├── active/                      # Current work tracking
-│   ├── ready.md                 # References to available tasks
-│   ├── in-progress.md           # Current work (solo development)
-│   └── blocked.md               # Blocked tasks (if any)
-├── archived/                    # Completed and cancelled items
-│   ├── README.md                # Archive management
-│   ├── completed/               # Successfully completed task files
-│   └── cancelled/               # Cancelled or obsolete task files
-└── templates/                   # Task templates for consistency
-    ├── task-template.md         # Comprehensive task template
-    ├── task-template-simplified.md # Simplified template (recommended)
-    └── bug-template.md          # Bug report template
+├── active/                      # Tasks ready for execution
+│   └── [task files moved here when ready]
+├── completed/                   # Successfully completed tasks
+│   └── [completed task files]
+├── canceled/                    # Cancelled or obsolete tasks
+│   └── [cancelled task files]
+└── templates/                   # Task creation templates
+    ├── task-template.md
+    ├── task-template-simplified.md
+    └── bug-template.md
 ```
 
-## 🤖 AI Agent Integration
+## 🤖 AI Agent Instructions
 
-This backlog structure is designed for AI agents to:
+### **CRITICAL RULES**
+- ❌ **NEVER modify `TODO.md`** - This is human responsibility only
+- ✅ **ALWAYS use task templates** from `templates/` when creating new tasks
+- ✅ **Follow the task lifecycle** strictly as defined below
+- ✅ **Update task status** by moving files between directories
 
-1. **Parse and understand** task priorities and dependencies
-2. **Execute tasks** by following structured templates
-3. **Update status** across different backlog states
-4. **Track progress** and maintain task history
-5. **Generate reports** on backlog health and velocity
-
-### AI Agent Usage Patterns
-
-- **Task Pickup**: AI agents scan [active/ready.md](active/ready.md) for available tasks by priority
-- **Status Updates**: Update task files and move references between [ready.md](active/ready.md) → [in-progress.md](active/in-progress.md) → [archived/completed/](archived/completed/)
-- **Dependency Management**: Check [blocked.md](active/blocked.md) and task file dependencies
-- **Progress Tracking**: Update individual task files with daily progress logs
-
-## 📝 Task Lifecycle (Solo Development)
+### **Task Lifecycle for AI Agents**
 
 ```mermaid
-graph TD
-    A["TODO.md<br/>Raw Ideas"] --> B["Refinement Process"]
-    B --> C["tasks/<br/>Individual Task Files"]
-    C --> D["active/ready.md<br/>References"]
-    D --> E["active/in-progress.md<br/>Current Work"]
-    E --> F["archived/completed/<br/>Done"]
-    E --> G["active/blocked.md<br/>Blocked"]
-    G --> E
-    C --> H["archived/cancelled/<br/>Cancelled"]
+graph LR
+    A[tasks/] --> B[active/]
+    B --> C[completed/]
+    B --> D[canceled/]
+    
+    A -.->|Review & Refine| A
+    B -.->|Move back if issues| A
 ```
 
-## 🏷️ Task States
+#### **1. Task Review Phase (`tasks/` directory)**
+- **Purpose**: Tasks waiting for review, refinement, or dependency resolution
+- **AI Agent Actions**:
+  - Review task requirements and dependencies
+  - Refine task descriptions if needed
+  - Check if prerequisites are met
+  - Move to `active/` when ready for execution
 
-| State | Location | Description |
-|-------|----------|-------------|
-| **Raw** | [TODO.md](TODO.md) | Unrefined ideas and notes |
-| **Refined** | [tasks/TASK-XXX-*.md](tasks/) | Detailed task files ready for work |
-| **Ready** | [active/ready.md](active/ready.md) | References to available tasks |
-| **In Progress** | [active/in-progress.md](active/in-progress.md) | Current work (solo development) |
-| **Blocked** | [active/blocked.md](active/blocked.md) | Waiting on dependencies |
-| **Completed** | [archived/completed/](archived/completed/) | Successfully finished task files |
-| **Cancelled** | [archived/cancelled/](archived/cancelled/) | No longer needed task files |
+#### **2. Execution Phase (`active/` directory)**
+- **Purpose**: Tasks currently being worked on
+- **AI Agent Actions**:
+  - Execute the task according to specifications
+  - Update task file with progress logs
+  - Move to `completed/` when finished
+  - Move to `canceled/` if task becomes obsolete
 
-## 🎯 Best Practices
+#### **3. Completion Phase (`completed/` directory)**
+- **Purpose**: Successfully finished tasks
+- **AI Agent Actions**:
+  - Ensure all acceptance criteria are met
+  - Update final status and completion date
+  - Archive for future reference
 
-### For Human Contributors
-1. **Start with TODO.md** for quick idea capture
-2. **Refine regularly** by creating detailed task files
-3. **Use templates** for consistent task structure (see Template Selection below)
-4. **Update status** when working on tasks
-5. **Archive completed work** for historical reference
+#### **4. Cancellation Phase (`canceled/` directory)**
+- **Purpose**: Tasks that are no longer needed
+- **AI Agent Actions**:
+  - Document reason for cancellation
+  - Update task file with cancellation details
+  - Archive for historical reference
 
-### For AI Agents
-1. **Check dependencies** before starting tasks
-2. **Follow templates** for consistent output
-3. **Update status frequently** to maintain accuracy
-4. **Link related tasks** for better context
-5. **Generate summaries** of completed work
+### **AI Agent Workflow**
 
-## 📝 Template Selection Guide
+#### **Starting a New Task**
+1. **Check `active/` directory** for current workload
+2. **Select task from `tasks/`** based on priority and dependencies
+3. **Review task file** thoroughly before starting
+4. **Move task file** from `tasks/` to `active/`
+5. **Begin execution** following task specifications
 
-### When to Use Each Template
+#### **During Task Execution**
+1. **Update progress** in task file
+2. **Document decisions** and technical approaches
+3. **Track time spent** and any blockers encountered
+4. **Update status** if task needs to move back to `tasks/`
 
-#### Simplified Template (Recommended for Solo Development)
-**Use [templates/task-template-simplified.md](../templates/task-template-simplified.md) for:**
-- Solo development and learning projects
-- Distributed systems experiments
-- Tasks under 3 days effort
-- When you want to focus on implementation over planning
-- AI-assisted development workflows
+#### **Completing a Task**
+1. **Verify all acceptance criteria** are met
+2. **Update task file** with final results and learnings
+3. **Move task file** from `active/` to `completed/`
+4. **Update any dependent tasks** if applicable
 
-#### Comprehensive Template  
-**Use [templates/task-template.md](../templates/task-template.md) for:**
-- Complex enterprise projects
-- Tasks requiring extensive stakeholder coordination
-- High-risk or high-impact initiatives
-- When detailed risk assessment is needed
-- Multi-team coordination required
+### **File Management Commands for AI Agents**
 
-#### Bug Template
-**Use [templates/bug-template.md](../templates/bug-template.md) for:**
-- Defect reporting and tracking
-- Issues requiring detailed reproduction steps
-- Problems affecting multiple users or systems
+#### **Moving Tasks Between States**
+```bash
+# Move task from review to active
+mv tasks/TASK-XXX-description.md active/
 
-### Template Selection Quick Decision Tree
+# Move task from active to completed
+mv active/TASK-XXX-description.md completed/
+
+# Move task from active to canceled
+mv active/TASK-XXX-description.md canceled/
+
+# Move task back to review (if issues found)
+mv active/TASK-XXX-description.md tasks/
 ```
-Is this a learning/solo project? → Yes → Use Simplified Template
-Is this complex/high-risk? → Yes → Use Comprehensive Template  
-Is this a bug/defect? → Yes → Use Bug Template
-When in doubt → Use Simplified Template
+
+#### **Creating New Tasks**
+1. **Read the `templates/README.md`** for detailed instructions on template usage and selection.
+2. **Choose the appropriate template** from the `templates/` directory based on task type and complexity.
+3. **Follow the naming convention**: `TASK-XXX-brief-description.md`
+4. **Place the new task file** in the `tasks/` directory for review.
+5. **Complete all required metadata and requirements** in the task file as specified in the template instructions.
+
+### **Task File Standards**
+
+#### **Required Sections**
+- **Title**: Clear, descriptive task name
+- **Priority**: High/Medium/Low based on business impact
+- **Effort Estimate**: Time estimate in hours/days
+- **Acceptance Criteria**: Specific, measurable completion criteria
+- **Dependencies**: Any prerequisites or blocking tasks
+- **Progress Log**: Daily updates during execution
+
+#### **Naming Convention**
+- Format: `TASK-XXX-brief-description.md`
+- Example: `TASK-025-development-standards-guidelines-audit-update.md`
+- Use descriptive names that clearly indicate task purpose
+
+### **Priority Guidelines**
+
+#### **High Priority**
+- Critical system functionality
+- Security vulnerabilities
+- Production blocking issues
+- High business impact features
+
+#### **Medium Priority**
+- Important enhancements
+- Performance improvements
+- Technical debt reduction
+- User experience improvements
+
+#### **Low Priority**
+- Nice-to-have features
+- Documentation updates
+- Code cleanup
+- Future planning items
+
+### **Dependency Management**
+
+#### **Before Starting a Task**
+1. **Check task dependencies** in the task file
+2. **Verify prerequisite tasks** are completed
+3. **Ensure required resources** are available
+4. **Move back to `tasks/`** if dependencies aren't met
+
+#### **Blocking Other Tasks**
+1. **Update dependent tasks** with current status
+2. **Communicate blockers** clearly in task file
+3. **Move dependent tasks** to `tasks/` if they're blocked
+
+### **Progress Tracking**
+
+#### **Daily Updates Required**
+- **Date**: Current date and time
+- **Time Spent**: Hours worked on task
+- **Progress**: What was accomplished
+- **Blockers**: Any issues encountered
+- **Next Steps**: Plan for next session
+
+#### **Example Progress Entry**
+```markdown
+## Progress Log
+
+### 2025-08-27 16:23:00
+- **Time Spent**: 4 hours
+- **Progress**: Implemented core authentication logic, added unit tests
+- **Blockers**: None
+- **Next Steps**: Integrate with database layer, add integration tests
 ```
 
-## 🔗 Integration Points
+### **Quality Assurance**
 
-- **Product Requirements**: Links to [../product/](../product/) for business requirements and development plans
-- **Architecture**: May reference [../architecture/](../architecture/) for technical context
-- **Templates**: Uses [../templates/](../templates/) for document consistency
+#### **Before Marking Complete**
+- [ ] All acceptance criteria met
+- [ ] Code follows project standards
+- [ ] Tests (if implemented) pass successfully
+- [ ] Documentation updated
+- [ ] No known issues remain
 
-## 📊 Metrics and Reporting
+#### **Task File Validation**
+- [ ] Proper template used
+- [ ] All required sections filled
+- [ ] Clear acceptance criteria
+- [ ] Realistic effort estimates
+- [ ] Dependencies identified
 
-Track backlog health with these metrics:
-- **Velocity**: Tasks completed per time period
-- **Cycle Time**: Time from ready to completed
-- **Blocked Ratio**: Percentage of tasks blocked
-- **Priority Distribution**: Balance of high/medium/low priority items
-- **Age Analysis**: How long tasks stay in each state
+### **Error Handling**
 
-## 🚀 Getting Started (Solo Development)
+#### **Common Issues and Solutions**
+1. **Task file corrupted**: Restore from git history
+2. **Missing dependencies**: Move task back to `tasks/` directory
+3. **Scope creep**: Update task file and re-estimate effort
+4. **Technical blockers**: Document issue and move to `tasks/` for review
 
-1. **Capture ideas** in [TODO.md](TODO.md)
-2. **Create detailed task file** in [tasks/](tasks/) using simplified template (see Template Selection above)
-3. **Add reference** to [active/ready.md](active/ready.md)
-4. **Start work** and update [active/in-progress.md](active/in-progress.md)
-5. **Track progress** in individual task file
-6. **Archive completed** task file when done
+---
 
-### Example Workflow for Distributed Systems Learning
-1. Add "implement load balancer" to [TODO.md](TODO.md)
-2. Create [tasks/TASK-003-nginx-load-balancer.md](tasks/) with detailed requirements
-3. Reference it in [active/ready.md](active/ready.md)
-4. Move reference to [active/in-progress.md](active/in-progress.md) when starting
-5. Update task file daily with progress and learnings
-6. Move completed file to [archived/completed/](archived/completed/) when done
+## 🚀 Quick Start for AI Agents
+
+1. **Check current workload** in `active/` directory
+2. **Select next task** from `tasks/` directory
+3. **Review requirements** thoroughly before starting
+4. **Move to `active/`** when ready to begin
+5. **Update progress** during execution
+6. **Move to `completed/`** when finished
+7. **Repeat** with next available task
+
+## 📝 Important Notes
+
+- **Human responsibility**: `TODO.md` is maintained by humans only
+- **AI responsibility**: All task execution and status management
+- **File movement**: Use git commands to move files between directories
+- **Documentation**: Keep task files updated with current status
+- **Quality**: Ensure high standards before marking tasks complete
+
+---
+
+**Remember**: This system is designed for efficiency and clarity. Follow the lifecycle strictly and maintain accurate status information for optimal project management.
