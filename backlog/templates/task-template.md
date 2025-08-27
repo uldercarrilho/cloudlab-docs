@@ -47,6 +47,28 @@ Clear, specific, testable criteria that define when this task is complete:
 - **Integration requirements**: APIs, services, databases involved
 - **Scalability needs**: Expected load and growth considerations
 
+### 🔄 Technology Version Requirements
+**MANDATORY**: All technologies must use the latest stable versions compatible with project requirements.
+
+#### Version Selection Process
+1. **Research Latest Versions**: For each technology used, verify current stable release:
+   - Check official websites and documentation
+   - Review release notes for breaking changes
+   - Verify compatibility with existing systems
+   - Confirm security patches are included
+
+2. **Document Version Choices**:
+   - **Exact version numbers** (e.g., "PostgreSQL 16.6, Go 1.23.4")
+   - **Selection rationale** (why this version vs. others)
+   - **Compatibility validation** (tested with existing systems)
+   - **Security considerations** (latest patches included)
+
+3. **Validate Compatibility**:
+   - ✅ Check against existing ADRs and architectural decisions
+   - ✅ Verify no conflicts with current system components
+   - ✅ Test in development environment before production
+   - ✅ Ensure all dependencies support the chosen versions
+
 ### Dependencies
 - **Prerequisites**: What must be completed before this task
 - **Blocking dependencies**: External factors that could delay this
@@ -79,6 +101,7 @@ Clear, specific, testable criteria that define when this task is complete:
 - **Contingency plans**: Backup approaches if primary approach fails
 
 ### Definition of Done
+- [ ] All technologies use latest stable compatible versions (documented)
 - [ ] Code is written and follows coding standards
 - [ ] Code review is completed and approved
 - [ ] All tests are written and passing
@@ -134,6 +157,7 @@ Before creating a task file from TODO items:
 - [ ] Task title is clear and descriptive
 - [ ] Business value is articulated
 - [ ] Acceptance criteria are specific and testable
+- [ ] Technology versions are specified and current
 - [ ] Dependencies are identified
 - [ ] Effort is estimated
 - [ ] Risks are assessed

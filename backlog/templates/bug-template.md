@@ -28,6 +28,14 @@
 **Database Version**: If applicable
 **Server Environment**: If applicable
 
+### 🔄 Version Tracking for Bug Analysis
+**CRITICAL**: Document exact versions to aid in bug investigation and resolution:
+- **Framework/Runtime Versions**: (e.g., Go 1.23.4, Node.js 20.10.0)
+- **Database Versions**: (e.g., PostgreSQL 16.6, Redis 7.4.0)
+- **Infrastructure Versions**: (e.g., Kubernetes 1.31.3, Docker 27.0.0)
+- **Dependency Versions**: List key dependencies and their versions
+- **Last Known Working Versions**: If bug is a regression, note previous working versions
+
 ### Bug Description
 
 #### What Happened
@@ -161,11 +169,18 @@ If specific test data is needed to reproduce:
 - Configuration updates needed
 - Testing approach
 
+#### Version Upgrade Considerations
+- **Version Update Required**: Does fixing this bug require upgrading any components?
+- **Latest Version Benefits**: Could upgrading to latest stable versions resolve this issue?
+- **Breaking Changes**: What breaking changes exist in newer versions?
+- **Migration Path**: What's the migration strategy for version upgrades?
+
 #### Impact Assessment
 - Risk of the proposed fix
 - Other areas that might be affected
 - Regression testing needed
 - Deployment considerations
+- Version compatibility implications
 
 #### Timeline
 - Estimated time to fix
@@ -194,6 +209,7 @@ Areas to test to ensure the fix doesn't break other functionality:
 
 ### Definition of Done
 - [ ] Root cause identified and documented
+- [ ] Technology versions verified and updated if needed for fix
 - [ ] Fix implemented and code reviewed
 - [ ] Unit tests written/updated
 - [ ] Integration tests passing
@@ -227,9 +243,11 @@ Priority should consider:
 
 ### Automated Bug Analysis
 AI agents can help with:
+- **Version Analysis**: Check if bug is related to specific versions or version mismatches
 - **Pattern recognition**: Identify similar bugs or patterns
 - **Impact assessment**: Analyze user and business impact
 - **Root cause suggestions**: Suggest potential causes based on symptoms
+- **Update Recommendations**: Identify if latest versions contain fixes for similar issues
 - **Test case generation**: Create comprehensive test cases
 - **Documentation**: Ensure all required information is captured
 

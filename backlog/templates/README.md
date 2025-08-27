@@ -104,10 +104,12 @@ This directory contains various task templates designed to help create well-stru
 6. **Complete all quality gates** and validation steps
 
 ### Best Practices
+- **Verify technology versions FIRST** - Always check for latest stable versions before implementation
 - **Use templates consistently** across similar task types
 - **Fill all relevant sections** - don't skip unless truly not applicable
 - **Update progress regularly** with timestamps and clear descriptions
 - **Document decisions and learnings** throughout execution
+- **Document version choices and rationale** for all technologies used
 - **Validate against quality gates** before proceeding
 - **Capture insights** for future reference and learning
 
@@ -117,6 +119,34 @@ This directory contains various task templates designed to help create well-stru
 - **Modify criteria** to match your specific context
 - **Update metrics** to align with your goals
 - **Adapt language** for your team and organization
+
+---
+
+## 🔄 Technology Version Requirements
+
+### Critical Version Management Policy
+All templates now include **mandatory version checking requirements**:
+
+#### Before Any Implementation:
+1. **Verify Latest Versions**: Check official sources for the latest stable versions of all technologies
+2. **Assess Compatibility**: Ensure new versions work with existing project components and ADRs
+3. **Document Choices**: Record exact versions and rationale for selection
+4. **Test in Development**: Validate version compatibility in development environment
+
+#### Key Technology Sources:
+- **Kubernetes**: https://kubernetes.io/releases/
+- **Go**: https://golang.org/dl/
+- **Docker**: https://docs.docker.com/engine/release-notes/
+- **PostgreSQL**: https://www.postgresql.org/versions/
+- **Redis**: https://redis.io/downloads
+- **Node.js**: https://nodejs.org/en/download/releases/
+
+#### Selection Criteria (Priority Order):
+1. **Latest Stable Release** (never use beta/alpha in production)
+2. **Security Updates** (prioritize versions with latest security patches)
+3. **LTS Support** (prefer Long-Term Support versions for production)
+4. **Breaking Changes Assessment** (understand migration requirements)
+5. **Ecosystem Compatibility** (ensure compatibility with other components)
 
 ---
 

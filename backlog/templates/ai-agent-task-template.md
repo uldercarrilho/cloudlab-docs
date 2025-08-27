@@ -78,9 +78,44 @@ Clear, specific, testable criteria that define when this task is complete:
 
 ### Technical Approach
 - **Technology Choices**: What tools/frameworks to use and why
+- **Version Requirements**: MUST use latest stable versions compatible with project requirements
 - **Implementation Strategy**: High-level approach and methodology
 - **Architecture Considerations**: How this fits into existing systems
 - **Alternative Approaches**: What other solutions were considered
+
+### 🔄 Technology Version Requirements
+**CRITICAL**: Always use the latest stable versions of all technologies. Follow this process:
+
+#### Version Verification Process
+1. **Check Current Versions**: For each technology, verify the latest stable version:
+   - **Kubernetes**: Check https://kubernetes.io/releases/ for latest stable release
+   - **Go**: Check https://golang.org/dl/ for latest stable version
+   - **Docker**: Check https://docs.docker.com/engine/release-notes/ for latest stable
+   - **PostgreSQL**: Check https://www.postgresql.org/versions/ for current major version
+   - **Redis**: Check https://redis.io/downloads for latest stable release
+   - **Node.js**: Check https://nodejs.org/en/download/releases/ for LTS version
+   - **Other technologies**: Check official documentation/release pages
+
+2. **Compatibility Assessment**: Before selecting versions:
+   - ✅ Review existing ADRs for any version constraints
+   - ✅ Check project requirements for compatibility needs
+   - ✅ Verify dependencies work with latest versions
+   - ✅ Ensure no breaking changes affect current architecture
+   - ✅ Test in development environment if major version change
+
+3. **Version Documentation**: Document chosen versions:
+   - **Exact version numbers** (e.g., Kubernetes 1.31.3, Go 1.23.4)
+   - **Rationale** for version selection
+   - **Compatibility notes** with existing systems
+   - **Migration considerations** if upgrading
+
+#### Version Selection Criteria (in order of priority):
+1. **Latest Stable Release**: Always prefer latest stable over beta/alpha
+2. **Security Updates**: Prioritize versions with latest security patches
+3. **LTS Support**: For production systems, prefer LTS versions when available
+4. **Breaking Changes**: Assess impact of breaking changes vs. benefits
+5. **Ecosystem Compatibility**: Ensure version works with other technologies
+6. **Performance Improvements**: Consider performance gains in new versions
 
 ### Implementation Steps
 1. **Step 1**: Specific action with clear deliverable
@@ -104,6 +139,12 @@ Clear, specific, testable criteria that define when this task is complete:
 - **YYYY-MM-DD HH:MM:SS**: Decision made - Reasoning
 - **YYYY-MM-DD HH:MM:SS**: Alternative considered - Why rejected
 - **YYYY-MM-DD HH:MM:SS**: Architecture choice - Trade-offs
+
+### Technology Version Log
+<!-- Document all technology versions used and rationale -->
+- **Technology 1**: Version X.Y.Z - Selected because [reason] - Checked on YYYY-MM-DD
+- **Technology 2**: Version X.Y.Z - Selected because [reason] - Checked on YYYY-MM-DD
+- **Dependencies**: List all major dependencies with their versions
 
 ### Alternative Analysis
 <!-- Document what other approaches were considered -->
@@ -138,6 +179,7 @@ Clear, specific, testable criteria that define when this task is complete:
 
 ### Quality Gates
 <!-- Built-in validation checkpoints -->
+- [ ] **Version Verification**: Latest compatible versions confirmed and documented
 - [ ] **Design Review**: Architecture approach validated
 - [ ] **Implementation Review**: Code quality and standards met
 - [ ] **Testing Review**: All tests passing and coverage adequate
@@ -206,6 +248,7 @@ Clear, specific, testable criteria that define when this task is complete:
 ## ✅ Definition of Done
 
 ### Core Completion Criteria
+- [ ] **Version Compliance**: All technologies use latest stable compatible versions
 - [ ] **Functionality**: Core functionality implemented and working
 - [ ] **Testing**: All tests written and passing
 - [ ] **Code Quality**: Code follows coding standards and best practices
@@ -275,17 +318,28 @@ Clear, specific, testable criteria that define when this task is complete:
 
 ### Best Practices for AI Agents
 1. **Start with Planning**: Complete the overview and strategy sections first
-2. **Update Progress Regularly**: Log progress at least daily or per major milestone
-3. **Document Everything**: Capture decisions, alternatives, and learnings
-4. **Validate Continuously**: Use quality gates to ensure quality throughout
-5. **Think Architecturally**: Always consider distributed systems implications
-6. **Plan for Failure**: Consider what could go wrong and how to handle it
-7. **Focus on Learning**: Treat each task as a learning opportunity
+2. **Verify Technology Versions**: ALWAYS check for latest versions before implementation
+3. **Update Progress Regularly**: Log progress at least daily or per major milestone
+4. **Document Everything**: Capture decisions, alternatives, and learnings
+5. **Validate Continuously**: Use quality gates to ensure quality throughout
+6. **Think Architecturally**: Always consider distributed systems implications
+7. **Plan for Failure**: Consider what could go wrong and how to handle it
+8. **Focus on Learning**: Treat each task as a learning opportunity
+
+### Version Management Best Practices
+1. **Check Before Starting**: Verify latest versions during planning phase
+2. **Document Decisions**: Record why specific versions were chosen
+3. **Test Compatibility**: Validate new versions work with existing systems
+4. **Update Dependencies**: Ensure all dependencies are compatible
+5. **Monitor Security**: Stay aware of security updates and patches
+6. **Consider Stability**: Balance new features with system stability
+7. **Review ADRs**: Ensure version choices align with architectural decisions
 
 ### Quality Checklist
 Before marking a task complete:
 - [ ] All acceptance criteria are met
 - [ ] All quality gates are passed
+- [ ] Latest technology versions are verified and documented
 - [ ] Progress log is complete and up-to-date
 - [ ] Decision log captures all significant choices
 - [ ] Learning capture documents key insights

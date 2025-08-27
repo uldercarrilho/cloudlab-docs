@@ -34,9 +34,17 @@ Clear description of what needs to be accomplished and why this is valuable for 
 
 ## Technical Approach
 - **Technology choices**: What tools/frameworks to use
+- **Version requirements**: MUST use latest stable versions - check before implementation
 - **Implementation strategy**: High-level approach
 - **Architecture considerations**: How this fits into overall system
 - **Integration points**: What systems this connects to
+
+## 🔄 Version Check Requirements
+**CRITICAL**: Before starting implementation, verify and document:
+1. **Latest Stable Versions**: Check official sites for current releases
+2. **Compatibility**: Ensure versions work with existing project components
+3. **Security**: Confirm latest security patches are included
+4. **Document Choices**: Record exact versions and rationale (e.g., "Go 1.23.4 - latest stable with security fixes")
 
 ## Implementation Steps
 1. Step 1: Specific action
@@ -71,6 +79,7 @@ Clear description of what needs to be accomplished and why this is valuable for 
 - **Risk 2**: Description - *Mitigation: approach*
 
 ## Definition of Done
+- [ ] Latest compatible versions verified and documented
 - [ ] Core functionality implemented
 - [ ] Basic testing completed
 - [ ] Documentation updated
@@ -90,6 +99,7 @@ Clear description of what needs to be accomplished and why this is valuable for 
 ## 📝 Template Usage Notes
 
 ### For Solo Development
+- **Check versions FIRST**: Always verify latest technology versions before starting
 - Focus on learning objectives and practical experience
 - Keep scope manageable (1-3 days maximum)
 - Emphasize hands-on implementation over extensive planning

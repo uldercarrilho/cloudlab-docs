@@ -119,12 +119,18 @@ Complete these sections before starting execution:
    - Define success criteria
    - Identify business value and learning objectives
 
-2. **Architecture Planning**
+2. **Version Verification (MANDATORY)**
+   - Check latest stable versions of all technologies
+   - Document version choices and rationale
+   - Validate compatibility with existing systems
+   - Update Technology Version Log section
+
+3. **Architecture Planning**
    - Analyze distributed systems impact
    - Consider scalability and reliability implications
    - Plan integration approach
 
-3. **Implementation Planning**
+4. **Implementation Planning**
    - Define technical approach
    - Break down into implementation steps
    - Identify resource requirements
@@ -161,9 +167,10 @@ Complete these sections before starting execution:
 ## 🎯 Best Practices for AI Agents
 
 ### 1. Systematic Approach
+- **Verify versions FIRST** - Check latest technology versions before any implementation
 - **Follow the template structure** consistently
 - **Update progress regularly** (at least daily)
-- **Document everything** - decisions, alternatives, learnings
+- **Document everything** - decisions, alternatives, learnings, version choices
 - **Use quality gates** to ensure quality throughout
 
 ### 2. Architectural Thinking
@@ -183,6 +190,14 @@ Complete these sections before starting execution:
 - **Test thoroughly** - validate against all success criteria
 - **Document everything** - future you will thank you
 - **Consider edge cases** - what could go wrong?
+
+### 5. Version Management Excellence
+- **Always verify latest versions** before starting implementation
+- **Document version decisions** with clear rationale
+- **Test version compatibility** in development environment
+- **Monitor for security updates** throughout project lifecycle
+- **Balance stability vs. features** when selecting versions
+- **Keep ADRs updated** with version-related decisions
 
 ---
 
@@ -212,6 +227,11 @@ Complete these sections before starting execution:
 **Problem**: Focusing only on immediate functionality
 **Solution**: Always consider distributed systems implications
 **Check**: Architecture context sections should be comprehensive
+
+### 6. Skipping Version Verification
+**Problem**: Using outdated or unverified technology versions
+**Solution**: Always check latest stable versions before implementation starts
+**Check**: Technology Version Log should be complete with rationale
 
 ---
 
