@@ -19,6 +19,8 @@
 ### Description
 Create comprehensive GitHub Actions CI/CD pipeline templates for the distributed e-commerce platform's microservices architecture. The templates must support automated testing, building, security scanning, and deployment across multiple environments (development, staging, production) with proper orchestration for interdependent services.
 
+**Scope Update**: Due to the postponement of Kubernetes and Terraform infrastructure tasks (TASK-021 and TASK-022), this implementation will focus on Docker Compose-based deployment strategies for the development environment, with future cloud deployment capabilities to be added when infrastructure tasks are resumed.
+
 ### Business Value & Learning Objectives
 **Business Value:**
 - **Automated Quality Assurance**: Ensure consistent code quality across all microservices
@@ -30,15 +32,15 @@ Create comprehensive GitHub Actions CI/CD pipeline templates for the distributed
 - **CI/CD Patterns**: Master continuous integration and deployment patterns for microservices
 - **Pipeline Orchestration**: Learn to coordinate builds and deployments across multiple services
 - **Security Integration**: Implement security scanning and compliance checks in pipelines
-- **Multi-Environment Management**: Handle configuration and deployment across environments
+- **Container-Based Deployment**: Handle configuration and deployment with Docker Compose
 - **Distributed System Deployment**: Address challenges of deploying interconnected services
 
 ### Success Criteria
 - [ ] **Template Coverage**: Complete CI/CD templates for all 10+ microservices
-- [ ] **Environment Support**: Templates work across dev, staging, and production environments
+- [ ] **Environment Support**: Templates work with Docker Compose development environment
 - [ ] **Security Integration**: Security scanning, vulnerability detection, and compliance checks integrated
 - [ ] **Test Automation**: Unit tests, integration tests, and end-to-end tests automated
-- [ ] **Deployment Strategies**: Support for blue-green, canary, and rolling deployments
+- [ ] **Deployment Strategies**: Support for blue-green, canary, and rolling deployments with Docker Compose
 - [ ] **Service Dependencies**: Handle service interdependencies and deployment ordering
 - [ ] **Performance**: Build and deployment times under 10 minutes per service
 - [ ] **Documentation**: Comprehensive usage documentation and troubleshooting guides
@@ -50,14 +52,14 @@ Create comprehensive GitHub Actions CI/CD pipeline templates for the distributed
 ### Architectural Impact
 **System Architecture Considerations:**
 - **Microservices Independence**: Each service pipeline must be independently deployable
-- **Service Mesh Integration**: Pipelines must integrate with Istio service mesh deployment
+- **Container Orchestration**: Pipelines must integrate with Docker Compose deployment
 - **API Gateway Coordination**: Ensure API gateway configurations are updated with service deployments
 - **Database Migrations**: Coordinate database schema changes across services
 - **Event Stream Management**: Handle Kafka topic and schema evolution during deployments
 
 **Integration Points:**
-- **Container Registry**: Integration with Docker Hub/ECR for image management
-- **Kubernetes Clusters**: Deployment to EKS clusters across multiple regions
+- **Container Registry**: Integration with Docker Hub for image management
+- **Docker Compose Environment**: Deployment to Docker Compose development environment
 - **Monitoring Integration**: Automatic registration with Prometheus and Grafana
 - **Service Discovery**: Update service discovery registrations during deployments
 
@@ -69,8 +71,8 @@ Create comprehensive GitHub Actions CI/CD pipeline templates for the distributed
 - **Matrix Builds**: Support for multiple Go versions and target environments
 
 **Deployment Scalability:**
-- **Multi-Region Deployment**: Coordinate deployments across AWS regions
-- **Auto-Scaling Integration**: Ensure proper integration with Kubernetes HPA/VPA
+- **Multi-Environment Deployment**: Coordinate deployments across development, staging, and production environments
+- **Container Scaling**: Ensure proper integration with Docker Compose scaling capabilities
 - **Load Balancer Management**: Update load balancer configurations during deployments
 - **CDN Invalidation**: Coordinate CDN cache invalidation for static assets
 
@@ -108,7 +110,7 @@ Create comprehensive GitHub Actions CI/CD pipeline templates for the distributed
 **Technology Stack:**
 - **CI/CD Platform**: GitHub Actions with reusable workflows
 - **Containerization**: Docker multi-stage builds with BuildKit
-- **Orchestration**: Kubernetes with Helm charts for deployment
+- **Orchestration**: Docker Compose for local development and testing
 - **Security Scanning**: Snyk, Trivy, and GitHub Advanced Security
 - **Testing**: Go test framework, Testcontainers for integration tests
 - **Monitoring**: Prometheus, Grafana, and Jaeger integration
@@ -117,9 +119,9 @@ Create comprehensive GitHub Actions CI/CD pipeline templates for the distributed
 ```
 Trigger → Build → Test → Security → Package → Deploy → Validate
     ↓       ↓      ↓       ↓         ↓        ↓        ↓
-  Events   Unit   Lint    SAST     Docker   K8s      Health
-  Branch   Tests  Check   DAST     Build    Deploy   Checks
-  PR       Int.   Vuln.   SCA      Push     Helm     Metrics
+  Events   Unit   Lint    SAST     Docker   Docker   Health
+  Branch   Tests  Check   DAST     Build    Compose  Checks
+  PR       Int.   Vuln.   SCA      Push     Deploy   Metrics
   Tag      E2E    Scan    Secrets  Sign     Update   Validate
 ```
 
@@ -169,11 +171,11 @@ Trigger → Build → Test → Security → Package → Deploy → Validate
 **Deliverables:**
 - [ ] **Blue-Green Deployment**: Zero-downtime deployment strategy implementation
 - [ ] **Canary Deployment**: Gradual rollout with automated validation
-- [ ] **Rolling Updates**: Standard Kubernetes rolling update optimization
+- [ ] **Rolling Updates**: Standard Docker Compose rolling update optimization
 - [ ] **Feature Flags**: Integration with feature flag systems for controlled releases
 
 **Technical Tasks:**
-- Implement Kubernetes deployment strategies
+- Implement Docker Compose deployment strategies
 - Create automated health check validation
 - Set up traffic splitting and canary analysis
 - Integrate feature flag management
@@ -195,20 +197,25 @@ Trigger → Build → Test → Security → Package → Deploy → Validate
 
 #### Prerequisites
 - [ ] **GitHub Repository**: Access to main repository with Actions enabled
-- [ ] **AWS Access**: IAM roles and permissions for EKS, ECR, and other AWS services
-- [ ] **Kubernetes Access**: kubectl access to development, staging, and production clusters
+- [ ] **Docker Environment**: Docker and Docker Compose installed and configured
+- [ ] **Local Development**: Access to development environment with Docker Compose
 - [ ] **Security Tools**: API keys for Snyk, Trivy, and other security scanning tools
-- [ ] **Docker Registry**: Access to container registries (ECR, Docker Hub)
+- [ ] **Docker Registry**: Access to container registries (Docker Hub)
 
 #### Dependencies
-- [ ] **Kubernetes Manifests**: Requires completion of TASK-025 (Kubernetes manifests)
-- [ ] **Go Service Templates**: Requires completion of TASK-026 (Go service architecture templates)
-- [ ] **Infrastructure**: Terraform infrastructure from previous tasks must be deployed
+- [ ] **Go Service Templates**: Requires completion of TASK-024 (Go service architecture templates)
+- [ ] **Infrastructure**: Docker Compose development environment (TASK-018 completed)
 - [ ] **Monitoring Stack**: Prometheus and Grafana installation required
 
+#### Postponed Dependencies
+- ~~**Kubernetes Manifests**: TASK-021 (Kubernetes manifests) - Postponed (see canceled directory)~~
+- ~~**Terraform Infrastructure**: TASK-022 (Terraform Infrastructure as Code) - Postponed (see canceled directory)~~
+
+**Note**: Due to the postponement of Kubernetes and Terraform infrastructure tasks, this CI/CD pipeline will focus on Docker Compose-based deployment strategies for the development environment. Future iterations may include cloud deployment capabilities when infrastructure tasks are resumed.
+
 #### Tools & Environment
-- [ ] **Development Environment**: Local Docker, kubectl, and GitHub CLI setup
-- [ ] **Testing Environment**: Access to test clusters for pipeline validation
+- [ ] **Development Environment**: Local Docker, Docker Compose, and GitHub CLI setup
+- [ ] **Testing Environment**: Access to Docker Compose environment for pipeline validation
 - [ ] **Security Environment**: Integration with security scanning and compliance tools
 - [ ] **Monitoring Environment**: Access to observability stack for pipeline monitoring
 
@@ -261,7 +268,7 @@ Trigger → Build → Test → Security → Package → Deploy → Validate
 
 **Tool-Specific Learnings:**
 - [GitHub Actions specific optimizations and limitations]
-- [Kubernetes deployment automation insights]
+- [Docker Compose deployment automation insights]
 - [Security scanning tool integration patterns]
 
 ### Error Handling & Troubleshooting
@@ -438,6 +445,7 @@ Trigger → Build → Test → Security → Package → Deploy → Validate
 ## 🔄 Future Considerations
 
 ### Enhancements & Extensions
+- **Cloud Deployment Integration**: Add Kubernetes and cloud deployment capabilities when infrastructure tasks are resumed
 - **Advanced Deployment Strategies**: Implement progressive delivery patterns
 - **AI/ML Integration**: Add automated testing and deployment validation using ML
 - **Cross-Cloud Support**: Extend pipelines to support multi-cloud deployments
@@ -482,7 +490,7 @@ Trigger → Build → Test → Security → Package → Deploy → Validate
 
 ### Technical Documentation
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
-- [Kubernetes Deployment Strategies](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+- [Docker Compose Deployment Strategies](https://docs.docker.com/compose/production/)
 - [Docker Best Practices](https://docs.docker.com/develop/dev-best-practices/)
 - [Go Testing Framework](https://golang.org/doc/tutorial/add-a-test)
 
@@ -494,9 +502,11 @@ Trigger → Build → Test → Security → Package → Deploy → Validate
 - [Coding Standards](../development/guidelines/coding-standards-golang.md)
 
 ### Related Tasks
-- [TASK-021: Kubernetes Manifests](TASK-025-kubernetes-manifests-all-environments.md)
-- [TASK-024: Go Service Architecture Templates](TASK-026-go-service-architecture-templates.md)
-- [TASK-022: Terraform Infrastructure as Code](TASK-027-terraform-infrastructure-as-code.md)
+- [TASK-024: Go Service Architecture Templates](TASK-024-go-service-architecture-templates.md)
+
+### Postponed Tasks
+- ~~[TASK-021: Kubernetes Manifests](TASK-021-kubernetes-manifests-all-environments.md)~~ *(Postponed - see canceled directory)*
+- ~~[TASK-022: Terraform Infrastructure as Code](TASK-022-terraform-infrastructure-as-code.md)~~ *(Postponed - see canceled directory)*
 
 ---
 
