@@ -1002,17 +1002,38 @@ WHERE created_at >= NOW() - INTERVAL '1 hour';
 
 ## 🔗 Related Documents
 
-### Architecture Documents
+### **Core Development Standards**
+- [Comprehensive Coding Standards](coding-standards.md) - Database integration patterns
+- [Go Coding Standards](coding-standards-golang.md) - Go database implementation patterns
+- [Testing Guidelines](testing-guidelines.md) - Database testing strategies
+- [Code Review Guidelines](code-review-guidelines.md) - Database review criteria
+- [Error Handling Patterns](error-handling-patterns.md) - Database error handling
+
+### **API & Communication Standards**
+- [API Design Principles](../../api/guides/api-design-principles.md) - Database API patterns
+- [Authorization Guidelines](../../api/guides/authorization.md) - Database security patterns
+- [JWT Implementation](../../api/guides/jwt-implementation.md) - Database authentication
+- [OAuth 2.0 Setup](../../api/guides/oauth-setup.md) - Database OAuth integration
+- [Rate Limiting](../../api/guides/rate-limiting.md) - Database performance protection
+
+### **Infrastructure & Operations**
+- [Deployment Guidelines](deployment-guidelines.md) - Database deployment strategies
+- [Service Mesh Configuration](service-mesh-configuration-standards.md) - Database service mesh
+- [Monitoring & Observability](monitoring-observability-standards.md) - Database monitoring
+- [Performance Standards](performance-standards.md) - Database performance optimization
+
+### **Data & Event Management**
+- [Event Sourcing Guidelines](event-sourcing-guidelines.md) - Event store patterns
+- [Security Best Practices](security-best-practices.md) - Database security
+- [Mocking Strategy](mocking-strategy.md) - Database mocking for testing
+
+### **Architecture Documents**
 - [ADR-004: Data Storage & Consistency Patterns](../../architecture/decisions/ADR-004-data-storage-consistency-patterns.md)
 - [ADR-003: Container Orchestration & Service Mesh](../../architecture/decisions/ADR-003-container-orchestration-service-mesh.md)
 - [System Overview](../../architecture/overview/system-overview.md)
+- [Distributed Patterns](../../architecture/patterns/distributed-patterns.md)
 
-### Development Guidelines
-- [Go Coding Standards](coding-standards-golang.md)
-- [Testing Guidelines](testing-guidelines.md)
-- [Security Best Practices](security-best-practices.md)
-
-### Business Documents
+### **Business Documents**
 - [Business Rules](../../product/PRD-001-business-rules.md)
 - [Development Plan](../../product/PRD-002-development-plan.md)
 

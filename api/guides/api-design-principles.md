@@ -1338,9 +1338,39 @@ func CacheControlMiddleware(next http.Handler) http.Handler {
 }
 ```
 
-## References
+## Related Guidelines
+
+### **API & Communication Standards**
+- [Authorization Guidelines](authorization.md) - API security implementation
+- [JWT Implementation](jwt-implementation.md) - Token-based authentication
+- [OAuth 2.0 Setup](oauth-setup.md) - OAuth implementation patterns
+- [Rate Limiting](rate-limiting.md) - API protection and performance
+
+### **Core Development Standards**
+- [Comprehensive Coding Standards](../development/guidelines/coding-standards.md) - API coding patterns
+- [Go Coding Standards](../development/guidelines/coding-standards-golang.md) - Go API implementation
+- [Database Design Standards](../development/guidelines/database-design-standards.md) - API data patterns
+- [Testing Guidelines](../development/guidelines/testing-guidelines.md) - API testing strategies
+- [Code Review Guidelines](../development/guidelines/code-review-guidelines.md) - API review criteria
+
+### **Infrastructure & Operations**
+- [Deployment Guidelines](../development/guidelines/deployment-guidelines.md) - API deployment
+- [Service Mesh Configuration](../development/guidelines/service-mesh-configuration-standards.md) - API service mesh
+- [Monitoring & Observability](../development/guidelines/monitoring-observability-standards.md) - API monitoring
+- [Performance Standards](../development/guidelines/performance-standards.md) - API performance
+
+### **Security & Compliance**
+- [Security Best Practices](../development/guidelines/security-best-practices.md) - API security
+- [Error Handling Patterns](../development/guidelines/error-handling-patterns.md) - API error handling
+- [Mocking Strategy](../development/guidelines/mocking-strategy.md) - API mocking
+
+### **Architecture References**
 - [ADR-006: API Communication Patterns](../../architecture/decisions/ADR-006-api-communication-patterns.md)
 - [ADR-009: Security & Authentication Architecture](../../architecture/decisions/ADR-009-security-authentication.md)
+- [System Overview](../../architecture/overview/system-overview.md) - API architecture
+- [Distributed Patterns](../../architecture/patterns/distributed-patterns.md) - API patterns
+
+### **External References**
 - [REST API Design Best Practices](https://restfulapi.net/)
 - [GraphQL Best Practices](https://graphql.org/learn/best-practices/)
 - [gRPC Documentation](https://grpc.io/docs/)

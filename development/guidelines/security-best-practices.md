@@ -1,7 +1,35 @@
-# Security Best Practices Guide
+# Security Best Practices for Distributed Systems
+
+## Table of Contents
+1. [Overview](#overview)
+2. [Core Security Principles](#core-security-principles)
+3. [Authentication & Authorization](#authentication--authorization)
+4. [Data Protection](#data-protection)
+5. [Network Security](#network-security)
+6. [Application Security](#application-security)
+7. [Compliance & Governance](#compliance--governance)
+8. [Security Monitoring](#security-monitoring)
+9. [Incident Response](#incident-response)
+10. [Related Guidelines](#related-guidelines)
+11. [References](#references)
+
+---
 
 ## Overview
-This document outlines comprehensive security best practices for the distributed e-commerce platform, implementing the security architecture decisions from ADR-009 and ensuring compliance with PCI DSS, GDPR, and other regulatory requirements.
+
+### Purpose
+This document establishes comprehensive security best practices for the CloudLab distributed e-commerce platform, implementing security-by-design principles and ensuring compliance with PCI DSS, GDPR, and other regulatory requirements.
+
+### Scope
+- **Primary Focus**: Security implementation across all system layers
+- **Secondary Areas**: Compliance, monitoring, incident response
+- **Audience**: Security engineers, developers, AI agents
+
+### Business Value
+- **Risk Reduction**: Comprehensive security controls reduce business risk
+- **Compliance**: Ensures regulatory compliance and audit readiness
+- **Trust**: Builds customer and stakeholder trust through security
+- **Cost Efficiency**: Prevents security incidents and associated costs
 
 ## Core Security Principles
 
@@ -276,10 +304,39 @@ func TestXSSPrevention(t *testing.T) {
 - Code security reviews
 - Infrastructure security audits
 
-## References
+## Related Guidelines
+
+### **Core Development Standards**
+- [Comprehensive Coding Standards](coding-standards.md) - Security integration patterns
+- [Go Coding Standards](coding-standards-golang.md) - Go security implementation
+- [Database Design Standards](database-design-standards.md) - Database security patterns
+- [Testing Guidelines](testing-guidelines.md) - Security testing strategies
+- [Code Review Guidelines](code-review-guidelines.md) - Security review criteria
+
+### **API & Communication Standards**
+- [API Design Principles](../../api/guides/api-design-principles.md) - API security patterns
+- [Authorization Guidelines](../../api/guides/authorization.md) - Access control implementation
+- [JWT Implementation](../../api/guides/jwt-implementation.md) - Token security
+- [OAuth 2.0 Setup](../../api/guides/oauth-setup.md) - OAuth security
+- [Rate Limiting](../../api/guides/rate-limiting.md) - Security protection
+
+### **Infrastructure & Operations**
+- [Deployment Guidelines](deployment-guidelines.md) - Secure deployment
+- [Service Mesh Configuration](service-mesh-configuration-standards.md) - Service mesh security
+- [Monitoring & Observability](monitoring-observability-standards.md) - Security monitoring
+- [Performance Standards](performance-standards.md) - Security performance
+
+### **Architecture References**
 - [ADR-009: Security & Authentication Architecture](../../architecture/decisions/ADR-009-security-authentication.md)
 - [ADR-015: Compliance & Regulatory Requirements](../../architecture/decisions/ADR-015-compliance-regulatory-requirements.md)
+- [System Overview](../../architecture/overview/system-overview.md) - Security architecture
+- [Distributed Patterns](../../architecture/patterns/distributed-patterns.md) - Security patterns
+
+## References
+
+### **External References**
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 - [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework)
 - [PCI DSS Requirements](https://www.pcisecuritystandards.org/)
 - [GDPR Guidelines](https://gdpr.eu/)
+

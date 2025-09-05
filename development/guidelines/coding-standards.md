@@ -806,6 +806,42 @@ type OrderProcessor interface {
 - **Security**: Zero critical security vulnerabilities
 - **Cost Efficiency**: Optimized infrastructure costs
 
+## Related Guidelines
+
+### **Core Development Standards**
+- [Go Coding Standards](coding-standards-golang.md) - Language-specific standards and best practices
+- [Database Design Standards](database-design-standards.md) - Schema design and data management patterns
+- [Testing Guidelines](testing-guidelines.md) - Comprehensive testing strategies and quality gates
+- [Code Review Guidelines](code-review-guidelines.md) - Review processes and quality assurance
+- [Error Handling Patterns](error-handling-patterns.md) - Distributed error handling strategies
+
+### **API & Communication Standards**
+- [API Design Principles](../../api/guides/api-design-principles.md) - REST, GraphQL, and gRPC patterns
+- [Authorization Guidelines](../../api/guides/authorization.md) - RBAC/ABAC implementation patterns
+- [JWT Implementation](../../api/guides/jwt-implementation.md) - Token-based authentication
+- [OAuth 2.0 Setup](../../api/guides/oauth-setup.md) - OAuth implementation patterns
+- [Rate Limiting](../../api/guides/rate-limiting.md) - API protection and performance
+
+### **Infrastructure & Operations**
+- [Deployment Guidelines](deployment-guidelines.md) - CI/CD and infrastructure deployment
+- [Service Mesh Configuration](service-mesh-configuration-standards.md) - Istio and traffic management
+- [Monitoring & Observability](monitoring-observability-standards.md) - Distributed tracing and metrics
+- [Performance Standards](performance-standards.md) - Performance optimization and SLAs
+
+### **Security & Compliance**
+- [Security Best Practices](security-best-practices.md) - Security-by-design principles
+- [Event Sourcing Guidelines](event-sourcing-guidelines.md) - Event-driven architecture patterns
+- [Mocking Strategy](mocking-strategy.md) - Development and testing with mocks
+
+### **Quick Reference**
+- [Coding Standards Quick Reference](coding-standards-quick-reference.md) - Daily development checklist
+- [Coding Standards Implementation Guide](coding-standards-implementation-guide.md) - Step-by-step implementation
+
+### **Architecture References**
+- [System Overview](../../architecture/overview/system-overview.md) - Distributed systems architecture
+- [Distributed Patterns](../../architecture/patterns/distributed-patterns.md) - Design patterns and practices
+- [Architecture Decision Records](../../architecture/decisions/) - Technical decisions and rationale
+
 ## Conclusion
 
 These coding standards provide a comprehensive foundation for building reliable, maintainable, and scalable distributed systems. They are designed to evolve with your project and team needs, ensuring continuous improvement and excellence in software development.

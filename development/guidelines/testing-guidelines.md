@@ -1035,8 +1035,39 @@ Remember to:
 - Integrate testing into CI/CD pipelines
 - Monitor test quality and performance
 
-For additional guidance, refer to:
+## Related Guidelines
+
+### **Core Development Standards**
+- [Comprehensive Coding Standards](coding-standards.md) - Testing integration patterns
+- [Go Coding Standards](coding-standards-golang.md) - Go testing best practices
+- [Database Design Standards](database-design-standards.md) - Database testing strategies
+- [Code Review Guidelines](code-review-guidelines.md) - Testing review criteria
+- [Error Handling Patterns](error-handling-patterns.md) - Error testing patterns
+
+### **API & Communication Standards**
+- [API Design Principles](../../api/guides/api-design-principles.md) - API testing patterns
+- [Authorization Guidelines](../../api/guides/authorization.md) - Security testing
+- [JWT Implementation](../../api/guides/jwt-implementation.md) - Authentication testing
+- [OAuth 2.0 Setup](../../api/guides/oauth-setup.md) - OAuth testing patterns
+- [Rate Limiting](../../api/guides/rate-limiting.md) - Performance testing
+
+### **Infrastructure & Operations**
+- [Deployment Guidelines](deployment-guidelines.md) - Deployment testing strategies
+- [Service Mesh Configuration](service-mesh-configuration-standards.md) - Service mesh testing
+- [Monitoring & Observability](monitoring-observability-standards.md) - Observability testing
+- [Performance Standards](performance-standards.md) - Performance testing criteria
+
+### **Data & Event Management**
+- [Event Sourcing Guidelines](event-sourcing-guidelines.md) - Event testing patterns
+- [Security Best Practices](security-best-practices.md) - Security testing
+- [Mocking Strategy](mocking-strategy.md) - Mock testing strategies
+
+### **Architecture References**
 - [ADR-014: Testing & Quality Assurance](../../architecture/decisions/ADR-014-testing-quality-assurance.md)
+- [System Overview](../../architecture/overview/system-overview.md) - Testing architecture
+- [Distributed Patterns](../../architecture/patterns/distributed-patterns.md) - Testing patterns
+
+### **External References**
 - [Go Testing Package Documentation](https://golang.org/pkg/testing/)
 - [Testify Framework Documentation](https://github.com/stretchr/testify)
 - [GoMock Documentation](https://github.com/uber-go/mock)

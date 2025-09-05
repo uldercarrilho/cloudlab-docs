@@ -649,6 +649,37 @@ jobs:
 
 ---
 
+## Related Guidelines
+
+### **Core Development Standards**
+- [Comprehensive Coding Standards](coding-standards.md) - Distributed systems coding principles
+- [Database Design Standards](database-design-standards.md) - Database patterns and Go integration
+- [Testing Guidelines](testing-guidelines.md) - Go testing strategies and quality gates
+- [Code Review Guidelines](code-review-guidelines.md) - Go-specific review criteria
+- [Error Handling Patterns](error-handling-patterns.md) - Go error handling strategies
+
+### **API & Communication Standards**
+- [API Design Principles](../../api/guides/api-design-principles.md) - Go API implementation patterns
+- [Authorization Guidelines](../../api/guides/authorization.md) - Go security implementation
+- [JWT Implementation](../../api/guides/jwt-implementation.md) - Go JWT handling
+- [OAuth 2.0 Setup](../../api/guides/oauth-setup.md) - Go OAuth implementation
+- [Rate Limiting](../../api/guides/rate-limiting.md) - Go rate limiting patterns
+
+### **Infrastructure & Operations**
+- [Deployment Guidelines](deployment-guidelines.md) - Go service deployment
+- [Service Mesh Configuration](service-mesh-configuration-standards.md) - Go service mesh integration
+- [Monitoring & Observability](monitoring-observability-standards.md) - Go observability patterns
+- [Performance Standards](performance-standards.md) - Go performance optimization
+
+### **Quick Reference**
+- [Coding Standards Quick Reference](coding-standards-quick-reference.md) - Go daily checklist
+- [Coding Standards Implementation Guide](coding-standards-implementation-guide.md) - Go implementation steps
+
+### **Architecture References**
+- [System Overview](../../architecture/overview/system-overview.md) - Go service architecture
+- [Distributed Patterns](../../architecture/patterns/distributed-patterns.md) - Go implementation patterns
+- [Architecture Decision Records](../../architecture/decisions/) - Go-related technical decisions
+
 ## References
 
 - [Effective Go](https://golang.org/doc/effective_go.html)
