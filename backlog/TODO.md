@@ -31,6 +31,20 @@
 - [ ] [INFRASTRUCTURE] Review security on docker-compose services
   - Context: As a workaround to fix some issues on login of ElasticSearch, Kibana, and Portainer, I changed the settings
   - Notes: It's important to review the settings for development and production environment
+- [ ] [PLATFORM] Review `service-template` scaffold
+  - Context: The project was created by AI Agent following a TASK document but it lacks of consistency with ADRs and Guidelines
+  - Notes: Create a prompt to automate the validation with ADRs and Guidelines
+- [ ] [PLATFORM] Review and update `go.mod`
+  - Notes: Use the latest version of each module
+- [ ] [PLATFORM] Add Swagger doc generation
+  - Notes: See file `platform\service-template\api\rest\openapi\v1\service.yaml`
+- [ ] [PLATFORM] Check consistency between OpenAPI definition and endpoints available
+  - Notes: Automate the validation
+- [ ] [PLATFORM] Organize the codebase in handler/controller, service, etc.?
+  - Notes: See file `platform\service-template\internal\handlers\rest.go`
+- [ ] [PLATFORM] Check config managment
+  - Context: The config managment match '.' with '_' in environment variables.
+  - Notes: The identifier `SERVICE_DATABASE_POSTGRESQL_MAX_CONN` is recognized as `database.postgresql.max_conn`?
 
 ### 📚 Documentation
 <!-- Add documentation tasks here -->
