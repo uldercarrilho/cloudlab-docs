@@ -255,24 +255,38 @@
 
 ### **4.1 Auth Service Rules**
 
+#### **ORY Kratos Identity Provider Integration**
+- **Identity Management**: ORY Kratos handles core authentication (OAuth 2.0, OpenID Connect, MFA, password policies)
+- **User Registration**: ORY Kratos self-service flows for customer and vendor registration
+- **Session Management**: ORY Kratos session lifecycle with Redis backend for scalability
+- **Multi-Factor Authentication**: ORY Kratos TOTP and SMS-based 2FA for vendors and admins
+
+#### **Custom Go Business Logic Services**
+- **Multi-tenant RBAC**: Custom Go services handle role-based permissions with tenant isolation
+- **User Profile Management**: Custom Go services for business-specific user data and validation
+- **Event Publishing**: Custom Go services publish user lifecycle events to Kafka
+- **Business Rule Enforcement**: Custom Go services implement e-commerce specific business rules
+
 #### **Authentication Flow**
 1. **Login Attempts**:
-   - Maximum 5 failed attempts before account lockout
+   - Maximum 5 failed attempts before account lockout (enforced by ORY Kratos)
    - Lockout duration: 30 minutes
-   - Account recovery via email verification
+   - Account recovery via email verification (ORY Kratos self-service flows)
 
-2. **Password Policies**:
+2. **Password Policies** (enforced by ORY Kratos):
    - Minimum 8 characters
    - Must contain uppercase, lowercase, number, special character
    - Cannot reuse last 5 passwords
    - Password expiration: 90 days
+   - Argon2id hashing for secure password storage
 
 #### **Authorization Rules**
-- **Role-Based Access Control (RBAC)**:
+- **Role-Based Access Control (RBAC)** (implemented in Custom Go services):
   - Customer: Read own data, create orders
   - Vendor: Manage products, view sales, respond to reviews
   - Admin: Full system access
   - Support: Customer data access, order management
+- **Multi-tenant Isolation**: Custom Go services enforce complete data segregation between tenants
 
 ---
 
@@ -637,19 +651,28 @@
 **Primary Focus**: Distributed systems patterns and concepts rather than comprehensive external service integration
 
 **Strategy**:
+- **Production-Ready Identity Provider**: Use ORY Kratos for authentication to learn microservices integration patterns
 - **Mock External Services**: Use mock implementations for payment providers, shipping carriers, and notification services
 - **Focus on Patterns**: Concentrate on distributed systems patterns like saga, circuit breaker, and event sourcing
 - **Reduce Complexity**: Avoid overengineering external integrations that don't contribute to learning objectives
 - **Real Services Only When Essential**: Implement real external services only when they demonstrate critical distributed systems concepts
 
-### **9.2 Mocked Services**
+### **9.2 Identity Provider Integration**
+- **ORY Kratos**: Production-ready identity provider for OAuth 2.0, OpenID Connect, and MFA
+  - **Learning Value**: Microservices integration patterns, API communication, security best practices
+  - **Implementation**: ORY Kratos handles authentication, custom Go services handle business logic
+  - **Benefits**: Professional-grade security with educational value for distributed systems patterns
+
+### **9.3 Mocked Services**
 - **Payment Providers**: Stripe, PayPal, Square (mocked to focus on payment processing patterns)
 - **Shipping Carriers**: FedEx, UPS, DHL (mocked to focus on multi-warehouse optimization)
 - **Notification Services**: SendGrid, Twilio (mocked to focus on asynchronous notification patterns)
 - **Content Moderation**: AWS Rekognition, Google Vision API (mocked to focus on content management workflows)
 
-### **9.3 Learning Benefits**
-- **Distributed Patterns**: Focus on saga patterns, circuit breakers, and event sourcing, and so on
+### **9.4 Learning Benefits**
+- **Distributed Patterns**: Focus on saga patterns, circuit breakers, and event sourcing
+- **Microservices Integration**: Learn API communication patterns with ORY Kratos
+- **Security Patterns**: Implement OAuth 2.0, OpenID Connect, and MFA via ORY Kratos
 - **Failure Scenarios**: Test resilience patterns with configurable mock failures
 - **Performance Testing**: Validate distributed system performance without external dependencies
 - **Architecture Validation**: Ensure distributed system design meets learning objectives

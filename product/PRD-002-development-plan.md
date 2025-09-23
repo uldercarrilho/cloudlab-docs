@@ -76,9 +76,9 @@
 - [x] Development environment with Docker Compose
 - ~~[ ] Kubernetes manifests for all environments~~ *(Postponed)*
 - ~~[ ] Terraform infrastructure as code~~ *(Postponed)*
-- [ ] GitHub Actions CI/CD pipeline templates
-- [ ] Go service architecture templates
-- [ ] Development standards and guidelines
+- [x] GitHub Actions CI/CD pipeline templates
+- [x] Go service architecture templates
+- [x] Development standards and guidelines
 
 #### **AI Tasks:**
 - Generate Docker Compose configurations *(Completed)*
@@ -89,9 +89,9 @@
 
 #### **Success Criteria:**
 - [x] Local development environment is fully functional
-- [ ] Infrastructure can be deployed with single command *(Docker Compose approach)*
-- [ ] GitHub Actions CI/CD pipeline successfully builds and tests
-- [ ] Go service templates follow established patterns
+- [x] Infrastructure can be deployed with single command *(Docker Compose approach)*
+- [x] GitHub Actions CI/CD pipeline successfully builds and tests
+- [x] Go service templates follow established patterns
 
 ---
 
@@ -99,31 +99,34 @@
 **Priority:** High
 **AI Assistance Focus:** Service implementation, database design, API development
 
-#### **Services to Implement (All in Go):**
-- [ ] **Auth Service**: JWT, OAuth2, RBAC (Role-Based Access Control)
-- [ ] **User Service**: Profile management, preferences
-- [ ] **Product Service**: Catalog management, categories
-- [ ] **Order Service**: Transaction handling, state management
-- [ ] **Payment Service**: Payment processing, gateways
-- [ ] **Notification Service**: Email, SMS, push notifications
-- [ ] **Inventory Service**: Stock management, warehouses
-- [ ] **Search Service**: Elasticsearch integration
-- [ ] **Content Service**: File management, CDN integration
-- [ ] **Analytics Service**: Real-time metrics, dashboards
+#### **Services to Implement:**
+- [ ] **ORY Kratos Identity Provider**: OAuth 2.0, OpenID Connect, MFA, password policies
+- [ ] **Auth Business Logic Services (Go)**: Multi-tenant RBAC, user profile management, event publishing
+- [ ] **User Service (Go)**: Profile management, preferences, business-specific user data
+- [ ] **Product Service (Go)**: Catalog management, categories
+- [ ] **Order Service (Go)**: Transaction handling, state management
+- [ ] **Payment Service (Go)**: Payment processing, gateways
+- [ ] **Notification Service (Go)**: Email, SMS, push notifications
+- [ ] **Inventory Service (Go)**: Stock management, warehouses
+- [ ] **Search Service (Go)**: Elasticsearch integration
+- [ ] **Content Service (Go)**: File management, CDN integration
+- [ ] **Analytics Service (Go)**: Real-time metrics, dashboards
 
 #### **AI Tasks:**
-- Generate Go database schemas and migrations
+- Deploy and configure ORY Kratos with OAuth 2.0 and OpenID Connect
+- Generate Go database schemas and migrations for business logic services
 - Create REST and GraphQL API endpoints and documentation
-- Implement service communication patterns using gRPC
-- Set up health checks and monitoring
+- Implement ORY Kratos integration patterns in Go services
+- Set up health checks and monitoring for both ORY Kratos and Go services
 - Generate test cases and mock data
 
 #### **Success Criteria:**
-- [ ] All core services are functional in Go
-- [ ] Services communicate via defined APIs
-- [ ] Database schemas are implemented
-- [ ] Health checks and monitoring are active
-- [ ] Test coverage >80% for all services
+- [ ] ORY Kratos identity provider is deployed and configured
+- [ ] Custom Go business logic services are functional
+- [ ] ORY Kratos and Go services communicate via defined APIs
+- [ ] Database schemas are implemented for both ORY Kratos and business data
+- [ ] Health checks and monitoring are active for all services
+- [ ] Test coverage >80% for all Go services
 
 ---
 
@@ -540,12 +543,13 @@
 - [Go Best Practices](https://golang.org/doc/effective_go.html)
 
 ### **11.3 Tools & Technologies**
+- **Identity Provider**: ORY Kratos (OAuth 2.0, OpenID Connect, MFA)
 - **Containerization**: Docker, Kubernetes (EKS)
 - **Service Mesh**: Istio
 - **Databases**: PostgreSQL, ClickHouse, Elasticsearch, Redis
 - **Message Queue**: Apache Kafka (Amazon MSK)
 - **Cloud Provider**: AWS ~~with Terraform~~ *(Terraform postponed)*
 - **Monitoring**: Prometheus, Grafana, ELK Stack
-- **Security**: HashiCorp Vault, OAuth2, JWT
+- **Security**: HashiCorp Vault, ORY Kratos, OAuth2, JWT
 - **CI/CD**: GitHub Actions
 - **Infrastructure**: ~~Terraform,~~ AWS *(Docker Compose for development)*

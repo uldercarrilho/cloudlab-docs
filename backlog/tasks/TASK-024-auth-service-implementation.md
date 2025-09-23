@@ -1,41 +1,43 @@
-# TASK-024: Auth Service Implementation - OAuth 2.0 + OpenID Connect
+# TASK-024: Auth Service Implementation - ORY Kratos + Custom Go Services
 
 **Status**: Ready  
 **Priority**: High  
-**Effort**: 8-10 days  
+**Effort**: 10-12 days  
 **Type**: Feature/Infrastructure  
 **Created**: 2025-09-22 14:30:00  
+**Updated**: 2025-09-23 10:45:00  
 **Started**:  
 **Completed**:  
 
 ## 🎯 Task Summary
-Implement a comprehensive Authentication Service for the distributed e-commerce platform using OAuth 2.0 + OpenID Connect, supporting multi-tenant user management, JWT-based session handling, multi-factor authentication, and role-based access control for customers, vendors, and administrators.
+Implement a comprehensive Authentication Service for the distributed e-commerce platform using ORY Kratos as the identity provider with custom Go services for business logic, supporting multi-tenant user management, OAuth 2.0 + OpenID Connect, multi-factor authentication, and role-based access control for customers, vendors, and administrators.
 
 ## 📋 Business Context
 **Problem**: The distributed e-commerce platform requires a robust authentication system that can handle multiple user types (customers, vendors, admins, support), provide secure authentication, and enforce business rules for user registration, verification, and access control.
 
 **Business Value**:
-- **Security Foundation**: Provides secure authentication for all platform services
+- **Production-Ready Security**: Enterprise-grade authentication using battle-tested ORY Kratos
 - **Compliance**: Meets PCI DSS and GDPR requirements for user data handling
 - **Multi-tenant Support**: Enables secure isolation between vendors and customers
 - **Scalability**: Supports 100,000+ concurrent users with <200ms response times
-- **Learning Value**: Demonstrates OAuth 2.0, JWT, MFA, and distributed authentication patterns
+- **Learning Value**: Demonstrates microservices integration, OAuth 2.0, MFA, and distributed authentication patterns
+- **Professional Standards**: Industry-standard solution with custom business logic integration
 
 ## 🎯 Acceptance Criteria
 
 ### Core Authentication Features
-- [ ] **OAuth 2.0 + OpenID Connect**: Complete OAuth flow implementation with Go
+- [ ] **ORY Kratos Integration**: Complete ORY Kratos deployment with OAuth 2.0 + OpenID Connect
 - [ ] **JWT Token Management**: 24-hour access tokens, 30-day refresh tokens with automatic rotation
-- [ ] **Multi-Factor Authentication**: TOTP-based 2FA with SMS fallback for vendors/admins
-- [ ] **Session Management**: Redis-backed sessions with concurrent session limits (max 5 per user)
-- [ ] **Password Policies**: Argon2id hashing, complexity requirements, breach detection
+- [ ] **Multi-Factor Authentication**: TOTP-based 2FA with SMS fallback for vendors/admins via ORY Kratos
+- [ ] **Session Management**: ORY Kratos session management with Redis backend and concurrent session limits
+- [ ] **Password Policies**: ORY Kratos password policies with Argon2id hashing and complexity requirements
 
 ### User Management Features
-- [ ] **User Registration**: Customer and vendor registration workflows with email verification
-- [ ] **Role-Based Access Control**: Granular permissions for customers, vendors, admins, support
+- [ ] **ORY Kratos User Registration**: Customer and vendor registration workflows with email verification
+- [ ] **Custom Go RBAC Service**: Granular permissions for customers, vendors, admins, support
 - [ ] **Multi-tenant Isolation**: Complete data segregation between tenants with zero cross-tenant access
-- [ ] **Profile Management**: User profile CRUD operations with data validation
-- [ ] **Account Security**: Account lockout, password reset, secure logout
+- [ ] **Custom Go Profile Service**: User profile CRUD operations with business logic validation
+- [ ] **Account Security**: ORY Kratos account lockout, password reset, secure logout
 
 ### Security & Compliance
 - [ ] **Data Encryption**: All data encrypted in transit (TLS) and at rest (AES-256)
@@ -52,245 +54,277 @@ Implement a comprehensive Authentication Service for the distributed e-commerce 
 
 ## 🏗️ Technical Architecture
 
-### Service Architecture
+### ORY Kratos + Custom Go Services Architecture
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   API Gateway   │    │   Auth Service  │    │   Auth Store    │
+│   API Gateway   │    │  ORY Kratos     │    │  Identity Store │
 │                 │◄──►│                 │◄──►│   (PostgreSQL)  │
-│ - Rate Limiting │    │ - OAuth Provider│    │ - User Profiles │
-│ - Auth Check    │    │ - JWT Management│    │ - Roles/Perms   │
-│ - Routing       │    │ - MFA Handling  │    │ - Tenant Data   │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-         │                       │                      │
-         │                       ▼                      │
-         │              ┌──────────────────┐            │
-         │              │   Session Store  │            │
-         │              │     (Redis)      │            │
-         │              │                  │            │
-         │              │ - Active Sessions│            │
-         │              │ - Token Blacklist│            │
-         └──────────────┴──────────────────┴────────────┘
+│ - Rate Limiting │    │ - OAuth 2.0     │    │ - Identities    │
+│ - Auth Check    │    │ - OpenID Connect│    │ - Sessions      │
+│ - Routing       │    │ - MFA           │    │ - Credentials   │
+└─────────────────┘    │ - Password Mgmt │    └─────────────────┘
+         │             └─────────────────┘             │
+         │                       │                     │
+         │                       ▼                     │
+         │              ┌─────────────────┐            │
+         │              │  Custom Go      │            │
+         │              │  Business Logic │            │
+         │              │  Services       │            │
+         │              │                 │            │
+         │              │ - Multi-tenant  │            │
+         │              │ - RBAC          │            │
+         │              │ - Event Pub     │            │
+         │              └─────────────────┘            │
+         │                       │                     │
+         │                       ▼                     │
+         │              ┌─────────────────┐            │
+         │              │   Event Bus     │            │
+         │              │   (Kafka)       │            │
+         │              │                 │            │
+         │              │ - User Created  │            │
+         │              │ - User Updated  │            │
+         │              │ - Auth Events   │            │
+         └──────────────┴─────────────────┴────────────┘
 ```
 
 ### Technology Stack
-- **Language**: Go 1.25 (latest stable with security patches)
+- **Identity Provider**: ORY Kratos v1.3.1 (latest stable)
+- **Custom Services**: Go 1.25 (latest stable with security patches)
 - **Web Framework**: Gin v1.10.0 (high-performance HTTP router)
 - **Database**: PostgreSQL 17 (primary data store)
 - **Cache**: Redis 7.4.0 (session management and caching)
-- **JWT Library**: github.com/golang-jwt/jwt/v5 (latest JWT implementation)
-- **OAuth Library**: github.com/coreos/go-oidc/v3 (OpenID Connect client)
-- **Password Hashing**: golang.org/x/crypto/argon2 (Argon2id implementation)
-- **MFA Library**: github.com/pquerna/otp (TOTP implementation)
+- **Event Streaming**: Apache Kafka 3.7.0 (user events)
+- **Container Runtime**: Docker 26.0.0 (containerization)
+- **Orchestration**: Kubernetes 1.31 (deployment)
 
 ## 🔄 Version Verification Requirements
 **CRITICAL**: Before implementation, verify and document exact versions:
 
-1. **Go Version**: 1.25 - Latest stable with security patches
-2. **PostgreSQL**: 17 - Latest stable with performance improvements
-3. **Redis**: 7.4.0 - Latest stable with security updates
-4. **Gin Framework**: 1.10.0 - Latest stable with improved middleware
-5. **JWT Library**: v5.3.0 - Latest with security improvements
-6. **OIDC Library**: v3.15.0 - Latest with OpenID Connect 1.0 support
+1. **ORY Kratos**: v1.3.1 - Latest stable with security patches and OAuth 2.0 support
+2. **Go Version**: 1.25 - Latest stable with security patches
+3. **PostgreSQL**: 17 - Latest stable with performance improvements
+4. **Redis**: 7.4.0 - Latest stable with security updates
+5. **Gin Framework**: 1.10.0 - Latest stable with improved middleware
+6. **Docker**: 26.0.0 - Latest stable for containerization
+7. **Kubernetes**: 1.31 - Latest stable for orchestration
+8. **Kafka**: 3.7.0 - Latest stable for event streaming
 
 ## 🚀 Implementation Strategy
 
-### Phase 1: Core Service Setup (Days 1-2)
-1. **Service Initialization**
-   - Create Go module with proper dependencies
-   - Set up Gin router with middleware (logging, recovery, CORS)
-   - Configure environment variables and configuration management
-   - Implement health check endpoints
+### Phase 1: ORY Kratos Setup (Days 1-3)
+1. **ORY Kratos Deployment**
+   - Deploy ORY Kratos using Docker Compose with PostgreSQL backend
+   - Configure ORY Kratos with OAuth 2.0 and OpenID Connect settings
+   - Set up identity schemas for customers, vendors, admins, and support
+   - Configure self-service flows for registration, login, and recovery
 
-2. **Database Setup**
-   - Design PostgreSQL schema with ENUM types for user roles and status
-   - Create database migrations with comprehensive comments
-   - Set up connection pooling and database health checks
-   - Implement database seeding for initial admin user
+2. **Database Configuration**
+   - Set up PostgreSQL database for ORY Kratos identity store
+   - Configure ORY Kratos database migrations
+   - Set up Redis for session management
+   - Create initial admin user and tenant configurations
 
-### Phase 2: Authentication Core (Days 3-4)
-1. **OAuth 2.0 + OpenID Connect Implementation**
-   - Implement OAuth 2.0 authorization server
-   - Create OpenID Connect provider endpoints
-   - Implement JWT token generation and validation
-   - Set up token refresh mechanism
-
-2. **User Registration & Login**
-   - Implement customer registration workflow
-   - Implement vendor registration workflow with business verification
-   - Create login endpoint with password validation
-   - Implement email verification system
-
-### Phase 3: Security Features (Days 5-6)
-1. **Multi-Factor Authentication**
-   - Implement TOTP-based 2FA using RFC 6238
-   - Create SMS fallback for 2FA
-   - Implement MFA enforcement for vendors and admins
-   - Add MFA recovery mechanisms
-
-2. **Session Management**
-   - Implement Redis-based session storage
-   - Create session lifecycle management (creation, validation, rotation, deletion)
-   - Implement concurrent session limits
-   - Add automatic logout on inactivity
-
-### Phase 4: Authorization & Multi-tenancy (Days 7-8)
-1. **Role-Based Access Control**
-   - Implement RBAC system with granular permissions
+### Phase 2: Custom Go Business Logic Services (Days 4-6)
+1. **Multi-tenant RBAC Service**
+   - Create Go service for role-based access control
+   - Implement tenant isolation at application level
    - Create permission checking middleware
-   - Implement tenant isolation at database and application levels
    - Add audit logging for all access attempts
 
-2. **API Security**
-   - Implement rate limiting per user and IP
-   - Add brute force protection
-   - Create API key management for service-to-service communication
-   - Implement CORS and security headers
+2. **User Profile Management Service**
+   - Create Go service for business-specific user data
+   - Implement user profile CRUD operations
+   - Add business rule validation and data integrity checks
+   - Create tenant-specific user management APIs
 
-### Phase 5: Integration & Testing (Days 9-10)
-1. **Service Integration**
-   - Publish authentication events to Kafka
+### Phase 3: ORY Kratos Integration (Days 7-8)
+1. **OAuth 2.0 + OpenID Connect Integration**
+   - Configure ORY Kratos OAuth 2.0 flows
+   - Set up OpenID Connect provider endpoints
+   - Implement JWT token validation in Go services
+   - Create token refresh and revocation mechanisms
+
+2. **Multi-Factor Authentication Setup**
+   - Configure ORY Kratos MFA with TOTP and SMS
+   - Implement MFA enforcement for vendors and admins
+   - Create MFA recovery mechanisms
+   - Add MFA status management in Go services
+
+### Phase 4: Event-Driven Integration (Days 9-10)
+1. **Event Publishing System**
+   - Create Go services for publishing user events to Kafka
+   - Implement user lifecycle event handlers
+   - Add authentication event streaming
+   - Create event-driven user management workflows
+
+2. **Service Integration**
    - Create authentication middleware for other services
    - Implement service discovery integration
-   - Set up monitoring and metrics
+   - Set up monitoring and metrics collection
+   - Add health checks and observability
 
-2. **Testing & Validation**
-   - Comprehensive unit test suite (>90% coverage)
-   - Integration tests for OAuth flows
-   - Security testing (penetration testing simulation)
+### Phase 5: Testing & Validation (Days 11-12)
+1. **Comprehensive Testing**
+   - Unit tests for Go business logic services (>90% coverage)
+   - Integration tests for ORY Kratos API interactions
+   - Security testing for authentication bypass attempts
    - Performance testing and load validation
+
+2. **Security & Compliance Validation**
+   - Penetration testing simulation
+   - GDPR and PCI DSS compliance validation
+   - Multi-tenant isolation verification
+   - Rate limiting and brute force protection testing
 
 ## 🎓 Learning Objectives
 
 ### Distributed Systems Concepts
-- **OAuth 2.0 & OpenID Connect**: Industry-standard authentication protocols
-- **JWT Token Management**: Stateless authentication with secure token handling
+- **Microservices Integration**: API communication patterns with ORY Kratos
+- **OAuth 2.0 & OpenID Connect**: Industry-standard authentication protocols via ORY Kratos
 - **Multi-tenant Architecture**: Data isolation and tenant-specific security
-- **Session Management**: Distributed session handling with Redis
 - **Event-driven Architecture**: Publishing authentication events to other services
+- **Service Discovery**: Health checks and service registration patterns
 
 ### Security Patterns
-- **Multi-Factor Authentication**: TOTP and SMS-based 2FA implementation
-- **Password Security**: Argon2id hashing and breach detection
+- **Identity Provider Integration**: Professional-grade authentication with ORY Kratos
+- **Multi-Factor Authentication**: TOTP and SMS-based 2FA via ORY Kratos
 - **Rate Limiting**: API protection against abuse and brute force attacks
 - **Audit Logging**: Comprehensive security event tracking
 - **Encryption**: Data protection in transit and at rest
 
 ### Go Development Skills
 - **Microservice Architecture**: Clean architecture patterns in Go
+- **API Integration**: RESTful API communication with external services
 - **Database Integration**: PostgreSQL with proper connection management
-- **Caching Strategies**: Redis integration for performance optimization
-- **Middleware Patterns**: Request processing and security middleware
+- **Event Streaming**: Kafka integration for user lifecycle events
 - **Testing Strategies**: Unit, integration, and security testing in Go
 
 ## 📊 Database Schema Design
 
-### Core Tables with ENUM Types
+### ORY Kratos Identity Store
+ORY Kratos manages its own identity store with the following structure:
+- **Identities**: Core user identity data managed by ORY Kratos
+- **Sessions**: Active user sessions managed by ORY Kratos
+- **Credentials**: Password hashes and MFA secrets managed by ORY Kratos
+- **Recovery Tokens**: Password reset and account recovery tokens
+
+### Custom Go Services Business Data
 ```sql
--- User roles enum
+-- User roles enum for business logic
 CREATE TYPE user_role AS ENUM ('customer', 'vendor', 'admin', 'support');
 
--- User status enum  
+-- User status enum for business logic
 CREATE TYPE user_status AS ENUM ('pending', 'active', 'suspended', 'deleted');
 
--- MFA status enum
+-- MFA status enum for business logic
 CREATE TYPE mfa_status AS ENUM ('disabled', 'enabled', 'required');
 
--- User profiles table
-CREATE TABLE user_profiles (
+-- Business user profiles table (extends ORY Kratos identities)
+CREATE TABLE business_user_profiles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    kratos_identity_id UUID NOT NULL, -- Reference to ORY Kratos identity
     tenant_id UUID NOT NULL, -- Multi-tenant isolation
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL, -- Argon2id hash
     role user_role NOT NULL DEFAULT 'customer',
     status user_status NOT NULL DEFAULT 'pending',
     mfa_enabled mfa_status NOT NULL DEFAULT 'disabled',
-    mfa_secret VARCHAR(255), -- TOTP secret (encrypted)
     phone_number VARCHAR(20), -- For SMS 2FA
-    email_verified_at TIMESTAMP,
-    last_login_at TIMESTAMP,
+    business_verification_status VARCHAR(50), -- For vendors
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_user_tenant FOREIGN KEY (tenant_id) REFERENCES tenants(id)
-) COMMENT 'User profiles with multi-tenant isolation and security features';
+    CONSTRAINT fk_business_profile_kratos FOREIGN KEY (kratos_identity_id) REFERENCES identities(id),
+    CONSTRAINT fk_business_profile_tenant FOREIGN KEY (tenant_id) REFERENCES tenants(id)
+) COMMENT 'Business user profiles extending ORY Kratos identities with multi-tenant isolation';
 
--- Session management table
-CREATE TABLE user_sessions (
+-- User permissions table for RBAC
+CREATE TABLE user_permissions (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
-    session_token VARCHAR(255) UNIQUE NOT NULL, -- JWT token ID
-    refresh_token VARCHAR(255) UNIQUE NOT NULL,
-    expires_at TIMESTAMP NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_session_user FOREIGN KEY (user_id) REFERENCES user_profiles(id)
-) COMMENT 'Active user sessions with JWT token tracking';
+    resource VARCHAR(100) NOT NULL,
+    action VARCHAR(50) NOT NULL,
+    granted_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    granted_by UUID,
+    CONSTRAINT fk_permission_user FOREIGN KEY (user_id) REFERENCES business_user_profiles(id),
+    CONSTRAINT fk_permission_granter FOREIGN KEY (granted_by) REFERENCES business_user_profiles(id)
+) COMMENT 'User permissions for role-based access control';
 ```
 
 ## 🔧 API Endpoints Specification
 
-### Authentication Endpoints
-- `POST /oauth/authorize` - OAuth 2.0 authorization endpoint
-- `POST /oauth/token` - OAuth 2.0 token endpoint
-- `POST /oauth/revoke` - Token revocation endpoint
+### ORY Kratos Authentication Endpoints
 - `GET /.well-known/openid_configuration` - OpenID Connect discovery
-- `GET /oauth/userinfo` - User information endpoint
+- `POST /oauth2/auth` - OAuth 2.0 authorization endpoint
+- `POST /oauth2/token` - OAuth 2.0 token endpoint
+- `POST /oauth2/revoke` - Token revocation endpoint
+- `GET /oauth2/userinfo` - User information endpoint
+- `GET /self-service/login/api` - Self-service login API
+- `GET /self-service/registration/api` - Self-service registration API
+- `GET /self-service/recovery/api` - Self-service recovery API
+- `GET /self-service/settings/api` - Self-service settings API
 
-### User Management Endpoints
-- `POST /api/v1/users/register` - User registration
-- `POST /api/v1/users/login` - User login
-- `POST /api/v1/users/logout` - User logout
-- `POST /api/v1/users/refresh` - Token refresh
-- `GET /api/v1/users/profile` - Get user profile
-- `PUT /api/v1/users/profile` - Update user profile
-- `POST /api/v1/users/verify-email` - Email verification
-- `POST /api/v1/users/reset-password` - Password reset
+### Custom Go Business Logic Endpoints
+- `GET /api/v1/users/profile` - Get business user profile
+- `PUT /api/v1/users/profile` - Update business user profile
+- `GET /api/v1/users/permissions` - Get user permissions
+- `POST /api/v1/users/permissions` - Grant user permissions
+- `DELETE /api/v1/users/permissions/:id` - Revoke user permissions
 
-### MFA Endpoints
-- `POST /api/v1/mfa/setup` - Setup MFA
-- `POST /api/v1/mfa/verify` - Verify MFA code
-- `POST /api/v1/mfa/disable` - Disable MFA
-- `POST /api/v1/mfa/recover` - MFA recovery
+### Multi-tenant Management Endpoints
+- `GET /api/v1/tenants/:id/users` - List users by tenant
+- `POST /api/v1/tenants/:id/users` - Create user in tenant
+- `PUT /api/v1/tenants/:id/users/:userId/role` - Update user role in tenant
+- `GET /api/v1/tenants/:id/analytics` - Get tenant analytics
 
 ### Admin Endpoints
-- `GET /api/v1/admin/users` - List users (admin only)
+- `GET /api/v1/admin/users` - List all users (admin only)
 - `PUT /api/v1/admin/users/:id/status` - Update user status
-- `GET /api/v1/admin/sessions` - List active sessions
-- `DELETE /api/v1/admin/sessions/:id` - Revoke session
+- `GET /api/v1/admin/tenants` - List all tenants
+- `POST /api/v1/admin/tenants` - Create new tenant
+- `GET /api/v1/admin/audit-logs` - Get audit logs
 
 ## 🧪 Testing Strategy
 
 ### Unit Testing (>90% Coverage)
-- **Authentication Logic**: OAuth flows, JWT handling, password validation
-- **User Management**: Registration, login, profile management
-- **MFA Implementation**: TOTP generation, verification, recovery
-- **RBAC System**: Permission checking, role validation
-- **Security Features**: Rate limiting, brute force protection
+- **Go Business Logic Services**: RBAC, user profile management, event publishing
+- **ORY Kratos Integration**: API client interactions, token validation
+- **Multi-tenant Logic**: Tenant isolation, permission checking
+- **Event Handling**: Kafka event publishing and consumption
+- **Security Features**: Rate limiting, audit logging
 
 ### Integration Testing
-- **Database Integration**: User CRUD operations, session management
-- **Redis Integration**: Session storage and retrieval
-- **OAuth Flow Testing**: Complete authorization and token flows
-- **Multi-tenant Testing**: Tenant isolation validation
-- **API Integration**: Endpoint testing with various user roles
+- **ORY Kratos API Integration**: Complete authentication flows with ORY Kratos
+- **Database Integration**: Business data CRUD operations, tenant isolation
+- **Redis Integration**: Session storage and retrieval via ORY Kratos
+- **Kafka Integration**: Event publishing and consumption
+- **Multi-tenant Testing**: Cross-tenant data access prevention
 
 ### Security Testing
-- **Authentication Bypass**: Attempt to bypass authentication mechanisms
-- **Authorization Testing**: Permission escalation attempts
-- **MFA Bypass**: Attempt to circumvent multi-factor authentication
+- **Authentication Bypass**: Attempt to bypass ORY Kratos authentication
+- **Authorization Testing**: Permission escalation attempts in Go services
+- **MFA Bypass**: Attempt to circumvent ORY Kratos multi-factor authentication
 - **Rate Limiting**: Validate rate limiting and brute force protection
 - **Data Isolation**: Verify multi-tenant data segregation
 
 ### Performance Testing
-- **Load Testing**: 1000+ concurrent authentication requests
+- **Load Testing**: 1000+ concurrent authentication requests through ORY Kratos
 - **Stress Testing**: System behavior under extreme load
 - **Token Validation**: Performance of JWT validation under load
-- **Database Performance**: User lookup and session management performance
+- **API Performance**: Go services response times under load
+- **Database Performance**: Business data queries and tenant isolation performance
 
 ## 📚 Resources & References
 
 ### Technical Documentation
 - [ADR-001: User Management & Authentication](../architecture/decisions/ADR-001-user-management-authentication.md)
+- [Brainstorm Session: Custom Auth Service vs Keycloak](../../ai-sessions/brainstorm-auth-service-vs-keycloak.md)
 - [Business Rules Document](../../product/PRD-001-business-rules.md) - Section 3.1 User Management
 - [Development Plan](../../product/PRD-002-development-plan.md) - Phase 2 Core Services
+
+### ORY Kratos Resources
+- [ORY Kratos Documentation](https://www.ory.sh/docs/kratos/)
+- [ORY Kratos API Reference](https://www.ory.sh/docs/kratos/reference/api)
+- [ORY Kratos Configuration](https://www.ory.sh/docs/kratos/guides/configuration)
+- [ORY Kratos Self-Service Flows](https://www.ory.sh/docs/kratos/self-hosted/self-service-flows)
+- [ORY Kratos Multi-Factor Authentication](https://www.ory.sh/docs/kratos/self-hosted/mfa)
 
 ### OAuth & Security Resources
 - [OAuth 2.0 Specification](https://oauth.net/2/)
@@ -300,11 +334,11 @@ CREATE TABLE user_sessions (
 - [NIST Digital Identity Guidelines](https://pages.nist.gov/800-63-3/)
 
 ### Go Development Resources
-- [Go OAuth 2.0 Implementation](https://pkg.go.dev/golang.org/x/oauth2)
 - [Gin Web Framework Documentation](https://gin-gonic.com/docs/)
-- [Go JWT Implementation](https://pkg.go.dev/github.com/golang-jwt/jwt/v5)
 - [PostgreSQL Go Driver](https://pkg.go.dev/github.com/lib/pq)
 - [Redis Go Client](https://pkg.go.dev/github.com/go-redis/redis/v8)
+- [Kafka Go Client](https://pkg.go.dev/github.com/segmentio/kafka-go)
+- [ORY Kratos Go Client](https://pkg.go.dev/github.com/ory/kratos-client-go)
 
 ## 🔗 Dependencies
 
@@ -374,60 +408,63 @@ CREATE TABLE user_sessions (
 ## 🎯 AI Agent Decision Points
 
 ### Technology Choices
-1. **Authentication Protocol**: OAuth 2.0 + OpenID Connect vs. alternatives
-   - *Decision*: OAuth 2.0 + OpenID Connect for industry standard compliance
-2. **Session Management**: JWT + Redis vs. pure JWT vs. server-side sessions
-   - *Decision*: JWT + Redis for performance and revocation capabilities
-3. **MFA Implementation**: TOTP vs. SMS vs. hardware tokens
-   - *Decision*: TOTP primary with SMS fallback for accessibility
+1. **Identity Provider**: ORY Kratos vs. Custom Auth Service vs. Keycloak
+   - *Decision*: ORY Kratos for production-ready security with microservices-native architecture
+2. **Business Logic**: ORY Kratos only vs. ORY Kratos + Custom Go Services
+   - *Decision*: ORY Kratos + Custom Go Services for professional security with custom business rules
+3. **MFA Implementation**: ORY Kratos MFA vs. Custom MFA vs. External MFA
+   - *Decision*: ORY Kratos MFA for production-ready security with TOTP and SMS support
 
 ### Architecture Decisions
-1. **User Storage**: Single user service vs. distributed user management
-   - *Decision*: Centralized user service for consistency and compliance
-2. **Multi-tenancy**: Database-level vs. application-level isolation
-   - *Decision*: Database-level isolation with application-level validation
-3. **Event Publishing**: Synchronous vs. asynchronous user events
-   - *Decision*: Asynchronous event publishing for performance and reliability
+1. **User Storage**: ORY Kratos identity store vs. Custom user database
+   - *Decision*: ORY Kratos identity store for core auth data, custom database for business data
+2. **Multi-tenancy**: ORY Kratos multi-tenancy vs. Custom multi-tenant isolation
+   - *Decision*: Custom Go services for multi-tenant business logic with ORY Kratos for authentication
+3. **Event Publishing**: ORY Kratos events vs. Custom event system
+   - *Decision*: Custom Go services for business event publishing to Kafka
 
 ### Implementation Strategies
-1. **Password Hashing**: Argon2id vs. bcrypt vs. scrypt
-   - *Decision*: Argon2id for modern security and resistance to attacks
-2. **Token Storage**: In-memory vs. Redis vs. database
-   - *Decision*: Redis for performance and distributed session management
-3. **Rate Limiting**: Application-level vs. gateway-level vs. both
-   - *Decision*: Both levels for defense in depth
+1. **Integration Pattern**: Direct API calls vs. SDK vs. gRPC
+   - *Decision*: Direct REST API calls to ORY Kratos for simplicity and learning value
+2. **Data Synchronization**: Real-time vs. Event-driven vs. Batch
+   - *Decision*: Event-driven synchronization via Kafka for performance and reliability
+3. **Error Handling**: ORY Kratos errors vs. Custom error handling
+   - *Decision*: Custom Go services for business-specific error handling and user experience
 
 ## 📝 Progress Log
 <!-- Update as work progresses using the current date and time -->
 - 2025-09-22 14:30:00: Task created and requirements analyzed
 - 2025-09-22 14:30:00: Architecture design completed
 - 2025-09-22 14:30:00: Implementation strategy defined
+- 2025-01-27 16:45:00: Updated to ORY Kratos + Custom Go Services architecture
+- 2025-01-27 16:45:00: Revised implementation strategy for ORY Kratos integration
+- 2025-01-27 16:45:00: Updated database schema for ORY Kratos + business data separation
 
 ## ✅ Definition of Done
 
 ### Core Implementation
-- [ ] Latest compatible versions verified and documented (Go 1.25, PostgreSQL 17.6, Redis 7.4.0)
-- [ ] OAuth 2.0 + OpenID Connect implementation complete and tested
-- [ ] JWT token management with 24-hour access and 30-day refresh tokens
-- [ ] Multi-factor authentication (TOTP + SMS) implemented and tested
-- [ ] Session management with Redis backend and concurrent session limits
-- [ ] Role-based access control with granular permissions
-- [ ] Multi-tenant isolation with zero cross-tenant data access
+- [ ] Latest compatible versions verified and documented (ORY Kratos v1.0.0, Go 1.25, PostgreSQL 17, Redis 7.4.0)
+- [ ] ORY Kratos deployment complete with OAuth 2.0 + OpenID Connect configuration
+- [ ] JWT token management with 24-hour access and 30-day refresh tokens via ORY Kratos
+- [ ] Multi-factor authentication (TOTP + SMS) implemented and tested via ORY Kratos
+- [ ] Session management with Redis backend and concurrent session limits via ORY Kratos
+- [ ] Custom Go RBAC service with granular permissions
+- [ ] Multi-tenant isolation with zero cross-tenant data access in Go services
 
 ### Security & Compliance
-- [ ] Password policies enforced with Argon2id hashing
-- [ ] Rate limiting and brute force protection implemented
+- [ ] ORY Kratos password policies enforced with Argon2id hashing
+- [ ] Rate limiting and brute force protection implemented in Go services
 - [ ] Audit logging for all authentication and authorization events
 - [ ] GDPR compliance features (data subject rights, retention policies)
 - [ ] PCI DSS compliance validation completed
 - [ ] Security testing passed (penetration testing simulation)
 
 ### Testing & Quality
-- [ ] Unit test coverage >90% for all authentication logic
-- [ ] Integration tests for OAuth flows and database operations
+- [ ] Unit test coverage >90% for Go business logic services
+- [ ] Integration tests for ORY Kratos API interactions and database operations
 - [ ] Security tests for authentication bypass and authorization escalation
 - [ ] Performance tests validate <200ms response times under load
-- [ ] Load tests validate 1000+ concurrent authentication requests
+- [ ] Load tests validate 1000+ concurrent authentication requests through ORY Kratos
 
 ### Documentation & Operations
 - [ ] API documentation complete with OpenAPI specifications
@@ -437,10 +474,10 @@ CREATE TABLE user_sessions (
 - [ ] Health checks implemented and validated
 
 ### Integration & Deployment
-- [ ] Authentication events published to Kafka for other services
-- [ ] Authentication middleware created for service integration
+- [ ] User lifecycle events published to Kafka for other services
+- [ ] ORY Kratos integration middleware created for service integration
 - [ ] Service discovery integration completed
-- [ ] Docker containerization with health checks
+- [ ] Docker containerization with health checks for ORY Kratos and Go services
 - [ ] CI/CD pipeline integration with automated testing
 
 ## 🚀 Follow-up Tasks
@@ -460,21 +497,24 @@ CREATE TABLE user_sessions (
 ### For AI Agents Executing This Task
 1. **Start with Version Verification**: Always verify and document exact technology versions before implementation
 2. **Follow Phased Approach**: Implement in phases as outlined, completing each phase before moving to the next
-3. **Security First**: Implement security features early and test thoroughly at each phase
-4. **Document Decisions**: Record all architectural and implementation decisions with rationale
-5. **Test Continuously**: Write tests as you implement, don't leave testing for the end
-6. **Validate Compliance**: Ensure GDPR and PCI DSS compliance at each implementation step
+3. **ORY Kratos First**: Deploy and configure ORY Kratos before implementing custom Go services
+4. **Security First**: Implement security features early and test thoroughly at each phase
+5. **Document Decisions**: Record all architectural and implementation decisions with rationale
+6. **Test Continuously**: Write tests as you implement, don't leave testing for the end
+7. **Validate Compliance**: Ensure GDPR and PCI DSS compliance at each implementation step
 
 ### Key Success Factors
+- **ORY Kratos Integration**: Master ORY Kratos configuration and API integration patterns
 - **Comprehensive Testing**: Security testing is as important as functional testing
 - **Performance Validation**: Validate response times and scalability throughout development
 - **Documentation Quality**: Clear, AI-friendly documentation for future maintenance
 - **Security Review**: Regular security validation and penetration testing simulation
-- **Integration Testing**: Thorough testing of OAuth flows and service integration
+- **Integration Testing**: Thorough testing of ORY Kratos flows and Go service integration
 
 ### Common Pitfalls to Avoid
-- **OAuth Complexity**: Don't underestimate OAuth 2.0 + OpenID Connect complexity
+- **ORY Kratos Configuration**: Don't underestimate ORY Kratos configuration complexity
 - **Security Oversights**: Ensure all security features are properly implemented and tested
 - **Multi-tenant Isolation**: Verify tenant isolation at multiple levels (database, application, API)
 - **Performance Issues**: Monitor and optimize performance throughout development
 - **Compliance Gaps**: Ensure GDPR and PCI DSS compliance from the start, not as an afterthought
+- **API Integration**: Ensure proper error handling and retry logic for ORY Kratos API calls
